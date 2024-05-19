@@ -12,7 +12,7 @@ public class Point {
 	protected final Double3 xyz;
 	
 	/**
-	 * the zero point (0,0,0)
+	 * the zero point at the head of the coordinate axis (0,0,0)
 	 */
 	public static final Point ZERO = new Point(0, 0, 0);
 
