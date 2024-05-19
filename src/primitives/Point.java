@@ -18,7 +18,9 @@ public class Point {
 
 	/**
 	 * Initializes a point with 3 parameters it received as input
-	 * @param  d1, d2, d3 are double numbers that will be one point with 3 coordinates
+	 * @param d1 x coordinate value
+	 * @param d2 y coordinate value
+	 * @param d3 z coordinate value
 	*/
 	public Point(double d1, double d2, double d3) {
 		xyz = new Double3(d1, d2, d3);

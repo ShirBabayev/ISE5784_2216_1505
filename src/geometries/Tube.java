@@ -16,8 +16,8 @@ public class Tube extends RadialGeometry {
 
 	/**
 	 * A constructor that initializes the tube with radius and ray
-	 * @param r - determines the width of the cylinder
-	 * @param rad - represents the direction of the cylinder
+	 * @param r -  represents the direction of the cylinder
+	 * @param rad - determines the width of the cylinder
 	 */
 	public Tube(Ray r, double rad) {
 		super(rad);

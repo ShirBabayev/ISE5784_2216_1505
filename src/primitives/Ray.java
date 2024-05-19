@@ -19,7 +19,16 @@ public class Ray {
 		head = p;
 		direction = dir.normalize();
 	}
-
+	/**
+	 * getter function for direction of the ray
+	 * @return direction of Vector type
+	 */
+	public Vector getDirection() {return direction;}
+	/**
+	 * getter function for head point of the ray
+	 * @return head of Point type
+	 */
+	public Point getHead() {return head;}
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
