@@ -44,7 +44,8 @@ public final class Main {
       try {
          p1.subtract(p1);
          out.println("ERROR: (point - itself) does not throw an exception");
-      } catch (IllegalArgumentException ignore) {} catch (Exception ignore) {
+      } catch (IllegalArgumentException ignore) {} 
+      	catch (Exception ignore) {
          out.println("ERROR: (point - itself) throws wrong exception");
       }
 
