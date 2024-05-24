@@ -51,7 +51,12 @@ public class Plane implements Geometry {
 
 	@Override
 	public Vector getNormal(Point p) {
-		return normal;
+		if( ((normal.getXyz().getD1()) * ( (p.getXyz().getD1()) - (q.getXyz().getD1()) ) - 
+				((normal.getXyz().getD2()) * ( (p.getXyz().getD2()) - (q.getXyz().getD2()) )) + 
+				((normal.getXyz().getD3()) * ( (p.getXyz().getD3()) - (q.getXyz().getD3()) )))==0){
+			return normal;
+		}
+		throw new IllegalArgumentException("ERROR: the point is not in the range of the plane");	
 	}
 
 }

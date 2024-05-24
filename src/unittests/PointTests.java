@@ -1,4 +1,4 @@
-package unittests.primitivesTests;
+package unittests;
 import static java.lang.System.out;
 import static org.junit.jupiter.api.Assertions.*;
 import static primitives.Util.isZero;

@@ -37,6 +37,10 @@ public class Point {
 	public Point(Double3 d) {
 		xyz = d;
 	}
+	
+	public Double3 getXyz() {
+		return xyz;
+	}
 
 	@Override
 	public boolean equals(Object obj) {
