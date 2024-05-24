@@ -1,4 +1,4 @@
-package unittests;
+package unittests.geometriesTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Unit tests for geometries.Tube class
+ * 
  * @author Hodaya Avidan and Shir Babayev
  */
 class TubeTests {
