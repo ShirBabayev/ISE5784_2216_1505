@@ -13,6 +13,8 @@ import primitives.Vector;
  * @author Hodaya Avidan and Shir Babayev
  */
 public class VectorTests {
+	/** accuracy for the numeric test results */
+	private static final double DELTA = 0.00001;
 	/** a vector for the tests */
 	private static final Vector v1 = new Vector(1, 2, 3);
 	/** a vector for the tests */
@@ -64,7 +66,7 @@ public class VectorTests {
 		/*
 		 * TC05 Checks if the squared length of the vector did return a correct result
 		 */
-		assertEquals(v4.lengthSquared(), 9, "ERROR: lengthSquared() wrong value");
+		assertEquals(9, v4.lengthSquared(), DELTA, "ERROR: lengthSquared() wrong value");
 	}
 
 	/**
@@ -75,7 +77,7 @@ public class VectorTests {
 
 		// ============ Equivalence Partitions Tests ==============
 		/* TC06 Checks if the length of the vector did return a correct result */
-		assertEquals(v4.length(), 3, "ERROR: length() wrong value");
+		assertEquals(3, v4.length(), DELTA, "ERROR: length() wrong value");
 	}
 
 	/**
@@ -111,9 +113,9 @@ public class VectorTests {
 
 		// ============ Equivalence Partitions Tests ==============
 		/* TC11: Checks if adding 2 vectors returns a correct result */
-		assertEquals(v1.add(v2), v1Opposite, "ERROR: Vector + Vector does not work correctly");
+		assertEquals(v1Opposite, v1.add(v2), "ERROR: Vector + Vector does not work correctly");
 		/* TC12: Checks if subtraction 2 vectors returns a correct result */
-		assertEquals(v1.subtract(v2), new Vector(3, 6, 9), "ERROR: Vector - Vector does not work correctly");
+		assertEquals(new Vector(3, 6, 9), v1.subtract(v2), "ERROR: Vector - Vector does not work correctly");
 	}
 
 	/**
@@ -127,7 +129,7 @@ public class VectorTests {
 		/*
 		 * TC13: Checks that multiplying a vector by a scalar returns a correct result
 		 */
-		assertEquals(v1.scale(-1), v1Opposite, "ERROR: Vector*scalar does not work correctly");
+		assertEquals(v1Opposite, v1.scale(-1), "ERROR: Vector*scalar does not work correctly");
 
 		// =============== Boundary Values Tests ==================
 
@@ -154,12 +156,12 @@ public class VectorTests {
 		// =============== Boundary Values Tests ==================
 
 		/* TC16: Checks if a scalar product of perpendicular vectors returns 0 */
-		assertEquals(v1.dotProduct(v3), 0, "ERROR: dotProduct() for orthogonal vectors is not zero");
+		assertEquals(0, v1.dotProduct(v3), DELTA, "ERROR: dotProduct() for orthogonal vectors is not zero");
 
 		// ============ Equivalence Partitions Tests ==============
 
 		/* TC17: Checks if a scalar product of vectors returns a correct result */
-		assertEquals(v1.dotProduct(v2) + 28, 0, "ERROR: dotProduct() returns wrong value");
+		assertEquals(-28, v1.dotProduct(v2), DELTA, "ERROR: dotProduct() returns wrong value");
 	}
 
 	/**
@@ -181,17 +183,17 @@ public class VectorTests {
 		 * TC19: Checks that the vector product takes into account the right angle
 		 * between the orthogonal vectors
 		 */
-		assertNotEquals(vr.length() - v1.length() * v3.length(), 0,
+		assertNotEquals(vr.length(), v1.length() * v3.length(), DELTA,
 				"ERROR: crossProduct() returns wrong result length");
 		/* TC20: Checks whether a dot product of 2 orthogonal vectors returns 0 */
-		assertEquals(vr.dotProduct(v3), 0, "ERROR: crossProduct() result is not orthogonal to its operands");
+		assertEquals(0, vr.dotProduct(v3), DELTA, "ERROR: crossProduct() result is not orthogonal to its operands");
 		/* TC21: Checks whether a dot product of 2 orthogonal vectors returns 0 */
-		assertEquals(vr.dotProduct(v1), 0, "ERROR: crossProduct() result is not orthogonal to its operands");
+		assertEquals(0, vr.dotProduct(v1), DELTA, "ERROR: crossProduct() result is not orthogonal to its operands");
 
 		// ============ Equivalence Partitions Tests ==============
 
 		/* TC22: Checks that cross product returns a correct result */
-		assertEquals(v3.crossProduct(v4), new Vector(10, -2, -3),
+		assertEquals(new Vector(10, -2, -3), v3.crossProduct(v4),
 				"ERROR: crossProduct() result is not orthogonal to its operands");// returns wrong result
 
 	}
@@ -207,7 +209,7 @@ public class VectorTests {
 		Vector v = new Vector(1, 2, 3);
 		Vector u = v.normalize();
 		/* TC23: Checks that the function does return a vector of unit length */
-		assertEquals(u.length() - 1, 0, "ERROR: the normalized vector is not a unit vector");
+		assertEquals(1, u.length(), DELTA, "ERROR: the normalized vector is not a unit vector");
 		/*
 		 * TC24: Checks that a vector returns in the right direction and not the reverse
 		 * of the vector itself

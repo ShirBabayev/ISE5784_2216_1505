@@ -32,15 +32,10 @@ class TriangleTests {
 		assertEquals(new Vector(d, d, d), triangle.getNormal(new Point(0, 0, 1)),
 				"ERROR: Triangle getNormal(Point) returns wrong value");
 		Vector result = triangle.getNormal(new Point(0, 0, 1));
-		/*
-		 * TC02: Checks that the normal is indeed perpendicular to the vectors on the
-		 * triangle
-		 */
+		/*TC02: Checks that the normal is indeed perpendicular to the vectors on the triangle*/
 		for (int i = 0; i < 3; ++i)
-			/*
-			 * Each time creates a vector from 2 points on the plane and checks that the
-			 * normal is indeed orthogonal to this vector
-			 */
+			/* Each time creates a vector from 2 points on the plane and checks that the normal
+			  is indeed orthogonal to this vector*/
 			assertEquals(0d, result.dotProduct(pts[i].subtract(pts[i == 0 ? 3 : i - 1])),
 					"Plane's normal is not orthogonal to one of the edges");
 
