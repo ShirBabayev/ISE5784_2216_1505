@@ -23,17 +23,21 @@ class TubeTests {
 		// ============ Equivalence Partitions Tests ==============
 		// TC01: Check getNormal validity
 		Tube tube1 = new Tube(new Ray(new Vector(0, 1, 0), new Point(1, 0, 0)), 1);
-		 /* check whether the normal to the tube returns the wanted result, if not -
-		 	throw an exception */
+		/*
+		 * check whether the normal to the tube returns the wanted result, if not -
+		 * throw an exception
+		 */
 		assertEquals(new Vector(-1, 0, 0), tube1.getNormal(new Point(0, 1, 0)),
 				"ERROR: tube getNormal(Point) returns wrong value");
 
 		// =============== Boundary Values Tests ==================
-		
+
 		// TC02: Ensure there is an exception
 		Tube tube2 = new Tube(new Ray(new Vector(0, 0, 1), new Point(0, 0, 2)), 1);
-		/* Check if sending to getNormal(point) the ray's head point, throws an
-		   exception, if not - throw an exception */
+		/*
+		 * Check if sending to getNormal(point) the ray's head point, throws an
+		 * exception, if not - throw an exception
+		 */
 		assertThrows(Exception.class, () -> tube2.getNormal(new Point(0, 0, 2)),
 				"ERROR: tube getNormal(Point) returns wrong value");
 	}

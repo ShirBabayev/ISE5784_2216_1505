@@ -8,9 +8,10 @@ import primitives.Point;
  * @author Hodaya Avidan and Shir Babayev
  */
 public class Triangle extends Polygon {
-	
+
 	/**
 	 * construct the triangle by 3 vertexes.
+	 * 
 	 * @param p1 first vertex
 	 * @param p2 second vertex
 	 * @param p3 third vertex

@@ -15,12 +15,12 @@ public class Cylinder extends Tube {
 	/**
 	 * A constructor that initializes the cylinder ray, radius and height
 	 * 
-	 * @param r   - direction of the cylinder
-	 * @param rad - width of the cylinder
-	 * @param h   - length of the cylinder
+	 * @param r      - direction of the cylinder
+	 * @param radius - width of the cylinder
+	 * @param h      - length of the cylinder
 	 */
-	public Cylinder(Ray r, double rad, double h) {
-		super(r, rad);
+	public Cylinder(Ray r, double radius, double h) {
+		super(r, radius);
 		height = h;
 	}
 

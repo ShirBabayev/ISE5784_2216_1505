@@ -14,7 +14,7 @@ public class Sphere extends RadialGeometry {
 	/**
 	 * A constructor that initializes the center point and the radius of the sphere
 	 * 
-	 * @param p   - center point
+	 * @param p      - center point
 	 * @param radius - radius
 	 */
 	public Sphere(Point p, double radius) {

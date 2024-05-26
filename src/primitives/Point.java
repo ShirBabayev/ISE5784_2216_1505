@@ -37,7 +37,7 @@ public class Point {
 	public Point(Double3 d) {
 		xyz = d;
 	}
-	
+
 	public Double3 getXyz() {
 		return xyz;
 	}
@@ -93,10 +93,8 @@ public class Point {
 	 * @return The point from which the distance is calculated
 	 */
 	public double distanceSquared(Point p) {
-		/*
-		 * Calculating the squared distance between 2 points according to the algebraic
-		 * formula for calculating the squared distance
-		 */
+		// Calculating the squared distance between 2 points according to the algebraic
+		// formula for calculating the squared distance
 		double dx = xyz.d1 - p.xyz.d1;
 		return Math.pow(xyz.d1 - p.xyz.d1, 2) + Math.pow(xyz.d2 - p.xyz.d2, 2) + Math.pow(xyz.d3 - p.xyz.d3, 2);
 	}

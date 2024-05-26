@@ -3,12 +3,8 @@ package test;
 import static java.lang.System.out;
 
 import static primitives.Util.isZero;
-import geometries.Plane;
-import primitives.Point;
-import primitives.Vector;
-
-
 import primitives.*;
+
 /**
  * Test program for the 1st stage
  * 
@@ -22,7 +18,7 @@ public final class Main {
 	 * @param args irrelevant here
 	 */
 	public static void main(String[] args) {
-	
+
 		Point p1 = new Point(1, 2, 3);
 		Point p2 = new Point(2, 4, 6);
 		Point p3 = new Point(2, 4, 5);
@@ -31,7 +27,6 @@ public final class Main {
 		Vector v2 = new Vector(-2, -4, -6);
 		Vector v3 = new Vector(0, 3, -2);
 		Vector v4 = new Vector(1, 2, 2);
-		Plane pyug=new Plane(p1,p2,p3);
 
 		// test zero vector =====================================================
 		try {
