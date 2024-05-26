@@ -10,10 +10,9 @@ import primitives.*;
 public interface Geometry {
 	/**
 	 * Calculation of a vector of unit length perpendicular to the surface at point
-	 * p
 	 * 
 	 * @param p The point on the surface at which the vector will be perpendicular.
-	 * @return A vector perpendicular to the surface of unit length
+	 * @return a vector perpendicular to the surface of unit length
 	 */
 	public Vector getNormal(Point p);
 }
