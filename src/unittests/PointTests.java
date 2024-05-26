@@ -18,14 +18,12 @@ public class PointTests {
 
 	Vector v1 = new Vector(1, 2, 3);
 	Vector v1Opposite = new Vector(-1, -2, -3);
-	//Vector v2 = new Vector(-2, -4, -6);
-	//Vector v3 = new Vector(0, 3, -2);
-	//Vector v4 = new Vector(1, 2, 2);
-
+	
+	// ============ Equivalence Partitions Tests ==============
+	
 	/**
 	 * Test method for {@link primitives.Point#add(primitives.Vector)}.
 	 */
-
 	@Test
 	void testAdd() {
 		// TC01: test Adding a vector to a point if it returns the right result

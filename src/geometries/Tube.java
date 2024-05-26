@@ -17,7 +17,7 @@ public class Tube extends RadialGeometry {
 	final protected Ray axis;
 
 	/**
-	 * A constructor that initializes the tube with radius and ray
+	 * A constructor that initializes the tube with a ray and a radius 
 	 * 
 	 * @param ray      - represents the direction of the cylinder
 	 * @param radius - determines the width of the cylinder
@@ -31,7 +31,10 @@ public class Tube extends RadialGeometry {
 	public Vector getNormal(Point p) {
 		Vector v=axis.getDirection();
 		Point p0=axis.getHead();
+		//a dot product between the direction vector and p-p0
+		//calculates the length between the head of the axis to the center of the tube
 		double t=v.dotProduct(p.subtract(p0));
-		return p.subtract(p0.add(v.scale(t))).normalize();
+		//subtract the edge of the tube from its center
+		return p.subtract(p0.add(v.scale(t))).normalize();//p-(p0+v*t)
 	}
 }

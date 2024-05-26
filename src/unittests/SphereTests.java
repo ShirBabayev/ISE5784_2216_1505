@@ -22,10 +22,13 @@ class SphereTests {
 	 */
 	@Test
 	void testGetNormal() {
-		Sphere sphere=new Sphere(new Point(1,1,1),2);
 		// ============ Equivalence Partitions Tests ==============
+		// TC01: Check getNormal validity
+		Sphere sphere=new Sphere(new Point(1,1,1),2);
+		
+		 /* check whether the normal to the sphere returns the wanted result, if not -
+		 * throw an exception */
 		assertEquals(new Vector(1,0,0), sphere.getNormal(new Point(3,1,1)), "ERROR: sphere getNormal(Point) returns wrong value");
-		// =============== Boundary Values Tests ==================
 
 			
 	}
