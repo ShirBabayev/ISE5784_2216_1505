@@ -10,8 +10,13 @@ import primitives.*;
  */
 public class Plane implements Geometry {
 
+	/**
+	 * a point on the plane
+	 */
 	final private Point q;
-
+	/**
+	 * a normal to the plane
+	 */
 	final private Vector normal;
 
 	/**

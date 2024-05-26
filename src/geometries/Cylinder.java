@@ -9,7 +9,9 @@ import primitives.*;
  * @author Hodaya Avidan and Shir Babayev
  */
 public class Cylinder extends Tube {
-
+	/**
+	 * the height of the cylinder
+	 */
 	final private double height;
 
 	/**

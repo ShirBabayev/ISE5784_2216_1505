@@ -9,6 +9,9 @@ import primitives.*;
  */
 public class Sphere extends RadialGeometry {
 
+	/**
+	 * the center point of the sphere
+	 */
 	final private Point center;
 
 	/**
