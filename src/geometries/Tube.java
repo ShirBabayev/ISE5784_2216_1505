@@ -11,6 +11,9 @@ import primitives.*;
  */
 public class Tube extends RadialGeometry {
 
+	/**
+	 * Direction of the tube
+	 */
 	final protected Ray axis;
 
 	/**
@@ -26,6 +29,9 @@ public class Tube extends RadialGeometry {
 
 	@Override
 	public Vector getNormal(Point p) {
-		return null;
+		Vector v=axis.getDirection();
+		Point p0=axis.getHead();
+		double t=v.dotProduct(p.subtract(p0));
+		return p.subtract(p0.add(v.scale(t))).normalize();
 	}
 }

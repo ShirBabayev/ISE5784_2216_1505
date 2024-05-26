@@ -17,9 +17,7 @@ import primitives.Vector;
  */
 public class VectorTests {
 
-	/**
-	 * Test method for {@link primitives.Vector#lengthSquared()}.
-	 */
+	
 	private static final Point p1 = new Point(1, 2, 3);
 	private static final Point p2 = new Point(2, 4, 6);
 	private static final Point p3 = new Point(2, 4, 5);
@@ -30,8 +28,12 @@ public class VectorTests {
 	private static final Vector v3 = new Vector(0, 3, -2);
 	private static final Vector v4 = new Vector(1, 2, 2);
 
+	/** Test method for {@link primitives.Vector#Vector(primitives.Point...)}. */
 	@Test
 	void testConstructor() {
+		
+		// =============== Boundary Values Tests ==================
+		/*TC01:*/
 		assertThrows(Exception.class, () -> new Vector(0, 0, 0), "ERROR: zero vector does not throw an exception");
 		assertThrows(IllegalArgumentException.class, () -> new Vector(0, 0, 0),
 				"ERROR: zero vector does not throw a correct exception");
@@ -39,9 +41,15 @@ public class VectorTests {
 		assertThrows(IllegalArgumentException.class, () -> new Vector(Double3.ZERO),
 				"ERROR: zero vector does not throw an exception");
 	}
-
+	
+	/**
+	 * Test method for {@link primitives.Vector#lengthSquared()}.
+	 */
 	@Test
 	void testLengthSquared() {
+		
+		// ============ Equivalence Partitions Tests ==============
+		
 		assertEquals(v4.lengthSquared(), 9, "ERROR: lengthSquared() wrong value");
 	}
 

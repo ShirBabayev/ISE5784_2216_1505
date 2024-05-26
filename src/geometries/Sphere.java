@@ -15,16 +15,16 @@ public class Sphere extends RadialGeometry {
 	 * A constructor that initializes the center point and the radius of the sphere
 	 * 
 	 * @param p   - center point
-	 * @param rad - radius
+	 * @param radius - radius
 	 */
-	public Sphere(Point p, double rad) {
-		super(rad);
+	public Sphere(Point p, double radius) {
+		super(radius);
 		center = p;
 	}
 
 	@Override
 	public Vector getNormal(Point p) {
-		return null;
+		return p.subtract(center).normalize();
 	}
 
 }
