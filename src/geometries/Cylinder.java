@@ -29,16 +29,17 @@ public class Cylinder extends Tube {
 	@Override
 	public Vector getNormal(Point p) {
 		Plane plane = new Plane(_ray.getPoint(), _ray.getVector());
-    Vector v1 = _ray.getPoint().subtract(p);
-    if((v1.dotProduct(_ray.getVector()))==0) //the vectors are orthogonal
-        return (_ray.getVector().scale(-1)).normalize();
-    Point3D p1 = _ray.getPoint().add(_ray.getVector().normalized().scale(_height));
-    v1 = p1.subtract(p);
-    if((v1.dotProduct(_ray.getVector()))==0) //the vectors are orthogonal
-        return (_ray.getVector()).normalize();
-    Vector v = p.subtract((_ray.getPoint()));
-    double t = _ray.getVector().dotProduct(v);
-    Point3D o = _ray.getPoint().add(_ray.getVector().scale(t));
-    Vector n = (p.subtract(o)).normalize();
-    return n;
-}}
+		Vector v1 = _ray.getPoint().subtract(p);
+		if ((v1.dotProduct(_ray.getVector())) == 0) // the vectors are orthogonal
+			return (_ray.getVector().scale(-1)).normalize();
+		Point3D p1 = _ray.getPoint().add(_ray.getVector().normalized().scale(_height));
+		v1 = p1.subtract(p);
+		if ((v1.dotProduct(_ray.getVector())) == 0) // the vectors are orthogonal
+			return (_ray.getVector()).normalize();
+		Vector v = p.subtract((_ray.getPoint()));
+		double t = _ray.getVector().dotProduct(v);
+		Point3D o = _ray.getPoint().add(_ray.getVector().scale(t));
+		Vector n = (p.subtract(o)).normalize();
+		return n;
+	}
+}
