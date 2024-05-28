@@ -28,18 +28,20 @@ public class Cylinder extends Tube {
 
 	@Override
 	public Vector getNormal(Point p) {
-		Plane plane = new Plane(_ray.getPoint(), _ray.getVector());
-		Vector v1 = _ray.getPoint().subtract(p);
-		if ((v1.dotProduct(_ray.getVector())) == 0) // the vectors are orthogonal
-			return (_ray.getVector().scale(-1)).normalize();
-		Point3D p1 = _ray.getPoint().add(_ray.getVector().normalized().scale(_height));
-		v1 = p1.subtract(p);
-		if ((v1.dotProduct(_ray.getVector())) == 0) // the vectors are orthogonal
-			return (_ray.getVector()).normalize();
-		Vector v = p.subtract((_ray.getPoint()));
-		double t = _ray.getVector().dotProduct(v);
-		Point3D o = _ray.getPoint().add(_ray.getVector().scale(t));
-		Vector n = (p.subtract(o)).normalize();
-		return n;
+		Point edge1=axis.getHead();
+		Vector direction=axis.getDirection();
+		//Plane plane = new Plane(head, direction);
+		Vector v1 = edge1.subtract(p);
+		if ((v1.dotProduct(direction)) == 0) // the vectors are orthogonal - p is on the cylinder edge
+			return (direction.scale(-1)).normalize();//the opposite direction - normalized
+		Point edge2 = edge1.add(direction.normalize().scale(height));//the end of the cylinder
+		v1 = edge2.subtract(p);
+		if ((v1.dotProduct(direction)) == 0) // the vectors are orthogonal
+			return (direction).normalize();
+		Vector v = p.subtract((edge1));//a vector from the first edge to p
+		double t = direction.dotProduct(v);//the projection of vector v to the axis direction
+		Point o = edge1.add(direction.scale(t));// the closet point to p on the cylinder 
+		return (p.subtract(o)).normalize();//the vector between o to p -> normalized
+		
 	}
 }
