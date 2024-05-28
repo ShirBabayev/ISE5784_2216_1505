@@ -9,11 +9,11 @@ package primitives;
 public class Ray {
 
 	/**
-	 * 	the direction of the ray
+	 * the direction of the ray
 	 */
 	private final Vector direction;
 	/**
-	 * 	the head of the ray
+	 * the head of the ray
 	 */
 	private final Point head;
 

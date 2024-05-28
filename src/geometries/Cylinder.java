@@ -1,6 +1,7 @@
 package geometries;
 
 import primitives.*;
+import static primitives.Util.*;
 
 /**
  * A class that represents a finite cylinder by an infinite cylinder and a
@@ -17,7 +18,7 @@ public class Cylinder extends Tube {
 	/**
 	 * A constructor that initializes the cylinder ray, radius and height
 	 * 
-	 * @param r      - direction of the cylinder
+	 * @param ray    - direction of the cylinder
 	 * @param radius - width of the cylinder
 	 * @param h      - length of the cylinder
 	 */
@@ -28,20 +29,22 @@ public class Cylinder extends Tube {
 
 	@Override
 	public Vector getNormal(Point p) {
-		Point edge1=axis.getHead();
-		Vector direction=axis.getDirection();
-		//Plane plane = new Plane(head, direction);
-		Vector v1 = edge1.subtract(p);
-		if ((v1.dotProduct(direction)) == 0) // the vectors are orthogonal - p is on the cylinder edge
-			return (direction.scale(-1)).normalize();//the opposite direction - normalized
-		Point edge2 = edge1.add(direction.normalize().scale(height));//the end of the cylinder
-		v1 = edge2.subtract(p);
-		if ((v1.dotProduct(direction)) == 0) // the vectors are orthogonal
-			return (direction).normalize();
-		Vector v = p.subtract((edge1));//a vector from the first edge to p
-		double t = direction.dotProduct(v);//the projection of vector v to the axis direction
-		Point o = edge1.add(direction.scale(t));// the closet point to p on the cylinder 
-		return (p.subtract(o)).normalize();//the vector between o to p -> normalized
-		
+		Point edge1 = axis.getHead();
+		Vector direction = axis.getDirection();
+
+		if (p.equals(edge1))
+			return direction.scale(-1);
+		Vector v = p.subtract((edge1));
+
+		double t = v.dotProduct(direction);
+		if (isZero(t)) // lower base
+			return direction.scale(-1);
+		if (isZero(t - height)) // upper base
+			return direction;
+
+		// the closet point to p on the axis of the cylinder
+		Point o = edge1.add(direction.scale(t));
+		// the vector between o to p -> normalized
+		return (p.subtract(o)).normalize();
 	}
 }

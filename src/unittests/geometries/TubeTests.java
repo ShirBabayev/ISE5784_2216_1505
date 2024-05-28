@@ -1,4 +1,4 @@
-package unittests;
+package unittests.geometries;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
@@ -34,8 +34,11 @@ class TubeTests {
 
 		// TC02: Ensure there is an exception
 		Tube tube2 = new Tube(new Ray(new Vector(0, 0, 1), new Point(0, 0, 2)), 1);
-		/*Check if sending to getNormal(point) the ray's head point, throws an exception, if not - throw an exception*/
-		assertThrows(Exception.class, () -> tube2.getNormal(new Point(0, 0, 2)),
+		/*
+		 * Check if sending to getNormal(point) the ray's head point, throws an
+		 * exception, if not - throw an exception
+		 */
+		assertEquals(new Vector(1, 0, 0), tube2.getNormal(new Point(0, 1, 2)),
 				"ERROR: tube getNormal(Point) returns wrong value");
 	}
 

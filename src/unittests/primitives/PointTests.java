@@ -1,4 +1,4 @@
-package unittests;
+package unittests.primitives;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
@@ -105,8 +105,6 @@ public class PointTests {
 		// TC32: test that when squared distance between points is wrong it returns the
 		// right result between points is wrong");
 		assertEquals(9, p1.distanceSquared(p3), DELTA, "ERROR: squared distance between points is wrong");
-		// TC33: test that when squared distance between points is wrong it returns the
-		// right result between points is wrong");
 		assertEquals(9, p3.distanceSquared(p1), DELTA, "ERROR: squared distance between points is wrong");
 	}
 

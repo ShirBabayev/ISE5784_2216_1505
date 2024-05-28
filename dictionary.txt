@@ -3,3 +3,5 @@ hodaya
 avidan
 shir
 babayev
+concave
+quadrangular

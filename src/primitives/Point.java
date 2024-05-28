@@ -92,8 +92,8 @@ public class Point {
 		// Calculating the squared distance between 2 points according to the algebraic
 		// formula for calculating the squared distance
 		double dx = xyz.d1 - p.xyz.d1;
-		double dy=xyz.d2 - p.xyz.d2;
-		double dz=xyz.d3 - p.xyz.d3;
-		return dx*dx + dy*dy + dz*dz;
+		double dy = xyz.d2 - p.xyz.d2;
+		double dz = xyz.d3 - p.xyz.d3;
+		return dx * dx + dy * dy + dz * dz;
 	}
 }

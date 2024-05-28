@@ -1,4 +1,4 @@
-package unittests;
+package unittests.primitives;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -180,8 +180,8 @@ public class VectorTests {
 				"ERROR: crossProduct() for parallel vectors does not throw an exception");
 		Vector vr = v1.crossProduct(v3);
 		/*
-		 * TC19: Checks that the vector product takes into account the 90C angle
-		 * between the orthogonal vectors
+		 * TC19: Checks that the vector product takes into account the 90C angle between
+		 * the orthogonal vectors
 		 */
 		assertEquals(vr.length(), v1.length() * v3.length(), DELTA,
 				"ERROR: crossProduct() returns wrong result length");

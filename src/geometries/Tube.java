@@ -1,6 +1,7 @@
 package geometries;
 
 import primitives.*;
+import static primitives.Util.*;
 
 /**
  * A class that represents an infinite cylinder by a radius that determines the
@@ -33,8 +34,12 @@ public class Tube extends RadialGeometry {
 		Point p0 = axis.getHead();
 		// a dot product between the direction vector and p-p0
 		// calculates the length between the head of the axis to the center of the tube
-		double t = v.dotProduct(p.subtract(p0));//v*(p-p0)
+		double t = v.dotProduct(p.subtract(p0));// v*(p-p0)
+		
+		// Calculate projection of the point P on the axis
+		Point o = isZero(t) ? p0 : p0.add(v.scale(t));
+
 		// subtract the edge of the tube from its center
-		return p.subtract(p0.add(v.scale(t))).normalize();// p-(p0+v*t)
+		return p.subtract(o).normalize();// p-(p0+v*t)
 	}
 }

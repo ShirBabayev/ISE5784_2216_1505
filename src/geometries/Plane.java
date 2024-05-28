@@ -13,6 +13,7 @@ public class Plane implements Geometry {
 	/**
 	 * a point on the plane
 	 */
+	@SuppressWarnings("unused") // TODO remove it after q will be used
 	final private Point q;
 	/**
 	 * a normal to the plane
@@ -26,6 +27,7 @@ public class Plane implements Geometry {
 	 * @param p1 first double point
 	 * @param p2 second double point
 	 * @param p3 third double point
+	 * @throws IllegalArgumentException if some of points are convergent or the points are co-linear
 	 */
 	public Plane(Point p1, Point p2, Point p3) {
 		normal = ((p2.subtract(p1)).crossProduct(p3.subtract(p1))).normalize();

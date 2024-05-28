@@ -1,4 +1,4 @@
-package unittests;
+package unittests.geometries;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
@@ -14,7 +14,8 @@ import geometries.Plane;
 class PlaneTests {
 
 	/** a set of points for the tests */
-	private static final Point[] pts = { new Point(0, 0, 1), new Point(1, 0, 0), new Point(0, 1, 0), new Point(-1, 1, 1) };
+	private static final Point[] pts = { new Point(0, 0, 1), new Point(1, 0, 0), new Point(0, 1, 0),
+			new Point(-1, 1, 1) };
 	/** a plane for the tests */
 	private static final Plane plane1 = new Plane(pts[0], pts[1], pts[2]);
 	/** a numeric result for several tests */
