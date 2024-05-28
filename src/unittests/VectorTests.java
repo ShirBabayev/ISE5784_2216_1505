@@ -180,10 +180,10 @@ public class VectorTests {
 				"ERROR: crossProduct() for parallel vectors does not throw an exception");
 		Vector vr = v1.crossProduct(v3);
 		/*
-		 * TC19: Checks that the vector product takes into account the right angle
+		 * TC19: Checks that the vector product takes into account the 90C angle
 		 * between the orthogonal vectors
 		 */
-		assertNotEquals(vr.length(), v1.length() * v3.length(), DELTA,
+		assertEquals(vr.length(), v1.length() * v3.length(), DELTA,
 				"ERROR: crossProduct() returns wrong result length");
 		/* TC20: Checks whether a dot product of 2 orthogonal vectors returns 0 */
 		assertEquals(0, vr.dotProduct(v3), DELTA, "ERROR: crossProduct() result is not orthogonal to its operands");
