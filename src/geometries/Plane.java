@@ -27,9 +27,19 @@ public class Plane implements Geometry {
 	 * @param p1 first double point
 	 * @param p2 second double point
 	 * @param p3 third double point
-	 * @throws IllegalArgumentException if some of points are convergent or the points are co-linear
+	 * @throws IllegalArgumentException if some of points are convergent or the
+	 *                                  points are co-linear
 	 */
 	public Plane(Point p1, Point p2, Point p3) {
+		if (p1 == p2 || p2 == p3 || p3 == p1)
+			throw new IllegalArgumentException("2 points are same");
+		Vector p12 = p1.subtract(p2);
+		Vector p23 = p2.subtract(p3);
+		try {
+			Vector v = p12.crossProduct(p23);
+		} catch (Exception exIgnore) {
+			throw new IllegalArgumentException("3 points on a same line");
+		}
 		normal = ((p2.subtract(p1)).crossProduct(p3.subtract(p1))).normalize();
 		q = p1;
 	}

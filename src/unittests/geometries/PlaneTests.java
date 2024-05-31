@@ -45,6 +45,22 @@ class PlaneTests {
 			 */
 			assertEquals(0d, result.dotProduct(pts[i].subtract(pts[i == 0 ? 3 : i - 1])),
 					"Plane's normal is not orthogonal to one of the vectors");
+		/*
+		 * TC04: checks 2 points are same throws exception
+		 */
+		assertThrows(Exception.class, () -> new Plane(pts[0], pts[0], pts[1]),
+				"ERROR: 2 points are same does not throw exception");
+		assertThrows(Exception.class, () -> new Plane(pts[0], pts[1], pts[1]),
+				"ERROR: 2 points are same does not throw exception");
+		assertThrows(Exception.class, () -> new Plane(pts[1], pts[0], pts[1]),
+				"ERROR: 2 points are same does not throw exception");
+
+		/*
+		 * TC05: checks 3 points on a same line throws exception
+		 */
+		assertThrows(Exception.class, () -> new Plane(new Point(1, 2, 3), new Point(2, 3, 4), new Point(3, 4, 5)),
+				"ERROR: 2 points are same does not throw exception");
+
 	}
 
 	/**
@@ -55,13 +71,13 @@ class PlaneTests {
 
 		// ============ Equivalence Partitions Tests ==============
 
-		/* TC04: Checks that the function does indeed return a result */
+		/* TC06: Checks that the function does indeed return a result */
 		assertDoesNotThrow(() -> plane1.getNormal(pts[0]), "ERROR: normal of the plane does not work");
-		/* TC05: Checks that the function returns a correct result */
+		/* TC07: Checks that the function returns a correct result */
 		assertEquals(new Vector(d, d, d), plane1.getNormal(pts[0]),
 				"ERROR: normal of the plane does not work correctly");
 		/*
-		 * TC06: Checks that the normal is indeed orthogonal to the vectors on the plane
+		 * TC08: Checks that the normal is indeed orthogonal to the vectors on the plane
 		 */
 		Vector result = plane1.getNormal(new Point(0, 0, 1));
 		for (int i = 0; i < 3; ++i)

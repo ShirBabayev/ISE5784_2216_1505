@@ -34,6 +34,11 @@ public class Cylinder extends Tube {
 
 		if (p.equals(edge1))
 			return direction.scale(-1);
+		// the end of the cylinder
+		Point edge2 = edge1.add(direction.scale(height));
+		if (p.equals(edge2))
+			return direction;
+
 		Vector v = p.subtract((edge1));
 
 		double t = v.dotProduct(direction);

@@ -35,7 +35,7 @@ public class Tube extends RadialGeometry {
 		// a dot product between the direction vector and p-p0
 		// calculates the length between the head of the axis to the center of the tube
 		double t = v.dotProduct(p.subtract(p0));// v*(p-p0)
-		
+
 		// Calculate projection of the point P on the axis
 		Point o = isZero(t) ? p0 : p0.add(v.scale(t));
 

@@ -35,11 +35,11 @@ class TubeTests {
 		// TC02: Ensure there is an exception
 		Tube tube2 = new Tube(new Ray(new Vector(0, 0, 1), new Point(0, 0, 2)), 1);
 		/*
-		 * Check if sending to getNormal(point) the ray's head point, throws an
-		 * exception, if not - throw an exception
+		 * When connecting the point to the head of the ray of the cylinder axis makes a
+		 * 90 c angle with the axis
 		 */
-		assertEquals(new Vector(1, 0, 0), tube2.getNormal(new Point(0, 1, 2)),
-				"ERROR: tube getNormal(Point) returns wrong value");
+		assertEquals(new Vector(0, 1, 0), tube2.getNormal(new Point(0, 1, 2)),
+				"ERROR: Incorrect value at 90C angle of the radius with the axis");
 	}
 
 }
