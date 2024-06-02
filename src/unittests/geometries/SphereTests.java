@@ -1,4 +1,6 @@
 package unittests.geometries;
+
+import java.util.Comparator;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,10 +18,10 @@ import primitives.*;
  */
 class SphereTests {
 
-	 private final Point p001 = new Point(0, 0, 1);
-	 private final Point p100 = new Point(1, 0, 0);
-	 private final Vector v001 = new Vector(0, 0, 1);
-	 
+	private final Point p001 = new Point(0, 0, 1);
+	private final Point p100 = new Point(1, 0, 0);
+	private final Vector v001 = new Vector(0, 0, 1);
+
 	/**
 	 * Test method for {@link geometries.Sphere#getNormal(primitives.Point)}.
 	 */
@@ -37,7 +39,7 @@ class SphereTests {
 		assertEquals(new Vector(1, 0, 0), sphere.getNormal(new Point(3, 1, 1)),
 				"ERROR: sphere getNormal(Point) returns wrong value");
 	}
-	
+
 	/**
 	 * Test method for {@link geometries.sphere#findIntsersections}.
 	 */
@@ -53,32 +55,41 @@ class SphereTests {
 		 final Vector v110 = new Vector(1, 1, 0);
 		 final Point p01 = new Point(-1, 0, 0);
 		 // ============ Equivalence Partitions Tests ==============
+		 
 		 // TC01: Ray's line is outside the sphere (0 points)
 		 assertNull(sphere.findIntersections(new Ray(v110,p01)), "Ray's line out of sphere");
+		 
 		 // TC02: Ray starts before and crosses the sphere (2 points)
 		 final var result1 = sphere.findIntersections(new Ray(v310,p01))
-		 .stream().sorted(Comparator.comparingDouble(p) -> p.distance(p01)))
-		 .toList();
+				 					.stream()
+				 					.sorted(Comparator.comparingDouble(p -> p.distance(p01)))
+				 					.toList();
 		 assertEquals(2, result1.size(), "Wrong number of points");
 		 assertEquals(exp, result1, "Ray crosses sphere");
+		 
 		 // TC03: Ray starts inside the sphere (1 point)
 		 var l1=List.of(new Point(2,0,0));
 		 assertEquals(l1, sphere.findIntersections(new Ray(new Vector(1,0,0),new Point(1,1.5,0))), "Ray crosses sphere");
 
 		 // TC04: Ray starts after the sphere (0 points)
-		 ...
+		 assertNull(sphere.findIntersections(new Ray(v110,new Point(3,0,0))), "Ray's line out of sphere");
+		 
 		 // =============== Boundary Values Tests ==================
 		 
 		 // **** Group: Ray's line crosses the sphere (but not the center)
 		 
 		 // TC11: Ray starts at sphere and goes inside (1 points)
+		 	assertEquals((Point)v110, sphere.findIntersections(new Ray(v110,new Point(0,0,0))), "Ray starts at sphere and goes inside return wrong value");
+		
 		 // TC12: Ray starts at sphere and goes outside (0 points)
 		 
+		 	assertNull(sphere.findIntersections(new Ray(v110,new Point(1,1,0))), "Ray starts at sphere and goes outside does not return null");
+
 		 // **** Group: Ray's line goes through the center
 		 
 		 // TC13: Ray starts before the sphere (2 points)
 		 var l3=List.of(new Point(2,0,0),new Point(0,0,0));
-		 assertEquals(l3, sphere.findIntersections(new Ray(new Vector(3,0,0),new Point(-1,0,0))), "Ray crosses sphere");
+		 assertEquals(l3, sphere.findIntersections(new Ray(new Vector(3,0,0),new Point(-1,0,0))), "Ray starts before the sphere returns wrong value");
 
 		 // TC14: Ray starts at sphere and goes inside (1 points)
 		 var l2=List.of(new Point(2,0,0));
@@ -98,15 +109,14 @@ class SphereTests {
 		 // TC22: Ray's line is outside, ray is orthogonal to ray start to sphere's center line
 		 
 		Point q=new Point(0,0,1);
-		Sphere sphere=new Sphere(q,1);
-		var exp=List.of();
-		Point p1=new Point
+		Sphere sphere22=new Sphere(q,1);
+		var exp22=List.of(new Point(1,2,3)); // TODO the point is wrong
 		
 		// =============== Boundary Values Tests ==================
 
 		/*TC01: ray passes through the center point*/
-		assertEquals( exp.add(sphere)d, sphere.findIntsersections(new Ray(new Vector(0,0,2),q)),"ERROR: ray starts on the center point of the sphere");
-		assertEquals(null, sphere.findIntsersections(new Ray(new Vector(0,0,2),new Point(0,0,0))),"ERROR: ray starts on the center point of the sphere");
+		assertEquals( exp22, sphere22.findIntersections(new Ray(new Vector(0,0,2),q)),"ERROR: ray starts on the center point of the sphere");
+		assertEquals(null, sphere22.findIntersections(new Ray(new Vector(0,0,2),new Point(0,0,0))),"ERROR: ray starts on the center point of the sphere");
 
 	}
 
