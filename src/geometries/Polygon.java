@@ -6,6 +6,8 @@ import static primitives.Util.isZero;
 
 import primitives.Point;
 import primitives.Vector;
+import primitives.Ray;
+
 
 /**
  * Polygon class represents two-dimensional polygon in 3D Cartesian coordinate
@@ -85,5 +87,9 @@ public class Polygon implements Geometry {
 	public Vector getNormal(Point point) {
 		return plane.getNormal();
 	}
+	
+	@Override
+	public List<Point> findIntersections(Ray ray){
+		return null; }
 
 }

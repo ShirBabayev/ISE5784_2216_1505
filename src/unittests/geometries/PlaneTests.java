@@ -22,6 +22,31 @@ class PlaneTests {
 	private static final double d = Math.sqrt(3) / 3;
 
 	/**
+	 * Test method for {@link geometries.Plane#constructor()}.
+	 */
+	@Test
+	void testConstructor() {
+		
+		// =============== Boundary Values Tests ==================
+
+		/*
+		 * TC01: checks 2 points are same throws exception
+		 */
+		assertThrows(Exception.class, () -> new Plane(pts[0], pts[0], pts[1]),
+				"ERROR: 2 points are same does not throw exception");
+		assertThrows(Exception.class, () -> new Plane(pts[0], pts[1], pts[1]),
+				"ERROR: 2 points are same does not throw exception");
+		assertThrows(Exception.class, () -> new Plane(pts[1], pts[0], pts[1]),
+				"ERROR: 2 points are same does not throw exception");
+
+		/*
+		 * TC02: checks 3 points on a same line throws exception - 
+		 */
+		assertThrows(Exception.class, () -> new Plane(new Point(1, 2, 3), new Point(2, 3, 4), new Point(3, 4, 5)),
+				"ERROR: 2 points are same does not throw exception");
+
+	}
+	/**
 	 * Test method for {@link geometries.Plane#getNormal()}.
 	 */
 	@Test
@@ -29,12 +54,12 @@ class PlaneTests {
 
 		// ============ Equivalence Partitions Tests ==============
 
-		/* TC01: Checks that the function returns a result */
+		/* TC03: Checks that the function returns a result */
 		assertDoesNotThrow(() -> plane1.getNormal(), "ERROR: normal of the plane does not work");
-		/* TC02: Checks that the function returns a correct result */
+		/* TC04: Checks that the function returns a correct result */
 		assertEquals(new Vector(d, d, d), plane1.getNormal(), "ERROR: normal of the plane does not work correctly");
 		/*
-		 * TC03: Checks that the normal is indeed perpendicular to the vectors on the
+		 * TC05: Checks that the normal is indeed perpendicular to the vectors on the
 		 * plane
 		 */
 		Vector result = plane1.getNormal();
@@ -45,22 +70,7 @@ class PlaneTests {
 			 */
 			assertEquals(0d, result.dotProduct(pts[i].subtract(pts[i == 0 ? 3 : i - 1])),
 					"Plane's normal is not orthogonal to one of the vectors");
-		/*
-		 * TC04: checks 2 points are same throws exception
-		 */
-		assertThrows(Exception.class, () -> new Plane(pts[0], pts[0], pts[1]),
-				"ERROR: 2 points are same does not throw exception");
-		assertThrows(Exception.class, () -> new Plane(pts[0], pts[1], pts[1]),
-				"ERROR: 2 points are same does not throw exception");
-		assertThrows(Exception.class, () -> new Plane(pts[1], pts[0], pts[1]),
-				"ERROR: 2 points are same does not throw exception");
-
-		/*
-		 * TC05: checks 3 points on a same line throws exception
-		 */
-		assertThrows(Exception.class, () -> new Plane(new Point(1, 2, 3), new Point(2, 3, 4), new Point(3, 4, 5)),
-				"ERROR: 2 points are same does not throw exception");
-
+		
 	}
 
 	/**
@@ -87,6 +97,14 @@ class PlaneTests {
 			 */
 			assertEquals(0d, result.dotProduct(pts[i].subtract(pts[i == 0 ? 3 : i - 1])),
 					"Plane's normal is not orthogonal to one of the edges");
+	}
+	
+	/**
+	 * Test method for {@link geometries.plane#findIntsersections}.
+	 */
+	@Test 
+	void testFindIntsersections(){
+		
 	}
 
 }

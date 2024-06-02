@@ -1,5 +1,5 @@
 package geometries;
-
+import java.util.List;
 import primitives.*;
 import static primitives.Util.*;
 
@@ -42,4 +42,8 @@ public class Tube extends RadialGeometry {
 		// subtract the edge of the tube from its center
 		return p.subtract(o).normalize();// p-(p0+v*t)
 	}
+	
+	@Override
+	public List<Point> findIntersections(Ray ray){
+		return null; }
 }

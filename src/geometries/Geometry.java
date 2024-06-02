@@ -7,7 +7,7 @@ import primitives.*;
  * 
  * @author Hodaya Avidan and Shir Babayev
  */
-public interface Geometry {
+public interface Geometry extends Intersectable {
 	/**
 	 * Calculation of a vector of unit length perpendicular to the surface at point
 	 * 

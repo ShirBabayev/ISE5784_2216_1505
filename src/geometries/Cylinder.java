@@ -1,5 +1,5 @@
 package geometries;
-
+import java.util.List;
 import primitives.*;
 import static primitives.Util.*;
 
@@ -52,4 +52,8 @@ public class Cylinder extends Tube {
 		// the vector between o to p -> normalized
 		return (p.subtract(o)).normalize();
 	}
+	
+	@Override
+	public List<Point> findIntersections(Ray ray){
+		return null; }
 }
