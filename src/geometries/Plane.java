@@ -32,9 +32,9 @@ public class Plane implements Geometry {
 	 *                                  points are co-linear
 	 */
 	public Plane(Point p1, Point p2, Point p3) {
-		if (p1 == p2 || p2 == p3 || p3 == p1)
+		/*if (p1 == p2 || p2 == p3 || p3 == p1)
 			throw new IllegalArgumentException("2 points are same");
-		/*Vector p12 = p1.subtract(p2);
+		Vector p12 = p1.subtract(p2);
 		Vector p23 = p2.subtract(p3);
 		try {
 			Vector v = p12.crossProduct(p23);
@@ -74,6 +74,16 @@ public class Plane implements Geometry {
 	
 	@Override
 	public List<Point> findIntersections(Ray ray){
-		return null; }
+		try {
+		double t=normal.dotProduct(q.subtract(ray.getHead()))/(normal.dotProduct(ray.getDirection()));
+		if(t<0||Util.isZero(t)==true)
+			return null;
+		return List.of(ray.getHead().add(ray.getDirection().scale(t))); 
+		}
+		catch(Exception ex) {
+			return null;
+		}
+		
+	 }
 
 }

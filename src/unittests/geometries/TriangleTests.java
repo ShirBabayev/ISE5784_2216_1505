@@ -4,10 +4,12 @@ import geometries.Triangle;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
 import primitives.Point;
-
+import primitives.Ray;
 import primitives.Vector;
 
 /**
@@ -51,7 +53,31 @@ class TriangleTests {
 	 */
 	@Test 
 	void testFindIntsersections(){
+		Point[] pts = { new Point(0, 0, 1), new Point(1, 0, 0), new Point(-1, 0, 0) };
+		Triangle triangle = new Triangle(pts[0], pts[1], pts[2]);
+
+		// ============ Equivalence Partitions Tests ==============
+		//TC01: The point is inside the triangle
+		var exp2=List.of(new Point(0,0,0.5)); 
+		assertEquals( exp2, triangle.findIntersections(new Ray(new Vector(0, 1, 0),new Point(0,-1,0.5))),"ray start before the plane returns wrong value ");
 		
+		//TC02: The point is against the edge
+		assertNull( triangle.findIntersections(new Ray(new Vector(1, 0, 0),new Point(-1,0,-1))),"ray start before the plane returns wrong value ");
+
+		//TC03: The point is against the vertex
+		assertNull( triangle.findIntersections(new Ray(new Vector(1,0, 0),new Point(-1,0,2))),"ray start before the plane returns wrong value ");
+
+		
+		// =============== Boundary Values Tests ==================
+		//TC11: The point is on the edge
+		assertNull( triangle.findIntersections(new Ray(new Vector(0, 1, 0),new Point(0,-1,0))),"ray start before the plane returns wrong value ");
+
+		//TC12: The point is on the vertex
+		assertNull( triangle.findIntersections(new Ray(new Vector(0, 0, 1),new Point(-2,0,1))),"ray start before the plane returns wrong value ");
+
+		//TC13: The point is on the continuation of the edge
+		assertNull( triangle.findIntersections(new Ray(new Vector(0, 0, 1),new Point(-2,0,-1))),"ray start before the plane returns wrong value ");
+
 	}
 
 }
