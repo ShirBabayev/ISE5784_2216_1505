@@ -53,6 +53,7 @@ class TriangleTests {
 	 */
 	@Test 
 	void testFindIntsersections(){
+		/**a vertex point for the tests*/
 		Point[] pts = { new Point(0, 0, 1), new Point(1, 0, 0), new Point(-1, 0, 0) };
 		Triangle triangle = new Triangle(pts[0], pts[1], pts[2]);
 

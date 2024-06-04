@@ -38,7 +38,7 @@ public class Sphere extends RadialGeometry {
 		if(ray.getHead().equals(center))
         {
 	        List<Point> intersections = new LinkedList<Point>();
-            intersections.add(center.add(ray.getDirection().scale(radius)));
+            intersections.add(ray.getPoint(radius));
             return intersections;
         }
 
@@ -55,10 +55,11 @@ public class Sphere extends RadialGeometry {
             return null;
         List<Point> intersections = new LinkedList<Point>();
         if (t1>0)
-        	intersections.add(ray.getHead().add(ray.getDirection().scale(t1)));
+        	intersections.add(ray.getPoint(t1));
         if (t2>0 && t2!=t1)
-            intersections.add(ray.getHead().add(ray.getDirection().scale(t2)));
+            intersections.add(ray.getPoint(t2));
         //sort the intersections points according to the closeness to the head point of the ray
+
         return intersections.stream().sorted(Comparator.comparingDouble(p -> p.distance(ray.getHead())))
         .toList();
 

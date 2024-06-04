@@ -18,29 +18,6 @@ class GeometriesTests {
 	Geometries g1 =new Geometries();
 	Geometries g2 =new Geometries();
 	List<Point> result;
-
-	/**
-	 * {@link geometries.Geometries#Geometries()}
-	 */
-	@Test
-	void testGeometries() {
-		
-	}
-
-	/**
-	 * {@link geometries.Geometries#Geometries(geometries.Intersectable...)}
-	 */
-	@Test
-	void testGeometriesIntersectableArray() {
-		
-	}
-
-	/**
-	 * {@link geometries.Geometries#add(geometries.Intersectable...)}
-	 */
-	@Test
-	void testAdd() {
-	}
 	
 	/**
 	 * {@link geometries.Geometries#findIntersections(primitives.Ray)}
@@ -61,9 +38,8 @@ class GeometriesTests {
 		assertNull(g1.findIntersections(new Ray(new Vector(1,0,0), new Point(0,0,0))), "ERROR: The intersection returns wrong value");
 			
 		//TC03: There are intersection points with only one body
-		g2.add(new Sphere(new Point(2,2,2),1), new Sphere(new Point(1,0,0),1));
-		assertEquals(1,g2.findIntersections(new Ray(new Vector(2,1.5,0),new Point(0,0,2))).size(), "ERROR: he intersection with only one body returns wrong value");
-		
+		g2.add(new Sphere(new Point(1,0,0),1), new Sphere(new Point(10,0,0),1));
+		assertEquals(2,g2.findIntersections(new Ray(new Vector(0,0,1),new Point(1,0,-2))).size(), "ERROR: he intersection with only one body returns wrong value");
 		
 		//TC04: There are intersections with all the geometries
  		assertEquals(4, (g2.findIntersections(new Ray(new Vector(1,0,0),new Point(-1,0,0))).size()), "ERROR: the intersection with all bodies returns wrong value");

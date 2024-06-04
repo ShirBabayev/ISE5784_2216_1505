@@ -111,13 +111,11 @@ class PlaneTests {
 	@Test 
 	void testFindIntsersections(){
 		
-		Vector v=new Vector(0,3,0);
+		final Vector v=new Vector(0,3,0);
 		// ============ Equivalence Partitions Tests ==============
 
 		//TC01: The ray intersects the plane
 		var exp1=List.of(new Point(0.5,0.5,0));
-		System.out.print(exp1);
-
 		assertEquals(exp1, plane1.findIntersections(new Ray(new Vector(1,1,0),Point.ZERO)),"The ray intersects the plane returns wrong value");
 		//TC02: The ray does not intersect the plane
 		assertNull( plane1.findIntersections(new Ray(new Vector(1,1,0),new Point(1,1,2))),"parallel ray to plane does not return null ");
@@ -134,7 +132,6 @@ class PlaneTests {
 		//TC13: ray start before the plane and intersect it
 		double d1=0.33333333333335;
 		var exp2=List.of(new Point(d1,d1,d1)); 
-		System.out.print(exp2);
 		assertEquals( exp2, plane1.findIntersections(new Ray(new Vector(d, d, d),new Point(0,0,0))), "ray start before the plane returns wrong value ");
 		//TC14: ray start inside the plane
 		assertNull( plane1.findIntersections(new Ray(v1,pts[0])),"ray start inside the plane does not return null ");

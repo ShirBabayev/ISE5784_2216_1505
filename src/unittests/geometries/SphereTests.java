@@ -48,7 +48,7 @@ class SphereTests {
 	void testFindIntsersections(){
 		
 
-		 Sphere sphere = new Sphere(p100, 1);
+		 final Sphere sphere = new Sphere(p100, 1);
 		 final Point gp1 = new Point(0.0651530771650466, 0.355051025721682, 0);
 		 final Point gp2 = new Point(1.53484692283495, 0.844948974278318, 0);
 		 final var exp = List.of(gp1, gp2);
@@ -118,19 +118,6 @@ class SphereTests {
 		 // **** Group: Special cases
 		 // TC22: Ray's line is outside, ray is orthogonal to ray start to sphere's center line
 		 		assertNull(sphere.findIntersections(new Ray(new Vector(0,0,1),new Point(3,0,0))), "Ray's line is outside, ray is orthogonal to ray start to sphere's center line, does not return null");
-		
-		 		
-		/*Point q=new Point(0,0,1);
-		Sphere sphere22=new Sphere(q,1);
-		var exp22=List.of(new Point(0,0,2));
-		
-		
-		// =============== Boundary Values Tests ==================
-
-		//TC01: ray passes through the center point
-		assertEquals( exp22, sphere22.findIntersections(new Ray(new Vector(0,0,2),q)),"ERROR: ray starts on the center point of the sphere");
-		assertEquals(null, sphere22.findIntersections(new Ray(new Vector(0,0,2),new Point(0,0,0))),"ERROR: ray starts on the center point of the sphere");
-		*/
 		
 	}
 

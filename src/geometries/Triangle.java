@@ -52,8 +52,6 @@ public class Triangle extends Polygon {
 
 		if ((result1 > 0 && result2 > 0 && result3 > 0) || (result1 < 0 && result2 < 0 && result3 < 0)) {
 			List<Point> intersections = plane.findIntersections(ray);
-			// for (Point p : intersections) {
-			// p.geometry = this; }
 			return intersections;
 		} 
 		else {

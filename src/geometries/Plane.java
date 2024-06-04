@@ -32,15 +32,6 @@ public class Plane implements Geometry {
 	 *                                  points are co-linear
 	 */
 	public Plane(Point p1, Point p2, Point p3) {
-		/*if (p1 == p2 || p2 == p3 || p3 == p1)
-			throw new IllegalArgumentException("2 points are same");
-		Vector p12 = p1.subtract(p2);
-		Vector p23 = p2.subtract(p3);
-		try {
-			Vector v = p12.crossProduct(p23);
-		} catch (Exception exIgnore) {
-			throw new IllegalArgumentException("3 points on a same line");
-		}*/
 		normal = ((p2.subtract(p1)).crossProduct(p3.subtract(p1))).normalize();
 		q = p1;
 	}
@@ -75,11 +66,15 @@ public class Plane implements Geometry {
 	@Override
 	public List<Point> findIntersections(Ray ray){
 		try {
+		//@param t is the number of times the ray must be multiplied for it to cut the geometric body	
 		double t=normal.dotProduct(q.subtract(ray.getHead()))/(normal.dotProduct(ray.getDirection()));
+		//The body is in the opposite direction from the ray or there is no point of intersection
 		if(t<0||Util.isZero(t)==true)
 			return null;
-		return List.of(ray.getHead().add(ray.getDirection().scale(t))); 
+		//else:
+		return List.of(ray.getPoint(t)); 
 		}
+		//In case an exception was thrown from trying to create the 0 vector
 		catch(Exception ex) {
 			return null;
 		}

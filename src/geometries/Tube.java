@@ -38,7 +38,7 @@ public class Tube extends RadialGeometry {
 		double t = v.dotProduct(p.subtract(p0));// v*(p-p0)
 
 		// Calculate projection of the point P on the axis
-		Point o = isZero(t) ? p0 : p0.add(v.scale(t));
+		Point o = isZero(t) ? p0 : axis.getPoint(t);
 
 		// subtract the edge of the tube from its center
 		return p.subtract(o).normalize();// p-(p0+v*t)
