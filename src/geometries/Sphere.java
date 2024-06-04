@@ -58,6 +58,7 @@ public class Sphere extends RadialGeometry {
         	intersections.add(ray.getHead().add(ray.getDirection().scale(t1)));
         if (t2>0 && t2!=t1)
             intersections.add(ray.getHead().add(ray.getDirection().scale(t2)));
+        //sort the intersections points according to the closeness to the head point of the ray
         return intersections.stream().sorted(Comparator.comparingDouble(p -> p.distance(ray.getHead())))
         .toList();
 
