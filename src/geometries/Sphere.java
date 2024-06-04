@@ -1,7 +1,9 @@
 package geometries;
 import java.util.List;
+import java.util.*;
 
 import primitives.*;
+import primitives.Vector;
 
 /**
  * A class that represents a sphere by a point and a radius
@@ -33,6 +35,31 @@ public class Sphere extends RadialGeometry {
 	
 	@Override
 	public List<Point> findIntersections(Ray ray){
-		return null; }
+        List<Point> intersections = new LinkedList<Point>();
+		if(ray.getHead().equals(center))
+        {
+            intersections.add(center.add(ray.getDirection().scale(radius)));
+            return intersections;
+        }
+
+        Vector u= center.subtract(ray.getHead()); //a vector from the head of the ray to the center of the sphere
+        double tm = ray.getDirection().dotProduct(u);// tm = v*u
+        double d = Math.sqrt(u.lengthSquared()-tm*tm);//d=sqrt(|u|^2-tm^2
+        if(d>=radius)
+            return null;
+        double th = Math.sqrt(radius*radius - d*d);
+        double t1 = tm + th;
+        double t2 = tm - th;
+
+        if(t1<=0 && t2 <=0)
+            return null;
+        //List<Point> intersections = new LinkedList<Point>();
+        if (t1>0)
+        	intersections.add(ray.getHead().add(ray.getDirection().scale(t1)));
+        if (t2>0 && t2!=t1)
+            intersections.add(ray.getHead().add(ray.getDirection().scale(t2)));
+        return intersections;
+    }
+
 
 }

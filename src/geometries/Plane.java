@@ -51,7 +51,7 @@ public class Plane implements Geometry {
 	 * parameter
 	 * 
 	 * @param p - point in the plane
-	 * @param v - A vector perpendicular to the surface
+	 * @param v - A vector vertical to the surface
 	 */
 	public Plane(Point p, Vector v) {
 		q = p;

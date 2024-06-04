@@ -88,8 +88,40 @@ public class Polygon implements Geometry {
 		return plane.getNormal();
 	}
 	
-	@Override
-	public List<Point> findIntersections(Ray ray){
-		return null; }
+	 @Override
+	    public List<Point> findIntersections(Ray ray) {
+	        Plane plane = new Plane(this.vertices.get(0), this.vertices.get(1), this.vertices.get(2));
+	        List<Point> intersections = plane.findIntersections(ray);
+	        if(intersections == null)
+	            return null;
+	        if(this.vertices.get(0).equals(ray.getHead()) || this.vertices.get(0).equals(intersections.get(0)))
+	            return null;
+	        Vector v = this.vertices.get(0).subtract(ray.getHead());
+	        Vector v1, v2, n;
+	        v1=v;
+	        if(this.vertices.get(1).equals(ray.getHead()) || this.vertices.get(1).equals(intersections.get(0)))
+	            return null;
+	        v2 = this.vertices.get(1).subtract(ray.getHead());
+	        n = v1.crossProduct(v2).normalize();
+	        if(isZero(ray.getDirection().dotProduct(n)))
+	            return null;
+	        double sign = ray.getDirection().dotProduct(n);
+	        v1=v2;
+
+	        for (Point vertex: vertices.subList(2, vertices.size()))
+	        {
+	            if(vertex.equals(ray.getHead()) || vertex.equals(intersections.get(0)))
+	                return null;
+	            v2 = vertex.subtract(ray.getHead());
+	            n = v1.crossProduct(v2).normalize();
+	            if(ray.getDirection().dotProduct(n) * sign < 0 || isZero(ray.getDirection().dotProduct(n)))
+	                return null;
+	            v1=v2;
+	        }
+	        n = v1.crossProduct(v).normalize();
+	        if(ray.getDirection().dotProduct(n) * sign < 0 || isZero(ray.getDirection().dotProduct(n)))
+	            return null;
+	        return intersections;
+	    }
 
 }
