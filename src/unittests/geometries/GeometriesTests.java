@@ -3,19 +3,21 @@ package unittests.geometries;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.LinkedList;
 import java.util.List;
+
 
 import org.junit.jupiter.api.Test;
 
 import primitives.*;
+import primitives.Vector;
 import geometries.*;
 
 class GeometriesTests {
 
-	private List<Intersectable> bodies= new LinkedList<Intersectable>();
+	Geometries g0 =new Geometries();
 	Geometries g1 =new Geometries();
 	Geometries g2 =new Geometries();
+	List<Point> result;
 
 	/**
 	 * {@link geometries.Geometries#Geometries()}
@@ -45,20 +47,35 @@ class GeometriesTests {
 	 */
 	@Test
 	void testFindIntersections() {
-		//there are no bodies in the collection(0 points)
+		
+		
+ 		
+		 // =============== Boundary Values Tests ==================
+		
+		//TC01: There are no bodies in the collection(0 points)
 		assertNull(g1.findIntersections(new Ray(new Vector(1,1,1), new Point(0,0,0))), "ERROR: The result for a collection with no Geometries is not null");
+			
+		//TC02: There are intersection points with only one body
 		g1.add(new Sphere(new Point(2,2,2),1));
 		//There are bodies but no intersection points (0 points)
 		assertNull(g1.findIntersections(new Ray(new Vector(1,0,0), new Point(0,0,0))), "ERROR: The intersection returns wrong value");
-		g2.add(new Sphere(new Point(1,0,0),1));
-		var l1=List.of(new Point(0,0,0),new Point(2,0,0));
-		//There are intersection points with only one body
-		assertEquals(l1, g2.findIntersections(new Ray(new Vector(1,0,0),new Point(-1,0,0))), "ERROR: he intersection with only one body returns wrong value");
-		//There are intersection points with not all of the bodies
-		g2.add(new Sphere(new Point(2,2,2),1));
-		assertEquals(l1, g2.findIntersections(new Ray(new Vector(1,0,0),new Point(-1,0,0))), "ERROR: he intersection with only one body returns wrong value");
+			
+		//TC03: There are intersection points with only one body
+		g2.add(new Sphere(new Point(2,2,2),1), new Sphere(new Point(1,0,0),1));
+		assertEquals(1,g2.findIntersections(new Ray(new Vector(2,1.5,0),new Point(0,0,2))).size(), "ERROR: he intersection with only one body returns wrong value");
 		
-
+		
+		//TC04: There are intersections with all the geometries
+ 		assertEquals(4, (g2.findIntersections(new Ray(new Vector(1,0,0),new Point(-1,0,0))).size()), "ERROR: the intersection with all bodies returns wrong value");
+		
+		// ============ Equivalence Partitions Tests ==============
+ 		
+		//TC05: intersection with some geometries
+ 		g2.add(new Sphere(new Point(2,2,2),1));
+ 		
+ 		//There are intersection points with some bodies but not all of them
+ 		assertEquals(4, (g2.findIntersections(new Ray(new Vector(1,0,0),new Point(-1,0,0))).size()), "ERROR: he intersection with 2 bodies returns wrong value");
+ 		
 
 	
 	

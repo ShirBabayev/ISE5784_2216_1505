@@ -38,6 +38,8 @@ public class Geometries implements Intersectable {
                 l.addAll(intersectionsOfBody);
             }
         }
+        if(l==null)
+        	return null;
         //sort the intersections points according to the closeness to the head point of the ray
         return l.stream().sorted(Comparator.comparingDouble(p -> p.distance(ray.getHead())))
                 .toList();
