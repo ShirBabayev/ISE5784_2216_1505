@@ -22,8 +22,6 @@ public class Geometries implements Intersectable {
 	public void add(Intersectable... geometries) {
 		
 	}
-	
-	
 	public List<Point> findIntersections(Ray ray) {
 		return null;
 	}

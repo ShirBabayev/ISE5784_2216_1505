@@ -88,7 +88,7 @@ class SphereTests {
 
 		 // **** Group: Ray's line goes through the center
 		 // TC13: Ray starts before the sphere (2 points)
-			 var l3=List.of(new Point(2,0,0),new Point(0,0,0));
+			 var l3=List.of(new Point(0,0,0),new Point(2,0,0));
 			 assertEquals(l3, sphere.findIntersections(new Ray(new Vector(1,0,0),new Point(-1,0,0))), "Ray starts before the sphere returns wrong value");
 
 		 // TC14: Ray starts at sphere and goes inside (1 points)

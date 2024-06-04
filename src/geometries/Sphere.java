@@ -35,9 +35,9 @@ public class Sphere extends RadialGeometry {
 	
 	@Override
 	public List<Point> findIntersections(Ray ray){
-        List<Point> intersections = new LinkedList<Point>();
 		if(ray.getHead().equals(center))
         {
+	        List<Point> intersections = new LinkedList<Point>();
             intersections.add(center.add(ray.getDirection().scale(radius)));
             return intersections;
         }
@@ -53,12 +53,14 @@ public class Sphere extends RadialGeometry {
 
         if(t1<=0 && t2 <=0)
             return null;
-        //List<Point> intersections = new LinkedList<Point>();
+        List<Point> intersections = new LinkedList<Point>();
         if (t1>0)
         	intersections.add(ray.getHead().add(ray.getDirection().scale(t1)));
         if (t2>0 && t2!=t1)
             intersections.add(ray.getHead().add(ray.getDirection().scale(t2)));
-        return intersections;
+        return intersections.stream().sorted(Comparator.comparingDouble(p -> p.distance(ray.getHead())))
+        .toList();
+
     }
 
 
