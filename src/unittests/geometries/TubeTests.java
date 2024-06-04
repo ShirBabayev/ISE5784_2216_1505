@@ -46,7 +46,7 @@ class TubeTests {
 	}
 	
 	/**
-	 * Test method for {@link geometries.Tube#findIntsersections}.
+	 * Test method for {@link geometries.Tube#findIntersections(Ray ray)}.
 	 */
 	@Test 
 	void testFindIntsersections(){

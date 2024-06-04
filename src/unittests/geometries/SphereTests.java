@@ -18,6 +18,9 @@ import primitives.*;
  */
 class SphereTests {
 
+	/**
+	 * a point for test
+	 */
 	private final Point p100 = new Point(1, 0, 0);
 
 	/**
@@ -39,7 +42,7 @@ class SphereTests {
 	}
 
 	/**
-	 * Test method for {@link geometries.sphere#findIntsersections}.
+	 * Test method for {@link geometries.Sphere#findIntersections(Ray ray)}.
 	 */
 	@Test 
 	void testFindIntsersections(){

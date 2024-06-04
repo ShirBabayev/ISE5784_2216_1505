@@ -88,7 +88,7 @@ public class PolygonTests {
 	}
 	
 	/**
-	 * Test method for {@link geometries.Polygon#findIntsersections}.
+	 * Test method for {@link geometries.Polygon#findIntersections}.
 	 */
 	 @Test
 	    public void testFindIntersections() {

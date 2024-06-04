@@ -28,7 +28,7 @@ class PlaneTests {
 	private static final Vector v1 = new Vector(d,d,d);
 
 	/**
-	 * Test method for {@link geometries.Plane#constructor()}.
+	 * Test method for {@link geometries.Plane#Plane(Point, Point, Point)}.
 	 */
 	@Test
 	void testConstructor() {
@@ -106,7 +106,7 @@ class PlaneTests {
 	}
 	
 	/**
-	 * Test method for {@link geometries.plane#findIntsersections}.
+	 * Test method for {@link geometries.Plane#findIntersections(Ray ray)}.
 	 */
 	@Test 
 	void testFindIntsersections(){

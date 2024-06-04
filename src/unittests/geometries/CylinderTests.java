@@ -65,10 +65,10 @@ class CylinderTests {
 	}
 	
 	/**
-	 * Test method for {@link geometries.cylinder#findIntsersections}.
+	 * Test method for {@link geometries.Cylinder#findIntersections}.
 	 */
 	@Test 
-	void testFindIntsersections(){
+	void testFindIntersections(){
 		
 		
 	}

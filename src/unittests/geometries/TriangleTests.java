@@ -49,7 +49,7 @@ class TriangleTests {
 	}
 	
 	/**
-	 * Test method for {@link geometries.Triangle#findIntsersections}.
+	 * Test method for {@link geometries.Triangle#findIntersections(Ray ray)}.
 	 */
 	@Test 
 	void testFindIntsersections(){
