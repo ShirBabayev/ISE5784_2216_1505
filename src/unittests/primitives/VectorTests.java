@@ -44,8 +44,7 @@ public class VectorTests {
 		assertThrows(Exception.class, () -> new Vector(Double3.ZERO), "ERROR: zero vector does not throw an exception");
 		assertThrows(IllegalArgumentException.class, () -> new Vector(Double3.ZERO),
 				"ERROR: zero vector does not throw an exception");
-		
-		
+
 	}
 
 	/**
@@ -138,7 +137,6 @@ public class VectorTests {
 		assertThrows(Exception.class, () -> v1.scale(0), "ERROR: zero vector does not throw an exception");
 		assertThrows(IllegalArgumentException.class, () -> v1.scale(0),
 				"ERROR: zero vector does not throw a correct exception");
-		
 
 	}
 

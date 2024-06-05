@@ -1,4 +1,5 @@
 package unittests.primitives;
+
 import primitives.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,16 +15,18 @@ class RayTests {
 	 */
 	@Test
 	void testGetPoint() {
-		/** a ray for the tests*/
-		Ray ray=new Ray(new Vector(1,0,0),new Point(0,0,0));
+		/** a ray for the tests */
+		Ray ray = new Ray(new Vector(1, 0, 0), new Point(0, 0, 0));
 		// ============ Equivalence Partitions Tests ==============
-		//TC01: a positive distance
-		assertEquals(new Point(5,0,0),ray.getPoint(5),"ERROR: the point at this distance from the head point is wrong");
-		//TC02: a negative distance
-		assertEquals(new Point(-5,0,0),ray.getPoint(-5),"ERROR: the point at this distance from the head point is wrong");
+		// TC01: a positive distance
+		assertEquals(new Point(5, 0, 0), ray.getPoint(5),
+				"ERROR: the point at this distance from the head point is wrong");
+		// TC02: a negative distance
+		assertEquals(new Point(-5, 0, 0), ray.getPoint(-5),
+				"ERROR: the point at this distance from the head point is wrong");
 		// =============== Boundary Values Tests ==================
-		//TC11: no distance from the head of the ray
-		assertEquals(ray.getHead(),ray.getPoint(0),"ERROR: the point at this distance from the head point is wrong");
+		// TC11: no distance from the head of the ray
+		assertEquals(ray.getHead(), ray.getPoint(0), "ERROR: the point at this distance from the head point is wrong");
 
 	}
 

@@ -1,4 +1,5 @@
 package geometries;
+
 import java.util.List;
 
 import primitives.*;
@@ -62,23 +63,25 @@ public class Plane implements Geometry {
 	public Vector getNormal(Point p) {
 		return normal;
 	}
-	
+
 	@Override
-	public List<Point> findIntersections(Ray ray){
+	public List<Point> findIntersections(Ray ray) {
 		try {
-		//@param t is the number of times the ray must be multiplied for it to cut the geometric body	
-		double t=normal.dotProduct(q.subtract(ray.getHead()))/(normal.dotProduct(ray.getDirection()));
-		//The body is in the opposite direction from the ray or there is no point of intersection
-		if(t<0||Util.isZero(t)==true)
-			return null;
-		//else:
-		return List.of(ray.getPoint(t)); 
+			// @param t is the number of times the ray must be multiplied for it to cut the
+			// geometric body
+			double t = normal.dotProduct(q.subtract(ray.getHead())) / (normal.dotProduct(ray.getDirection()));
+			// The body is in the opposite direction from the ray or there is no point of
+			// intersection
+			if (Util.alignZero(t) <= 0)
+				return null;
+			// else:
+			return List.of(ray.getPoint(t));
 		}
-		//In case an exception was thrown from trying to create the 0 vector
-		catch(Exception ex) {
+		// In case an exception was thrown from trying to create the 0 vector
+		catch (Exception ex) {
 			return null;
 		}
-		
-	 }
+
+	}
 
 }

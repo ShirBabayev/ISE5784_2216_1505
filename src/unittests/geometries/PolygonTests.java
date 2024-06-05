@@ -86,46 +86,45 @@ public class PolygonTests {
 			assertEquals(0d, result.dotProduct(pts[i].subtract(pts[i == 0 ? 3 : i - 1])), DELTA,
 					"Polygon's normal is not orthogonal to one of the edges");
 	}
-	
+
 	/**
 	 * Test method for {@link geometries.Polygon#findIntersections}.
 	 */
-	 @Test
-	    public void testFindIntersections() {
-	        Polygon polygon = new Polygon(new Point(0,0,0), new Point(4,0,0), new Point(0,4,0));
+	@Test
+	public void testFindIntersections() {
+		Polygon polygon = new Polygon(new Point(0, 0, 0), new Point(4, 0, 0), new Point(0, 4, 0));
 
-	        // ============ Equivalence Partitions Tests ==============
+		// ============ Equivalence Partitions Tests ==============
 
-	        // TC01: Ray intersects the polygon
-	        Point p = new Point(2, 1, 0);
-	        List<Point> result = polygon.findIntersections(new Ray(new Vector(0, -1, -1), new Point(2, 2, 1)));
-	        assertEquals( 1, result.size(), "Wrong number of points");
-	        assertEquals(p, result.get(0), "Wrong Intersection point");
+		// TC01: Ray intersects the polygon
+		Point p = new Point(2, 1, 0);
+		List<Point> result = polygon.findIntersections(new Ray(new Vector(0, -1, -1), new Point(2, 2, 1)));
+		assertEquals(1, result.size(), "Wrong number of points");
+		assertEquals(p, result.get(0), "Wrong Intersection point");
 
-	        // **** Group: Ray does not intersect the polygon
-	        // TC02: Ray against vertex
-	        result = polygon.findIntersections(new Ray(new Vector(4, -3, -1),new Point(2, 2, 1)));
-	        assertEquals( null, result, "Wrong number of points");
+		// **** Group: Ray does not intersect the polygon
+		// TC02: Ray against vertex
+		result = polygon.findIntersections(new Ray(new Vector(4, -3, -1), new Point(2, 2, 1)));
+		assertEquals(null, result, "Wrong number of points");
 
-	        // TC03: Ray against edge
-	        result = polygon.findIntersections(new Ray(new Vector(1, 1, -1),new Point(2, 2, 1)));
-	        assertEquals(null, result, "Wrong number of points");
+		// TC03: Ray against edge
+		result = polygon.findIntersections(new Ray(new Vector(1, 1, -1), new Point(2, 2, 1)));
+		assertEquals(null, result, "Wrong number of points");
 
+		// =============== Boundary Values Tests ==================
 
-	        // =============== Boundary Values Tests ==================
+		// **** Group: Ray begins before the plane (all tests 0 points)
 
-	        // **** Group: Ray begins before the plane (all tests 0 points)
+		// TC04: the ray on vertex
+		result = polygon.findIntersections(new Ray(new Vector(2, -2, -1), new Point(2, 2, 1)));
+		assertEquals(null, result, "Wrong number of points");
 
-	        // TC04: the ray on vertex
-	        result = polygon.findIntersections(new Ray(new Vector(2, -2, -1),new Point(2, 2, 1)));
-	        assertEquals(null, result, "Wrong number of points");
+		// TC05: the ray on edge
+		result = polygon.findIntersections(new Ray(new Vector(0, -2, -1), new Point(2, 2, 1)));
+		assertEquals(null, result, "Wrong number of points");
 
-	        // TC05: the ray on edge
-	        result = polygon.findIntersections(new Ray(new Vector(0, -2, -1),new Point(2, 2, 1)));
-	        assertEquals( null, result, "Wrong number of points");
-
-	        // TC06: the ray on edge's continuation
-	        result = polygon.findIntersections(new Ray(new Vector(4, -2, -1),new Point(2, 2, 1)));
-	        assertEquals( null, result, "Wrong number of points");	
+		// TC06: the ray on edge's continuation
+		result = polygon.findIntersections(new Ray(new Vector(4, -2, -1), new Point(2, 2, 1)));
+		assertEquals(null, result, "Wrong number of points");
 	}
 }
