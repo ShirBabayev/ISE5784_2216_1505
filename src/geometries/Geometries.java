@@ -9,10 +9,13 @@ import primitives.Point;
 import primitives.Ray;
 
 /**
- * 
+ * implementation of Intersectable
  */
 public class Geometries implements Intersectable {
 	
+	/**
+	 * a list of geometry bodies
+	 */
 	private final List<Intersectable> bodies= new LinkedList<Intersectable>();
 	
 	/**

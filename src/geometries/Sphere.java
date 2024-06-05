@@ -35,33 +35,35 @@ public class Sphere extends RadialGeometry {
 	
 	@Override
 	public List<Point> findIntersections(Ray ray){
-		if(ray.getHead().equals(center))
+		if(ray.getHead().equals(center))//The ray starts in the center
         {
-	        List<Point> intersections = new LinkedList<Point>();
-            intersections.add(ray.getPoint(radius));
+	        List<Point> intersections = new LinkedList<Point>();//empty list
+            intersections.add(ray.getPoint(radius));//add the intersection point to the list
             return intersections;
         }
 
         Vector u= center.subtract(ray.getHead()); //a vector from the head of the ray to the center of the sphere
         double tm = ray.getDirection().dotProduct(u);// tm = v*u
         double d = Math.sqrt(u.lengthSquared()-tm*tm);//d=sqrt(|u|^2-tm^2
-        if(d>=radius)
+        if(d>=radius)//outside the sphere - no intersections
             return null;
+        
         double th = Math.sqrt(radius*radius - d*d);
         double t1 = tm + th;
         double t2 = tm - th;
-
-        if(t1<=0 && t2 <=0)
+        
+        //the head of the ray is not included, so t=0 (or close to 0) is the head and t<0, both are not relevant
+        if(t1<=0.0001 && t2 <=0.0001)
             return null;
-        List<Point> intersections = new LinkedList<Point>();
-        if (t1>0)
+        List<Point> intersections = new LinkedList<Point>();//create empty list
+        if (t1>0.0001)
         	intersections.add(ray.getPoint(t1));
-        if (t2>0 && t2!=t1)
+        if (t2>0.0001 && t2!=t1)
             intersections.add(ray.getPoint(t2));
         //sort the intersections points according to the closeness to the head point of the ray
 
         return intersections.stream().sorted(Comparator.comparingDouble(p -> p.distance(ray.getHead())))
-        .toList();
+        .toList();//sort the list by closeness to the ray's head.
 
     }
 

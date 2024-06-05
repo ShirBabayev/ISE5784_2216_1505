@@ -3,22 +3,28 @@ package unittests.geometries;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.List;
-
-
 import org.junit.jupiter.api.Test;
 
 import primitives.*;
 import primitives.Vector;
 import geometries.*;
 
+/**
+ * Unit tests for geometries.Geometries class
+ * 
+ * @author Shir Babayev and Hodaya Avidan
+ */
 class GeometriesTests {
 
-	Geometries g0 =new Geometries();
+	/**
+	 * first collection of bodies for tests
+	 */
 	Geometries g1 =new Geometries();
+	/**
+	 * second collection of bodies for tests
+	 */
 	Geometries g2 =new Geometries();
-	List<Point> result;
-	
+		
 	/**
 	 * {@link geometries.Geometries#findIntersections(primitives.Ray)}
 	 */
