@@ -50,7 +50,6 @@ class TubeTests {
 	 */
 	@Test
 	void testFindIntsersections() {
-
 	}
 
 }
