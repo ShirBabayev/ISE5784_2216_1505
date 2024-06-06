@@ -55,9 +55,7 @@ public class Ray {
 	 * @return point on the line of the ray
 	 */
 	public Point getPoint(double t) {
-		if (!Util.isZero(t))
-			return head.add(direction.scale(t));
-		return head;
+		return Util.isZero(t) ? head : head.add(direction.scale(t));
 	}
 
 	@Override

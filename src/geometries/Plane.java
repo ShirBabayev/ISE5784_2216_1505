@@ -3,6 +3,7 @@ package geometries;
 import java.util.List;
 
 import primitives.*;
+import static primitives.Util.*;
 
 /**
  * A class that represents a surface by a point and a normal vector to the point
@@ -15,7 +16,6 @@ public class Plane implements Geometry {
 	/**
 	 * a point on the plane
 	 */
-	@SuppressWarnings("unused") // TODO remove it after q will be used
 	final private Point q;
 	/**
 	 * a normal to the plane
@@ -66,22 +66,25 @@ public class Plane implements Geometry {
 
 	@Override
 	public List<Point> findIntersections(Ray ray) {
+		double nv = normal.dotProduct(ray.getDirection());
+		if (isZero(nv))
+			return null;
+
+		Vector qMinusHead;
 		try {
-			// @param t is the number of times the ray must be multiplied for it to cut the
-			// geometric body
-			double t = normal.dotProduct(q.subtract(ray.getHead())) / (normal.dotProduct(ray.getDirection()));
-			// The body is in the opposite direction from the ray or there is no point of
-			// intersection
-			if (Util.alignZero(t) <= 0)
-				return null;
-			// else:
-			return List.of(ray.getPoint(t));
+			// t is the distance from the head of the ray to the intersection point
+			qMinusHead = q.subtract(ray.getHead());
 		}
 		// In case an exception was thrown from trying to create the 0 vector
-		catch (Exception ex) {
+		catch (IllegalArgumentException ignore) {
 			return null;
 		}
 
+		double t = normal.dotProduct(qMinusHead) / nv;
+		// If t is negative than the body is in the opposite direction from the ray or
+		// there is no point of
+		// intersection
+		return alignZero(t) <= 0 ? null : List.of(ray.getPoint(t));
 	}
 
 }

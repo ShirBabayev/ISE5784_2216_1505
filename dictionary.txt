@@ -5,3 +5,4 @@ shir
 babayev
 concave
 quadrangular
+intersectable

@@ -75,7 +75,7 @@ class PlaneTests {
 			 * Each time creates a vector from 2 points on the plane and checks that the
 			 * normal is indeed perpendicular to this vector
 			 */
-			assertEquals(0d, result.dotProduct(pts[i].subtract(pts[i == 0 ? 3 : i - 1])),
+			assertEquals(0d, result.dotProduct(pts[i].subtract(pts[i == 0 ? 3 : i - 1])), DELTA,
 					"Plane's normal is not orthogonal to one of the vectors");
 
 	}
@@ -101,7 +101,7 @@ class PlaneTests {
 			 * Each time creates a vector from 2 points on the plane and checks that the
 			 * normal is indeed perpendicular to this vector
 			 */
-			assertEquals(0d, result.dotProduct(pts[i].subtract(pts[i == 0 ? 3 : i - 1])),
+			assertEquals(0d, result.dotProduct(pts[i].subtract(pts[i == 0 ? 3 : i - 1])), DELTA,
 					"Plane's normal is not orthogonal to one of the edges");
 	}
 
@@ -118,6 +118,7 @@ class PlaneTests {
 		var exp1 = List.of(new Point(0.5, 0.5, 0));
 		assertEquals(exp1, plane1.findIntersections(new Ray(new Vector(1, 1, 0), Point.ZERO)),
 				"The ray intersects the plane returns wrong value");
+
 		// TC02: The ray does not intersect the plane
 		assertNull(plane1.findIntersections(new Ray(new Vector(1, 1, 0), new Point(1, 1, 2))),
 				"parallel ray to plane does not return null ");
@@ -126,10 +127,10 @@ class PlaneTests {
 
 		/* parallel rays to the plane */
 		// TC11: The ray out of the plane
-		// assertNull( plane1.findIntersections(new Ray(new
-		// Vector(0,-3,3),Point.ZERO)),"parallel ray to plane does not return null ");
+		assertNull(plane1.findIntersections(new Ray(new Vector(0, -3, 3), Point.ZERO)),
+				"parallel ray to plane does not return null ");
 		// TC12: The ray in contained in the plane
-		assertNull(plane1.findIntersections(new Ray(pts[0].subtract(pts[1]), pts[0])),
+		assertNull(plane1.findIntersections(new Ray(pts[0].subtract(pts[1]), pts[2])),
 				"parallel ray to plane does not return null ");
 
 		/* Ray is orthogonal to the plane */

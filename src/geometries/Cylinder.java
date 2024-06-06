@@ -40,18 +40,15 @@ public class Cylinder extends Tube {
 		if (p.equals(edge2))
 			return direction;
 
-		Vector v = p.subtract((edge1));
-
-		double t = v.dotProduct(direction);
+		double t = p.subtract((edge1)).dotProduct(direction);
 		if (isZero(t)) // lower base
 			return direction.scale(-1);
 		if (isZero(t - height)) // upper base
 			return direction;
 
 		// the closet point to p on the axis of the cylinder
-		Point o = edge1.add(direction.scale(t));
 		// the vector between o to p -> normalized
-		return (p.subtract(o)).normalize();
+		return (p.subtract(axis.getPoint(t))).normalize();
 	}
 
 	@Override

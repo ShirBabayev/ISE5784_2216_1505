@@ -16,7 +16,7 @@ class RayTests {
 	@Test
 	void testGetPoint() {
 		/** a ray for the tests */
-		Ray ray = new Ray(new Vector(1, 0, 0), new Point(0, 0, 0));
+		Ray ray = new Ray(new Vector(1, 0, 0), Point.ZERO);
 		// ============ Equivalence Partitions Tests ==============
 		// TC01: a positive distance
 		assertEquals(new Point(5, 0, 0), ray.getPoint(5),
@@ -26,7 +26,7 @@ class RayTests {
 				"ERROR: the point at this distance from the head point is wrong");
 		// =============== Boundary Values Tests ==================
 		// TC11: no distance from the head of the ray
-		assertEquals(ray.getHead(), ray.getPoint(0), "ERROR: the point at this distance from the head point is wrong");
+		assertEquals(Point.ZERO, ray.getPoint(0), "ERROR: the point at this distance from the head point is wrong");
 
 	}
 

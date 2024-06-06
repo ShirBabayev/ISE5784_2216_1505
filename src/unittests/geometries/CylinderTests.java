@@ -63,13 +63,4 @@ class CylinderTests {
 				"ERROR: point is center of the top bottom returns a wrong result");
 
 	}
-
-	/**
-	 * Test method for {@link geometries.Cylinder#findIntersections}.
-	 */
-	@Test
-	void testFindIntersections() {
-
-	}
-
 }

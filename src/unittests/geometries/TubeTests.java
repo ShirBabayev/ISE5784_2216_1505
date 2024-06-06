@@ -2,8 +2,6 @@ package unittests.geometries;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import primitives.Point;
 import primitives.Vector;
@@ -43,13 +41,6 @@ class TubeTests {
 		 */
 		assertEquals(new Vector(0, 1, 0), tube2.getNormal(new Point(0, 1, 2)),
 				"ERROR: Incorrect value at 90C angle of the radius with the axis");
-	}
-
-	/**
-	 * Test method for {@link geometries.Tube#findIntersections(Ray ray)}.
-	 */
-	@Test
-	void testFindIntsersections() {
 	}
 
 }

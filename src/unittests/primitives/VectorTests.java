@@ -97,7 +97,7 @@ public class VectorTests {
 	 * Test method for {@link primitives.Vector#subtract(primitives.Vector)}.
 	 */
 	@Test
-	void testsubtractVector() {
+	void testSubtractVector() {
 		// ============ Equivalence Partitions Tests ==============
 
 		/* TC07: Checks if subtraction 2 vectors returns a correct result */

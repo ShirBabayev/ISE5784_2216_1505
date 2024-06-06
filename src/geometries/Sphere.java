@@ -1,10 +1,9 @@
 package geometries;
 
 import java.util.List;
-import java.util.*;
 
 import primitives.*;
-import primitives.Vector;
+import static primitives.Util.*;
 
 /**
  * A class that represents a sphere by a point and a radius
@@ -36,74 +35,35 @@ public class Sphere extends RadialGeometry {
 
 	@Override
 	public List<Point> findIntersections(Ray ray) {
+		Point head = ray.getHead();
 		// The ray starts in the center
-		if (ray.getHead().equals(center)) {
-			// empty list
-			List<Point> intersections = new LinkedList<Point>();
-			// add the intersection point to the list
-			intersections.add(ray.getPoint(radius));
-			return intersections;
-		}
+		if (head.equals(center))
+			return List.of(ray.getPoint(radius));
+
 		// a vector from the head of the ray to the center of the sphere
-		Vector u = center.subtract(ray.getHead());
+		Vector u = center.subtract(head);
 		// tm = v*u. the distance o=between the head of the ray to the closest point on
 		// the ray to the center
 		double tm = ray.getDirection().dotProduct(u);
-		// the distance between the center to the closest point on the ray
-		double d = Math.sqrt(u.lengthSquared() - tm * tm);
+		// the squared distance between the center to the closest point on the ray
+		double dSquared = u.lengthSquared() - tm * tm;
+		double thSquared = radiusSquared - dSquared;
 		// outside the sphere - no intersections
-		if (d >= radius)
+		if (alignZero(thSquared) <= 0)
 			return null;
+
 		// the distance between the closest point to the first intersection point
-		double th = Math.sqrt(radius * radius - d * d);
+		double th = Math.sqrt(thSquared);
 		// the further point from the head
-		double t1 = Util.alignZero(tm + th);
-		// the closer point to the head
-		double t2 = Util.alignZero(tm - th);
-
-		/*
-		 * //the head of the ray is not included, so t=0 (or close to 0) is the head and
-		 * t<0, both are not relevant if(t1<=0 && t2 <=0) return null; List<Point>
-		 * intersections = new LinkedList<Point>();//create empty list if (t1>0)
-		 * intersections.add(ray.getPoint(t1)); if (t2>0 && t2!=t1)
-		 * intersections.add(ray.getPoint(t2)); //sort the intersections points
-		 * according to the closeness to the head point of the ray
-		 * 
-		 * return intersections.stream().sorted(Comparator.comparingDouble(p ->
-		 * p.distance(ray.getHead()))) .toList();//sort the list by closeness to the
-		 * ray's head. }
-		 */
-
-		// the head of the ray is not included, so t=0 (or close to 0) is the head and
-		// t<0, both are not relevant
-		if (t1 <= 0 && t2 <= 0)
+		double t2 = Util.alignZero(tm + th);
+		if (t2 <= 0)
 			return null;
 
-		List<Point> intersections = null;// create empty list
-		Point p1 = null;
-		Point p2 = null;
-
-		if (t1 > 0) {
-			p1 = ray.getPoint(t1);
-		}
-		if (t2 > 0 && t2 != t1) {
-			p2 = ray.getPoint(t2);
-		}
-		if (p1 != null) {
-			intersections = new LinkedList<Point>();
-			intersections.add(p1);
-		}
-		if (p2 != null) {
-			if (intersections == null) {
-				intersections = new LinkedList<Point>();
-			}
-			intersections.add(p2);
-		}
-
-		// sort the intersections points according to the closeness to the head point of
-		// the ray
-		return intersections.stream().sorted(Comparator.comparingDouble(p -> p.distance(ray.getHead()))).toList();
-
+		// the closer point to the head
+		double t1 = Util.alignZero(tm - th);
+		return t1 <= 0 //
+				? List.of(ray.getPoint(t2)) //
+				: List.of(ray.getPoint(t1), ray.getPoint(t2));
 	}
 
 }

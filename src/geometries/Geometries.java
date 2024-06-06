@@ -1,7 +1,6 @@
 package geometries;
 
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,7 +21,6 @@ public class Geometries implements Intersectable {
 	 * empty default constructor
 	 */
 	public Geometries() {
-
 	}
 
 	/**
@@ -48,24 +46,18 @@ public class Geometries implements Intersectable {
 	@Override
 	public List<Point> findIntersections(Ray ray) {
 		List<Point> l = null;
-		List<Point> intersectionsOfBody = null;
 		// Checks each body separately if it has intersection points with the beam
 		for (Intersectable body : bodies) {
-			intersectionsOfBody = body.findIntersections(ray);
+			var intersectionsOfBody = body.findIntersections(ray);
 			if (intersectionsOfBody != null) {
 				// create a new list because it is the first value
-				if (l == null) {
-					l = new LinkedList<>();
-				}
-				// insert the intersections points that were found
-				l.addAll(intersectionsOfBody);
+				if (l == null)
+					l = new LinkedList<>(intersectionsOfBody);
+				else
+					// insert the intersections points that were found
+					l.addAll(intersectionsOfBody);
 			}
 		}
-		// None of the bodies had a cutoff point
-		if (l == null)
-			return null;
-		// sort the intersections points according to the closeness to the head point of
-		// the ray
-		return l.stream().sorted(Comparator.comparingDouble(p -> p.distance(ray.getHead()))).toList();
+		return l;
 	}
 }
