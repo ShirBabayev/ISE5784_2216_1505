@@ -1,19 +1,22 @@
 package unittests.renderer;
 
 import java.util.*;
+
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import geometries.*;
 import primitives.*;
+import primitives.Vector;
 import renderer.Camera;
 
 public class integrationTests {
 
 	
-	private final Camera.Builder camera=Camera.getBuilder()
+	private final Camera.Builder camera=Camera.getBuilder().setVpDistance(1)
 			.setLocation(Point.ZERO).setDirection(new Vector(0,1,0), new Vector(0,0,-1));
-    Camera camera1 = camera.setVpSize(3, 3).build();
-    Camera camera2 = camera.setVpSize(6, 6).build();
+    //Camera camera1 = camera.setVpSize(3, 3).build();
+    //Camera camera2 = camera.setVpSize(6, 6).build();
+    Camera camera3=  camera.setVpSize(3, 3).setDirection(new Vector(0, 0, 1), new Vector(0, -1, 0)).build();
     String wrong="Wrong number of intersections";
 
     /**
@@ -49,7 +52,8 @@ public class integrationTests {
 	void testCamera_SphereIntsersections() {
 		
 		//TC01: Only the middle ray intersects the sphere by 2 points
-		assertEquals(2,findIntersections(new Sphere(new Point(0, 0, -3),1)).size(),"TC01 "+wrong);
+		assertEquals(2,findIntersections(new Sphere(new Point(0, 0, -3),1)).size(),"TC01 "+wrong);//		assertEquals(2,findIntersections(new Sphere(new Point(0, 0, -3),2.64)).size(),"TC01 "+wrong);
+
 		
 		//TC02: every ray intersects twice
 		camera.setLocation(new Point(0,0,0.5)).build();
@@ -70,8 +74,50 @@ public class integrationTests {
 	 */
 	@Test
 	void testCamera_PlaneIntsersections() {
-	}
-	
+        List<Point> results;
+        Plane plane;
+        int Nx = 3;
+        int Ny = 3;
+        int counter;
+
+        //TC01 - 9 intersection points with plane - plane is paralleled to the view plane
+        plane = new Plane(new Point(0,0,2), new Vector(0,0,1));
+        counter = 0;
+        for (int i = 0; i < Ny; i++) {
+            for (int j = 0; j < Nx; j++) {
+                results = plane.findIntersections(camera3.constructRay(Nx, Ny, j, i));
+                if (results != null)
+                    counter += results.size();
+            }
+        }
+        assertEquals(9, counter, "Wrong number of points");
+
+        //TC02 - 9 intersection points with plane
+        plane = new Plane(new Point(0,0,4), new Point(0.5,1,4.2), new Point(-0.5,1,3.8));
+        counter = 0;
+        for (int i = 0; i < Ny; i++) {
+            for (int j = 0; j < Nx; j++) {
+                results = plane.findIntersections(camera3.constructRay(Nx, Ny, j, i));
+                if (results != null)
+                    counter += results.size();
+            }
+        }
+        assertEquals(9, counter, "Wrong number of points");
+
+        //TC03 - 6 intersection points with plane
+        plane = new Plane(new Point(0,0,4), new Point(-0.2,1.5,5), new Point(-0.5,1,3.8));
+        counter = 0;
+        for (int i = 0; i < Ny; i++) {
+            for (int j = 0; j < Nx; j++) {
+                results = plane.findIntersections(camera3.constructRay(Nx, Ny, j, i));
+                if (results != null)
+                    counter += results.size();
+            }
+        }
+        assertEquals(6, counter, "Wrong number of points");
+
+    }
+
 	
 	
 	/**

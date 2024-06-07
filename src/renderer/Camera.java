@@ -15,15 +15,15 @@ public class Camera implements Cloneable {
 	 */
 	private Point p0 = null;
 	/**
-	 * the right vector X axis
+	 * the right vector X axis, this is a vector to the right direction. vRight is the orthogonal vector to vTo and vUp
 	 */
 	private Vector vRight = null;
 	/**
-	 * the up vector Y axis
+	 * the up vector Y axis, this is a vector on the positive direction going up.
 	 */
 	private Vector vUp = null;
 	/**
-	 * the to vector Z axis
+	 * the to vector Z axis, this is a vector towards the view plane 
 	 */
 	private Vector vTo = null;
 	/**
@@ -110,23 +110,61 @@ public class Camera implements Cloneable {
 	}
 
 	/**
-	 * 
-	 * @return
+	 * a function to get a Builder
+	 * @return a new object of Builder
 	 */
+
 	public static Builder getBuilder() {
-		return null;
+		return new Builder();
 	}
 
+	
 	/**
-	 * 
-	 * @param nX
-	 * @param nY
-	 * @param j
-	 * @param i
-	 * @return
+	 * a function that finds the ray from the camera to the pixel
+	 * @param nX - The number of pixels in the x-axis.
+	 * @param nY - The number of pixels in the y-axis.
+	 * @param j - The x-coordinate of the pixel.
+	 * @param i - The y-coordinate of the pixel.
+	 * @return a ray out of the camera through the pixel
 	 */
 	public Ray constructRay(int nX, int nY, int j, int i) {
-		return null;
+		 if (isZero(distance)) {
+	            throw new IllegalArgumentException("Distance can't be 0");
+	        }
+		 if (isZero(nY) || isZero(nX)) {
+	            throw new IllegalArgumentException("It is impossible to divide by 0");
+	        }
+		 //pc is the center point of the view plane, since vTo is going streight to the middle of the view plane
+		Point pc= p0.add(vTo.scale(distance));
+		//divide the height of the view plane by the number of pixels on the y-axis
+		double rY=height/nY;
+		//divide the width of the view plane by the number of pixels on the x-axis
+		double rX=width/nX;
+		
+	    // Calculate the x and y coordinates of the pixel in the view plane
+		double xj = (j - ((nX - 1) / 2d)) * rX;
+        double yi = (i - ((nY - 1) / 2d)) * rY;
+        
+        // Start with the center of the view plane
+		Point pij=pc;
+		
+		/*//When the matrix has an odd number of rows and \or columns of pixels
+		if(isZero(width%2) && isZero(height%2)) { 
+			pij = pij.add(vRight.scale(xj).add(vUp.scale(yi)));
+		}
+		else {*/
+		
+	    // Update the pixel's location using the calculated x and y offsets
+		if (!isZero(xj))
+            pij = pij.add(vRight.scale(xj));
+        if (!isZero(yi))
+            pij = pij.add(vUp.scale(-yi));
+		/*}*/
+        
+        //the direction vector from the camera to the pixel
+		Vector vij=pij.subtract(p0);
+		// Return a normalized ray starting from the camera position towards the pixel
+        return new Ray(vij.normalize(),p0);
 	}
 
 	/**
@@ -139,12 +177,18 @@ public class Camera implements Cloneable {
 		 */
 		private final Camera camera;
 
+		 /***
+         * Constructor for Camera in Builder
+         */
+        public Builder() {
+            this.camera = new Camera();
+        }
+        
 		/**
 		 * a constructor that build the camera according to the parameter c
 		 * 
 		 * @param c is a camera to construct the camera
 		 */
-
 		public Builder(Camera c) {
 			camera = c;
 		}
