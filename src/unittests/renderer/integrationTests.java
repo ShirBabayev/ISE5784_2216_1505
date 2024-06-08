@@ -79,19 +79,19 @@ public class integrationTests {
         int Ny = 3;
         int counter;
 
-        //TC01 - 9 intersection points with plane - plane is paralleled to the view plane
+        //TC11 - 9 intersection points with plane - plane is paralleled to the view plane
         plane = new Plane(new Point(0,0,2), new Vector(0,0,1));
         counter = 0;
         for (int i = 0; i < Ny; i++) {
             for (int j = 0; j < Nx; j++) {
                 results = plane.findIntersections(camera3.constructRay(Nx, Ny, j, i));
                 if (results != null)
-                    counter += results.size();
+                    counter += results.size();//in the case of a plane it will always add 1
             }
         }
-        assertEquals(9, counter, "Wrong number of points");
+        assertEquals(9, counter, wrong);
 
-        //TC02 - 9 intersection points with plane
+        //TC12 - 9 intersection points with plane
         plane = new Plane(new Point(0,0,4), new Point(0.5,1,4.2), new Point(-0.5,1,3.8));
         counter = 0;
         for (int i = 0; i < Ny; i++) {
@@ -101,9 +101,9 @@ public class integrationTests {
                     counter += results.size();
             }
         }
-        assertEquals(9, counter, "Wrong number of points");
+        assertEquals(9, counter, wrong);
 
-        //TC03 - 6 intersection points with plane
+        //TC13 - 6 intersection points with plane
         plane = new Plane(new Point(0,0,4), new Point(-0.2,1.5,5), new Point(-0.5,1,3.8));
         counter = 0;
         for (int i = 0; i < Ny; i++) {
@@ -113,7 +113,7 @@ public class integrationTests {
                     counter += results.size();
             }
         }
-        assertEquals(6, counter, "Wrong number of points");
+        assertEquals(6, counter, wrong);
 
     }
 
@@ -125,11 +125,11 @@ public class integrationTests {
 	@Test
 	void testCamera_TriangleIntsersections() {
 		
-		//TC31: only the middle ray intersects the triangle
+		//TC21: only the middle ray intersects the triangle
         camera.setLocation(new Point(0,0,0.5)).build();
         assertEquals(1, findIntersections(new Triangle(new Point(0, 1, -2), new Point(-1,-1,-2), new Point(1,-1,-2))).size(), "TC31 "+wrong);
 
-        //TC32: only two rays intersect the triangle
+        //TC22: only two rays intersect the triangle
         camera.setLocation(new Point(0,0,1)).build();
         assertEquals(2, findIntersections(new Triangle(new Point(0,20, -2), new Point(-1,-1,-2), new Point(1,-1,-2))).size(), "TC32 "+wrong);
 
