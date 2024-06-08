@@ -11,6 +11,7 @@ import renderer.Camera;
 
 public class integrationTests {
 
+
 	
 	private final Camera.Builder camera=Camera.getBuilder().setVpDistance(1)
 			.setLocation(Point.ZERO).setDirection(new Vector(0,1,0), new Vector(0,0,-1));
@@ -44,7 +45,6 @@ public class integrationTests {
 		return intersections;
 	}
 
-	
 	/**
 	 * Test method for {@link geometries.Sphere#findIntersections(primitives.Ray) and @link renderer.Camera#constructRay(int, int, int, int)}.
 	 */
@@ -53,7 +53,6 @@ public class integrationTests {
 		
 		//TC01: Only the middle ray intersects the sphere by 2 points
 		assertEquals(2,findIntersections(new Sphere(new Point(0, 0, -3),1)).size(),"TC01 "+wrong);//		assertEquals(2,findIntersections(new Sphere(new Point(0, 0, -3),2.64)).size(),"TC01 "+wrong);
-
 		
 		//TC02: every ray intersects twice
 		camera.setLocation(new Point(0,0,0.5)).build();
