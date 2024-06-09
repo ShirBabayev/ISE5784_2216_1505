@@ -110,7 +110,7 @@ public class Camera implements Cloneable {
 	}
 
 	/**
-	 * a function to get a Builder
+	 * getter function of the Builder camera
 	 * @return a new object of Builder
 	 */
 
@@ -118,6 +118,13 @@ public class Camera implements Cloneable {
 		return new Builder();
 	}
 
+	/**
+	 * getter function of the distance
+	 * @return the position of the camera
+	 */
+	public Point getLocation() {
+		return p0;
+	}
 	
 	/**
 	 * a function that finds the ray from the camera to the pixel
@@ -134,38 +141,36 @@ public class Camera implements Cloneable {
 		 if (isZero(nY) || isZero(nX)) {
 	            throw new IllegalArgumentException("It is impossible to divide by 0");
 	        }
-		 //pc is the center point of the view plane, since vTo is going streight to the middle of the view plane
+		//pc is the center point of the view plane, since vTo is going straight to the middle of the view plane
 		Point pc= p0.add(vTo.scale(distance));
-		//divide the height of the view plane by the number of pixels on the y-axis
+		//the height of each pixel
 		double rY=height/nY;
-		//divide the width of the view plane by the number of pixels on the x-axis
+		//the width of each pixel
 		double rX=width/nX;
 		
-	    // Calculate the x and y coordinates of the pixel in the view plane
-		double xj = (j - ((nX - 1) / 2d)) * rX;
+	    //Calculate the x and y coordinates of the pixel in the view plane
+		double xj = -1*(j - ((nX - 1) / 2d)) * rX;
         double yi = (i - ((nY - 1) / 2d)) * rY;
-        
-        // Start with the center of the view plane
+       
+       // Start with the center of the view plane
 		Point pij=pc;
 		
-		/*//When the matrix has an odd number of rows and \or columns of pixels
+		//When the matrix has an odd number of rows and \or columns of pixels*/
 		if(isZero(width%2) && isZero(height%2)) { 
 			pij = pij.add(vRight.scale(xj).add(vUp.scale(yi)));
 		}
-		else {*/
-		
+		else {
 	    // Update the pixel's location using the calculated x and y offsets
 		if (!isZero(xj))
-            pij = pij.add(vRight.scale(xj));
+           pij = pij.add(vRight.scale(xj));
         if (!isZero(yi))
-            pij = pij.add(vUp.scale(-yi));
-		/*}*/
-        
-        //the direction vector from the camera to the pixel
-		Vector vij=pij.subtract(p0);
-		// Return a normalized ray starting from the camera position towards the pixel
-        return new Ray(vij.normalize(),p0);
+           pij = pij.add(vUp.scale(yi));
+		}
+		
+   		// Return a normalized ray starting from the camera position towards the pixel
+        return new Ray(pij.subtract(p0).normalize(),p0);
 	}
+
 
 	/**
 	 * class that build a camera and enable settings to the fields of the camera
@@ -197,8 +202,8 @@ public class Camera implements Cloneable {
 		 * 
 		 * a method that set the location of the point of view of the camera
 		 * 
-		 * @param p0 is the point of view of the camera
-		 * @return
+		 * @param p is the point of view of the camera
+		 * @return a camera with updated location
 		 */
 		public Builder setLocation(Point p) {
 			camera.p0 = p;
@@ -210,7 +215,7 @@ public class Camera implements Cloneable {
 		 * 
 		 * @param vTo is a vector with direction to the center of the view plane
 		 * @param vUp is a vector with direction to the up
-		 * @return
+		 * @return a camera with updated direction
 		 */
 		public Builder setDirection(Vector vTo, Vector vUp) {
 			if (isZero(vTo.dotProduct(vUp))) {
@@ -227,7 +232,7 @@ public class Camera implements Cloneable {
 		 * 
 		 * @param w is a width of the view plane
 		 * @param h is a height of the view plane
-		 * @return
+		 * @return a camera with updated view plane size
 		 */
 		public Builder setVpSize(double w, double h) {
 			if (h == 0 || w == 0)
@@ -242,7 +247,7 @@ public class Camera implements Cloneable {
 		 * 
 		 * @param d is a distance from the point of the location of the camera to the
 		 *          view plane
-		 * @return
+		 * @return a camera with updated distance
 		 */
 		public Builder setVpDistance(double d) {
 			if (d == 0)
