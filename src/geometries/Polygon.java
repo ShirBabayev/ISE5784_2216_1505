@@ -121,7 +121,7 @@ public class Polygon implements Geometry {
 		double sign2 = ray.getDirection().dotProduct(n);
 		if (sign2 * sign <= 0)
 			return null;
-		
+
 		return intersections;
 	}
 

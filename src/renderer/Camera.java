@@ -15,7 +15,8 @@ public class Camera implements Cloneable {
 	 */
 	private Point p0 = null;
 	/**
-	 * the right vector X axis, this is a vector to the right direction. vRight is the orthogonal vector to vTo and vUp
+	 * the right vector X axis, this is a vector to the right direction. vRight is
+	 * the orthogonal vector to vTo and vUp
 	 */
 	private Vector vRight = null;
 	/**
@@ -23,7 +24,7 @@ public class Camera implements Cloneable {
 	 */
 	private Vector vUp = null;
 	/**
-	 * the to vector Z axis, this is a vector towards the view plane 
+	 * the to vector Z axis, this is a vector towards the view plane
 	 */
 	private Vector vTo = null;
 	/**
@@ -111,6 +112,7 @@ public class Camera implements Cloneable {
 
 	/**
 	 * getter function of the Builder camera
+	 * 
 	 * @return a new object of Builder
 	 */
 
@@ -120,57 +122,49 @@ public class Camera implements Cloneable {
 
 	/**
 	 * getter function of the distance
+	 * 
 	 * @return the position of the camera
 	 */
 	public Point getLocation() {
 		return p0;
 	}
-	
+
 	/**
 	 * a function that finds the ray from the camera to the pixel
+	 * 
 	 * @param nX - The number of pixels in the x-axis.
 	 * @param nY - The number of pixels in the y-axis.
-	 * @param j - The x-coordinate of the pixel.
-	 * @param i - The y-coordinate of the pixel.
+	 * @param j  - The x-coordinate of the pixel.
+	 * @param i  - The y-coordinate of the pixel.
 	 * @return a ray out of the camera through the pixel
 	 */
 	public Ray constructRay(int nX, int nY, int j, int i) {
-		 if (isZero(distance)) {
-	            throw new IllegalArgumentException("Distance can't be 0");
-	        }
-		 if (isZero(nY) || isZero(nX)) {
-	            throw new IllegalArgumentException("It is impossible to divide by 0");
-	        }
-		//pc is the center point of the view plane, since vTo is going straight to the middle of the view plane
-		Point pc= p0.add(vTo.scale(distance));
-		//the height of each pixel
-		double rY=height/nY;
-		//the width of each pixel
-		double rX=width/nX;
-		
-	    //Calculate the x and y coordinates of the pixel in the view plane
-		double xj = -1*(j - ((nX - 1) / 2d)) * rX;
-        double yi = (i - ((nY - 1) / 2d)) * rY;
-       
-       // Start with the center of the view plane
-		Point pij=pc;
-		
-		//When the matrix has an odd number of rows and \or columns of pixels*/
-		if(isZero(width%2) && isZero(height%2)) { 
-			pij = pij.add(vRight.scale(xj).add(vUp.scale(yi)));
+		if (isZero(nY) || isZero(nX)) {
+			throw new IllegalArgumentException("It is impossible to divide by 0");
 		}
-		else {
-	    // Update the pixel's location using the calculated x and y offsets
-		if (!isZero(xj))
-           pij = pij.add(vRight.scale(xj));
-        if (!isZero(yi))
-           pij = pij.add(vUp.scale(yi));
-		}
-		
-   		// Return a normalized ray starting from the camera position towards the pixel
-        return new Ray(pij.subtract(p0).normalize(),p0);
-	}
+		// pc is the center point of the view plane (since vTo is going straight to the
+		// middle of the view plane)
+		Point pc = p0.add(vTo.scale(distance));
+		// the height of each pixel
+		double rY = height / nY;
+		// the width of each pixel
+		double rX = width / nX;
 
+		// Calculate the x and y coordinates of the pixel in the view plane
+		double xj = (j - ((nX - 1) / 2d)) * rX;
+		double yi = -(i - ((nY - 1) / 2d)) * rY;
+
+		// Start with the center of the view plane
+		Point pij = pc;
+		// Update the pixel's location using the calculated x and y offsets
+		if (!isZero(xj))
+			pij = pij.add(vRight.scale(xj));
+		if (!isZero(yi))
+			pij = pij.add(vUp.scale(yi));
+
+		// Return a normalized ray starting from the camera position towards the pixel
+		return new Ray(pij.subtract(p0), p0);
+	}
 
 	/**
 	 * class that build a camera and enable settings to the fields of the camera
@@ -182,13 +176,13 @@ public class Camera implements Cloneable {
 		 */
 		private final Camera camera;
 
-		 /***
-         * Constructor for Camera in Builder
-         */
-        public Builder() {
-            this.camera = new Camera();
-        }
-        
+		/***
+		 * Constructor for Camera in Builder
+		 */
+		public Builder() {
+			this.camera = new Camera();
+		}
+
 		/**
 		 * a constructor that build the camera according to the parameter c
 		 * 
@@ -218,11 +212,12 @@ public class Camera implements Cloneable {
 		 * @return a camera with updated direction
 		 */
 		public Builder setDirection(Vector vTo, Vector vUp) {
+			//ensure that the vectors are orthogonal
 			if (isZero(vTo.dotProduct(vUp))) {
 				camera.vUp = vUp.normalize();
 				camera.vTo = vTo.normalize();
 			} else {
-				throw new IllegalArgumentException("2 vectors are not orthogonal");
+				throw new IllegalArgumentException("the vectors are not orthogonal");
 			}
 			return this;
 		}
@@ -297,8 +292,7 @@ public class Camera implements Cloneable {
 			camera.vRight = camera.vUp.crossProduct(camera.vTo).normalize();
 			try {
 				return (Camera) camera.clone();
-			}
-			catch(CloneNotSupportedException ex) {
+			} catch (CloneNotSupportedException ex) {
 				throw new RuntimeException("does not succeed to create a copy to camera");
 			}
 		}
