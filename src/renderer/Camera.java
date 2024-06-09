@@ -296,7 +296,7 @@ public class Camera implements Cloneable {
 				throw new IllegalArgumentException(d + illegalArgument);
 			camera.vRight = camera.vUp.crossProduct(camera.vTo).normalize();
 			try {
-			return (Camera) camera.clone();
+				return (Camera) camera.clone();
 			}
 			catch(CloneNotSupportedException ex) {
 				throw new RuntimeException("does not succeed to create a copy to camera");

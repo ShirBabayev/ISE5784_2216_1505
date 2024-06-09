@@ -6,11 +6,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import geometries.*;
 import primitives.*;
 import primitives.Vector;
-
 import renderer.Camera;
-
 public class integrationTests {
-
 	
 	/**
 	 * a camera for tests
@@ -24,8 +21,6 @@ public class integrationTests {
 	   */
 	  private final String wrong="Wrong number of intersections";
 
-	  
-	  
     /**
      * An auxiliary method for calculating the intersection points 
      * between the rays coming out of the camera and the geometric body
@@ -75,15 +70,16 @@ public class integrationTests {
 	 */
 	@Test
 	void testCamera_PlaneIntsersections() {
-		//TC01: First test case
+		
+		 //TC01: First test case
         camera.setLocation(new Point(0,0,1));
-        assertEquals(9, findIntersections(new Plane(new Point(0, 0, -1), new Point(1, 0, -1), new Point(0, 1, -1))),"Wrong number of intersections in case 1");
+        assertEquals(9, findIntersections(new Plane(new Point(0, 0, -1), new Point(1, 0, -1), new Point(0, 1, -1))),"TC11 "+wrong);
 
         //TC02: Second test case
-        assertEquals(9, findIntersections(new Plane(new Point(0, 0, -2), new Point(-3,0,0), new Point(-3,2,0))), "Wrong number of intersections in case 2");
+        assertEquals(9, findIntersections(new Plane(new Point(0, 0, -2), new Point(-3,0,0), new Point(-3,2,0))), "TC12 "+wrong);
 
         //TC03: Third test case
-        assertEquals(6, findIntersections(new Plane(new Point(0, 0, -4), new Point(-3,0,0), new Point(-3,2,0))), "Wrong number of intersections in case 3");
+        assertEquals(6, findIntersections(new Plane(new Point(0, 0, -4), new Point(-3,0,0), new Point(-3,2,0))), "TC13 "+wrong);
   }
 	
 	
@@ -94,13 +90,13 @@ public class integrationTests {
 	@Test
 	void testCamera_TriangleIntsersections() {
 		
-		//TC31: only the middle ray intersects the triangle
+		//TC21: only the middle ray intersects the triangle
         camera.setLocation(new Point(0,0,0.5)).build();
-        assertEquals(1, findIntersections(new Triangle(new Point(0, 1, -2), new Point(-1,-1,-2), new Point(1,-1,-2))), "TC31 "+wrong);
+        assertEquals(1, findIntersections(new Triangle(new Point(0, 1, -2), new Point(-1,-1,-2), new Point(1,-1,-2))), "TC21 "+wrong);
 
-        //TC32: only two rays intersect the triangle
+        //TC22: only two rays intersect the triangle
         camera.setLocation(new Point(0,0,1)).build();
-        assertEquals(2, findIntersections(new Triangle(new Point(0,20, -2), new Point(-1,-1,-2), new Point(1,-1,-2))), "TC32 "+wrong);
+        assertEquals(2, findIntersections(new Triangle(new Point(0,20, -2), new Point(-1,-1,-2), new Point(1,-1,-2))), "TC22 "+wrong);
 
 	}
 	
