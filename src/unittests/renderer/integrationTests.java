@@ -7,10 +7,16 @@ import geometries.*;
 import primitives.*;
 import renderer.Camera;
 
+/**
+ * Unit tests for Camera Integration
+ * 
+ * @author Shir Babayev and Hodaya Avidan
+ */
 public class integrationTests {
 
 	/**
-	 * a camera for tests
+	 * a cameraBuilder for tests
+	 * 
 	 */
 	private final Camera.Builder cameraBuilder = Camera.getBuilder()
 			.setDirection(new Vector(0, 0, -1), new Vector(0, 1, 0)).setVpDistance(1).setVpSize(3, 3);

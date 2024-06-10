@@ -116,40 +116,40 @@ class PlaneTests {
 
 		// TC01: The ray intersects the plane
 		var exp1 = List.of(new Point(0.5, 0.5, 0));
-		assertEquals(exp1, plane1.findIntersections(new Ray(new Vector(1, 1, 0), Point.ZERO)),
+		assertEquals(exp1, plane1.findIntersections(new Ray(Point.ZERO, new Vector(1, 1, 0))),
 				"The ray intersects the plane returns wrong value");
 
 		// TC02: The ray does not intersect the plane
-		assertNull(plane1.findIntersections(new Ray(new Vector(1, 1, 0), new Point(1, 1, 2))),
+		assertNull(plane1.findIntersections(new Ray(new Point(1, 1, 2), new Vector(1, 1, 0))),
 				"parallel ray to plane does not return null ");
 
 		// =============== Boundary Values Tests ==================
 
 		/* parallel rays to the plane */
 		// TC11: The ray out of the plane
-		assertNull(plane1.findIntersections(new Ray(new Vector(0, -3, 3), Point.ZERO)),
+		assertNull(plane1.findIntersections(new Ray(Point.ZERO, new Vector(0, -3, 3))),
 				"parallel ray to plane does not return null ");
 		// TC12: The ray in contained in the plane
-		assertNull(plane1.findIntersections(new Ray(pts[0].subtract(pts[1]), pts[2])),
+		assertNull(plane1.findIntersections(new Ray(pts[2], pts[0].subtract(pts[1]))),
 				"parallel ray to plane does not return null ");
 
 		/* Ray is orthogonal to the plane */
 		// TC13: ray start before the plane and intersect it
 		double d1 = 0.33333333333335;
 		var exp2 = List.of(new Point(d1, d1, d1));
-		assertEquals(exp2, plane1.findIntersections(new Ray(new Vector(d, d, d), new Point(0, 0, 0))),
+		assertEquals(exp2, plane1.findIntersections(new Ray(new Point(0, 0, 0), new Vector(d, d, d))),
 				"ray start before the plane returns wrong value ");
 		// TC14: ray start inside the plane
-		assertNull(plane1.findIntersections(new Ray(v1, pts[0])), "ray start inside the plane does not return null ");
+		assertNull(plane1.findIntersections(new Ray(pts[0], v1)), "ray start inside the plane does not return null ");
 		// TC15: ray start after the plane and does not intersect it
-		assertNull(plane1.findIntersections(new Ray(v1, (Point) v)), "ray start after the plane does not return null ");
+		assertNull(plane1.findIntersections(new Ray((Point) v, v1)), "ray start after the plane does not return null ");
 
 		/* Ray start at point that contained in the plane */
 		// TC16: ray starts at some point in the plane
-		assertNull(plane1.findIntersections(new Ray(v, pts[1])),
+		assertNull(plane1.findIntersections(new Ray(pts[1], v)),
 				"ray starts at some point in the plane does not return null ");
 		// TC17: ray start at q - the point that represents the plane
-		assertNull(plane1.findIntersections(new Ray(v, pts[0])),
+		assertNull(plane1.findIntersections(new Ray(pts[0], v)),
 				"ray start at q - the point that represents the plane does not return null ");
 
 	}

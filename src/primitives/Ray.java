@@ -21,10 +21,10 @@ public class Ray {
 	 * Construct ray at a given point and direction sent to the constructor. If the
 	 * direction parameter is not a unit vector - the ray will normalize it
 	 * 
-	 * @param dir - direction of the ray
 	 * @param p   - head point of the ray
+	 * @param dir - direction of the ray
 	 */
-	public Ray(Vector dir, Point p) {
+	public Ray(Point p, Vector dir) {
 		head = p;
 		direction = dir.normalize();
 	}

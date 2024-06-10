@@ -21,7 +21,7 @@ class CylinderTests {
 	@Test
 	void testGetNormal() {
 		// ============ Equivalence Partitions Tests ==============
-		Ray r = new Ray(new Vector(0, 1, 0), new Point(1, 0, 0));
+		Ray r = new Ray(new Point(1, 0, 0), new Vector(0, 1, 0));
 		Cylinder c = new Cylinder(r, 1, 5);
 		/**
 		 * TC01: point on the side surface

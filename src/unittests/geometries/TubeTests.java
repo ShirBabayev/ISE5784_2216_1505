@@ -23,7 +23,7 @@ class TubeTests {
 
 		// ============ Equivalence Partitions Tests ==============
 		// TC01: Check getNormal validity
-		Tube tube1 = new Tube(new Ray(new Vector(0, 1, 0), new Point(1, 0, 0)), 1);
+		Tube tube1 = new Tube(new Ray(new Point(1, 0, 0), new Vector(0, 1, 0)), 1);
 		/*
 		 * check whether the normal to the tube returns the wanted result, if not -
 		 * throw an exception
@@ -34,7 +34,7 @@ class TubeTests {
 		// =============== Boundary Values Tests ==================
 
 		// TC02: Ensure there is an exception
-		Tube tube2 = new Tube(new Ray(new Vector(0, 0, 1), new Point(0, 0, 2)), 1);
+		Tube tube2 = new Tube(new Ray(new Point(0, 0, 2), new Vector(0, 0, 1)), 1);
 		/*
 		 * When connecting the point to the head of the ray of the cylinder axis makes a
 		 * 90 c angle with the axis

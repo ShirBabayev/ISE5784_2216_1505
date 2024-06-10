@@ -16,7 +16,7 @@ class RayTests {
 	@Test
 	void testGetPoint() {
 		/** a ray for the tests */
-		Ray ray = new Ray(new Vector(1, 0, 0), Point.ZERO);
+		Ray ray = new Ray(Point.ZERO, new Vector(1, 0, 0));
 		// ============ Equivalence Partitions Tests ==============
 		// TC01: a positive distance
 		assertEquals(new Point(5, 0, 0), ray.getPoint(5),

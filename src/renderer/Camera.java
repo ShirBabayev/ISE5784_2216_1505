@@ -1,7 +1,6 @@
 package renderer;
 
-import static primitives.Util.*;
-
+import static primitives.Util.isZero;
 import java.util.MissingResourceException;
 
 import primitives.*;
@@ -151,8 +150,8 @@ public class Camera implements Cloneable {
 		double rX = width / nX;
 
 		// Calculate the x and y coordinates of the pixel in the view plane
-		double xj = (j - ((nX - 1) / 2d)) * rX;
 		double yi = -(i - ((nY - 1) / 2d)) * rY;
+		double xj = (j - ((nX - 1) / 2d)) * rX;
 
 		// Start with the center of the view plane
 		Point pij = pc;
@@ -161,9 +160,9 @@ public class Camera implements Cloneable {
 			pij = pij.add(vRight.scale(xj));
 		if (!isZero(yi))
 			pij = pij.add(vUp.scale(yi));
-
+		Vector vij = pij.subtract(p0).normalize();
 		// Return a normalized ray starting from the camera position towards the pixel
-		return new Ray(pij.subtract(p0), p0);
+		return new Ray(p0, vij);
 	}
 
 	/**
@@ -212,13 +211,15 @@ public class Camera implements Cloneable {
 		 * @return a camera with updated direction
 		 */
 		public Builder setDirection(Vector vTo, Vector vUp) {
-			//ensure that the vectors are orthogonal
+			// ensure that the vectors are orthogonal
 			if (isZero(vTo.dotProduct(vUp))) {
 				camera.vUp = vUp.normalize();
 				camera.vTo = vTo.normalize();
 			} else {
 				throw new IllegalArgumentException("the vectors are not orthogonal");
 			}
+			camera.vRight = vTo.crossProduct(vUp).normalize();
+
 			return this;
 		}
 
@@ -289,7 +290,8 @@ public class Camera implements Cloneable {
 
 			if (camera.distance < 0)
 				throw new IllegalArgumentException(d + illegalArgument);
-			camera.vRight = camera.vUp.crossProduct(camera.vTo).normalize();
+			// camera.vRight = camera.vTo.crossProduct(camera.vUp).normalize();
+
 			try {
 				return (Camera) camera.clone();
 			} catch (CloneNotSupportedException ex) {

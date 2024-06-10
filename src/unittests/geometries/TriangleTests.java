@@ -60,28 +60,28 @@ class TriangleTests {
 		// ============ Equivalence Partitions Tests ==============
 		// TC01: The point is inside the triangle
 		var exp2 = List.of(new Point(0, 0, 0.5));
-		assertEquals(exp2, triangle.findIntersections(new Ray(new Vector(0, 1, 0), new Point(0, -1, 0.5))),
+		assertEquals(exp2, triangle.findIntersections(new Ray(new Point(0, -1, 0.5), new Vector(0, 1, 0))),
 				"ray start before the plane returns wrong value ");
 
 		// TC02: The point is against the edge
-		assertNull(triangle.findIntersections(new Ray(new Vector(1, 0, 0), new Point(-1, 0, -1))),
+		assertNull(triangle.findIntersections(new Ray(new Point(-1, 0, -1), new Vector(1, 0, 0))),
 				"ray start before the plane returns wrong value ");
 
 		// TC03: The point is against the vertex
-		assertNull(triangle.findIntersections(new Ray(new Vector(1, 0, 0), new Point(-1, 0, 2))),
+		assertNull(triangle.findIntersections(new Ray(new Point(-1, 0, 2), new Vector(1, 0, 0))),
 				"ray start before the plane returns wrong value ");
 
 		// =============== Boundary Values Tests ==================
 		// TC11: The point is on the edge
-		assertNull(triangle.findIntersections(new Ray(new Vector(0, 1, 0), new Point(0, -1, 0))),
+		assertNull(triangle.findIntersections(new Ray(new Point(0, -1, 0), new Vector(0, 1, 0))),
 				"ray start before the plane returns wrong value ");
 
 		// TC12: The point is on the vertex
-		assertNull(triangle.findIntersections(new Ray(new Vector(0, 0, 1), new Point(-2, 0, 1))),
+		assertNull(triangle.findIntersections(new Ray(new Point(-2, 0, 1), new Vector(0, 0, 1))),
 				"ray start before the plane returns wrong value ");
 
 		// TC13: The point is on the continuation of the edge
-		assertNull(triangle.findIntersections(new Ray(new Vector(0, 0, 1), new Point(-2, 0, -1))),
+		assertNull(triangle.findIntersections(new Ray(new Point(-2, 0, -1), new Vector(0, 0, 1))),
 				"ray start before the plane returns wrong value ");
 
 	}
