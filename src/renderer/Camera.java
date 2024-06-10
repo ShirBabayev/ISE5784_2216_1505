@@ -43,7 +43,6 @@ public class Camera implements Cloneable {
 	 * default constructor with no parameters
 	 */
 	private Camera() {
-
 	}
 
 	/**
@@ -160,7 +159,7 @@ public class Camera implements Cloneable {
 			pij = pij.add(vRight.scale(xj));
 		if (!isZero(yi))
 			pij = pij.add(vUp.scale(yi));
-		Vector vij = pij.subtract(p0).normalize();
+		Vector vij = pij.subtract(p0);
 		// Return a normalized ray starting from the camera position towards the pixel
 		return new Ray(p0, vij);
 	}
@@ -212,14 +211,11 @@ public class Camera implements Cloneable {
 		 */
 		public Builder setDirection(Vector vTo, Vector vUp) {
 			// ensure that the vectors are orthogonal
-			if (isZero(vTo.dotProduct(vUp))) {
-				camera.vUp = vUp.normalize();
-				camera.vTo = vTo.normalize();
-			} else {
+			if (!isZero(vTo.dotProduct(vUp)))
 				throw new IllegalArgumentException("the vectors are not orthogonal");
-			}
-			camera.vRight = vTo.crossProduct(vUp).normalize();
 
+			camera.vUp = vUp.normalize();
+			camera.vTo = vTo.normalize();
 			return this;
 		}
 
@@ -290,12 +286,17 @@ public class Camera implements Cloneable {
 
 			if (camera.distance < 0)
 				throw new IllegalArgumentException(d + illegalArgument);
-			// camera.vRight = camera.vTo.crossProduct(camera.vUp).normalize();
+
+			if (!isZero(camera.vTo.dotProduct(camera.vUp)))
+				throw new IllegalArgumentException("the vectors are not orthogonal");
+
+			camera.vRight = camera.vTo.crossProduct(camera.vUp).normalize();
 
 			try {
 				return (Camera) camera.clone();
-			} catch (CloneNotSupportedException ex) {
-				throw new RuntimeException("does not succeed to create a copy to camera");
+			} catch (CloneNotSupportedException ignore) {
+				// these is zero probability for the code to get here
+				return null;
 			}
 		}
 
