@@ -73,7 +73,21 @@ public class Ray {
 		return head + "->" + direction;
 	}
 	
-	public Point findClosestPoint(List<Point> lst) {
-		return null;
+	public Point findClosestPoint(List<Point> intersections) {
+		if (intersections == null)	//if there are no points in the list
+			return null;
+		double distance = Double.POSITIVE_INFINITY;//the biggest value of distance
+		Point closest = null;
+		//passes threw all the points in the list and checks for each one
+		//if it's closer to the head of the ray, than the current closet point.
+		for (Point p : intersections) {    
+			double pdh = p.distance(head);//p distance head
+			//if the distance from p to the head is smaller than the smallest current distance
+			if (pdh < distance) {
+				distance = pdh;
+				closest = p;
+			}
+		}
+		return closest;
 		}
 }
