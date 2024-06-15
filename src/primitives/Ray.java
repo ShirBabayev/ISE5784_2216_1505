@@ -1,5 +1,7 @@
 package primitives;
 
+import java.util.List;
+
 /**
  * The class provides a service for various operations on ray based on point and
  * direction
@@ -70,4 +72,8 @@ public class Ray {
 	public String toString() {
 		return head + "->" + direction;
 	}
+	
+	public Point findClosestPoint(List<Point> lst) {
+		return null;
+		}
 }
