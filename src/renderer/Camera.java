@@ -38,6 +38,9 @@ public class Camera implements Cloneable {
 	 * the distance between the camera to the view plane
 	 */
 	private double distance = 0;
+	
+	ImageWriter imageWriter=null;
+	RayTracerBase rayTracer=null;
 
 	/**
 	 * default constructor with no parameters
@@ -164,6 +167,34 @@ public class Camera implements Cloneable {
 		return new Ray(p0, vij);
 	}
 
+	public void renderImage() {
+		//runs trough all the pixels of the view plain 
+		for(int i=0;i< imageWriter.getNy();i++)
+			for(int j=0;j< imageWriter.getNx();j++)
+				//for each pixel cast a ray
+				castRay(imageWriter.getNx(),imageWriter.getNy(),j,i);
+		//throw new UnsupportedOperationException();
+	}
+	
+	public void printGrid(int interval, Color color) {
+		for (int j = 0; j < imageWriter.getNx(); j++)
+			for (int i = 0; i < imageWriter.getNy(); i++)
+				if (isZero(j % interval) || isZero(i % interval))
+					imageWriter.writePixel(j, i, color);
+	}
+	
+	public void writeToImage() {
+		imageWriter.writeToImage();
+	}
+	private void castRay(int nX, int nY, int j, int i) {
+		//create a ray that constructs with the pixel
+		Ray ray=constructRay(nX, nY, j, i);	
+		//finds the color where the ray intersects
+		Color color = rayTracer.traceRay(ray);
+		//color the pixel
+		imageWriter.writePixel(j,i,color);
+
+	}
 	/**
 	 * class that build a camera and enable settings to the fields of the camera
 	 */
@@ -247,6 +278,28 @@ public class Camera implements Cloneable {
 			camera.distance = d;
 			return this;
 		}
+		
+		/**
+		 * 
+		 * 
+		 * @param
+		 * @return
+		 */
+		public Builder rayTracer(RayTracerBase rt) {
+			camera.rayTracer = rt;
+			return this;
+		}
+		
+		/**
+		 * 
+		 * 
+		 * @param
+		 * @return
+		 */
+		public Builder setImageWriter(ImageWriter imageWriter) {
+			camera.imageWriter = imageWriter;
+			return this;
+		}
 
 		/**
 		 * checks the validity of all fields of the camera
@@ -291,6 +344,11 @@ public class Camera implements Cloneable {
 				throw new IllegalArgumentException("the vectors are not orthogonal");
 
 			camera.vRight = camera.vTo.crossProduct(camera.vUp).normalize();
+			if (camera.imageWriter == null)
+							throw new MissingResourceException(missing, "Camera", "imageWriter");
+			
+			if (camera.rayTracer == null)
+				throw new MissingResourceException(missing, "Camera", "rayTracer");
 
 			try {
 				return (Camera) camera.clone();
@@ -298,6 +356,8 @@ public class Camera implements Cloneable {
 				// these is zero probability for the code to get here
 				return null;
 			}
+			
+			
 		}
 
 	}
