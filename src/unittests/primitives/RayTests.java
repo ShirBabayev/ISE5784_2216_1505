@@ -32,6 +32,9 @@ class RayTests {
 
 	}
 	
+	/**
+	 * Test method for {@link primitives.Ray#findClosestPoint(List)}.
+	 */
 	 @Test
 	    void testFindClosestPoint() {
 

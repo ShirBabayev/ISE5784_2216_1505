@@ -1,9 +1,8 @@
 package scene;
-
-import java.awt.Color;
-
 import lighting.AmbientLight;
 import geometries.*;
+
+import primitives.Color;
 
 /**
  * A class representing a graphical scene consisting of geometric bodies, 
@@ -19,7 +18,7 @@ public String name;
 /**
  * the background color of the scene
  */
-public Color background=Color.black;
+public Color background=Color.BLACK;
 
 /**
  * the ambient lighting of the scene
@@ -52,7 +51,7 @@ public Scene setBackground(Color color) {
 /**
  * setter function for setting the ambient lighting of the scene 
  * @param ambientLight is the ambient lighting according to which we will update the ambient lighting
- * @returnthe updated scene
+ * @return the updated scene
  */
 public Scene setAmbientLight(AmbientLight ambientLight) {
     this.ambientLight = ambientLight;
@@ -62,7 +61,7 @@ public Scene setAmbientLight(AmbientLight ambientLight) {
 /**
  * setter function for setting the geometries bodies of the scene 
  * @param geometries are the geometries bodies according to which we will update the geometries is the scene
- * @returnthe updated scene
+ * @return the updated scene
  */
 public Scene setGeometries(Geometries geometries) {
     this.geometries = geometries;

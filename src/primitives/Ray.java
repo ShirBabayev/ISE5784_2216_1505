@@ -73,6 +73,11 @@ public class Ray {
 		return head + "->" + direction;
 	}
 	
+	/**
+	 * A function that receives a list of points and returns the point closest to the top of the ray
+	 * @param intersections are the list of points
+	 * @return the point closest to the top of the ray
+	 */
 	public Point findClosestPoint(List<Point> intersections) {
 		if (intersections == null)	//if there are no points in the list
 			return null;

@@ -1,8 +1,10 @@
 package renderer;
 
 import primitives.Color;
+import primitives.Point;
 import primitives.Ray;
 import scene.Scene;
+
 /**
  * A class representing the path of a simple ray
  * @author Hodaya Avidan and Shir Babayev
@@ -17,9 +19,11 @@ public class SimpleRayTracer extends RayTracerBase {
 		super(s);
 	}
 	
+	
 	public Color traceRay(Ray ray) {
-		return null;
-	}
-
-
+		Point point = ray.findClosestPoint(scene.geometries.findIntersections(ray));
+        if (point == null)
+            return scene.background;
+        return scene.ambientLight.getIntensity();	
+     }
 }

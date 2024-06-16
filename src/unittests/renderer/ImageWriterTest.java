@@ -23,7 +23,7 @@ class ImageWriterTest {
 	 */
 	private final ImageWriter imageWriter=new ImageWriter("image",800,500);
 	/**
-	 * Test method for {@link renderer.ImageWriter#writeToImage()
+	 * Test method for {@link renderer.ImageWriter#writeToImage()}
 	 */
 	@Test
 	void writeToImage() {

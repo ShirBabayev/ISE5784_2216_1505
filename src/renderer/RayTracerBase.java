@@ -8,6 +8,9 @@ import scene.Scene;
  * @author Hodaya Avidan and Shir Babayev
  */
 public abstract class RayTracerBase {
+	/**
+	 * The scene with which we will test the cut with the ray
+	 */
 	protected Scene scene;
 	
 	/**

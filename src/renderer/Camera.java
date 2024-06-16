@@ -38,9 +38,14 @@ public class Camera implements Cloneable {
 	 * the distance between the camera to the view plane
 	 */
 	private double distance = 0;
-	
-	ImageWriter imageWriter=null;
-	RayTracerBase rayTracer=null;
+	/**
+	 * An object intended for creating the image and coloring it
+	 */
+	private ImageWriter imageWriter = null;
+	/**
+	 * An object designed to calculate the pixel color
+	 */
+	private RayTracerBase rayTracer = null;
 
 	/**
 	 * default constructor with no parameters
@@ -167,34 +172,57 @@ public class Camera implements Cloneable {
 		return new Ray(p0, vij);
 	}
 
+	/**
+	 * A function that goes through all the pixels of the view plane and casts a ray
+	 * on each one
+	 */
 	public void renderImage() {
-		//runs trough all the pixels of the view plain 
-		for(int i=0;i< imageWriter.getNy();i++)
-			for(int j=0;j< imageWriter.getNx();j++)
-				//for each pixel cast a ray
-				castRay(imageWriter.getNx(),imageWriter.getNy(),j,i);
-		//throw new UnsupportedOperationException();
+		// runs trough all the pixels of the view plain
+		for (int i = 0; i < imageWriter.getNy(); i++)
+			for (int j = 0; j < imageWriter.getNx(); j++)
+				// for each pixel cast a ray
+				castRay(imageWriter.getNx(), imageWriter.getNy(), j, i);
+		 //throw new UnsupportedOperationException();
 	}
-	
+
+	/**
+	 * A function responsible for creating a network of lines
+	 * 
+	 * @param interval is the length of the sides of the squares in the grid
+	 * @param color    is the color of the grid lines
+	 */
 	public void printGrid(int interval, Color color) {
 		for (int j = 0; j < imageWriter.getNx(); j++)
 			for (int i = 0; i < imageWriter.getNy(); i++)
 				if (isZero(j % interval) || isZero(i % interval))
 					imageWriter.writePixel(j, i, color);
 	}
-	
+
+	/**
+	 * A function that creates the final image
+	 */
 	public void writeToImage() {
 		imageWriter.writeToImage();
 	}
-	private void castRay(int nX, int nY, int j, int i) {
-		//create a ray that constructs with the pixel
-		Ray ray=constructRay(nX, nY, j, i);	
-		//finds the color where the ray intersects
-		Color color = rayTracer.traceRay(ray);
-		//color the pixel
-		imageWriter.writePixel(j,i,color);
 
+	/**
+	 * A function that produces a ray according to the given parameters, calculates
+	 * the color that should be painted the pixel and paints it.
+	 * 
+	 * @param nX - The number of pixels in the x-axis.
+	 * @param nY - The number of pixels in the y-axis.
+	 * @param j  - The x-coordinate of the pixel.
+	 * @param i  - The y-coordinate of the pixel.
+	 */
+	private void castRay(int nX, int nY, int j, int i) {
+		// create a ray that constructs with the pixel
+		Ray ray = constructRay(nX, nY, j, i);
+		// finds the color where the ray intersects
+		Color color = rayTracer.traceRay(ray);
+		// color the pixel
+		imageWriter.writePixel(j, i, color);
 	}
+
 	/**
 	 * class that build a camera and enable settings to the fields of the camera
 	 */
@@ -278,23 +306,23 @@ public class Camera implements Cloneable {
 			camera.distance = d;
 			return this;
 		}
-		
+
 		/**
+		 * A setter function that allows updating the ray tracer
 		 * 
-		 * 
-		 * @param
-		 * @return
+		 * @param rt is the ray tracer
+		 * @return a camera with updated ray tracer
 		 */
-		public Builder rayTracer(RayTracerBase rt) {
+		public Builder setRayTracer(RayTracerBase rt) {
 			camera.rayTracer = rt;
 			return this;
 		}
-		
+
 		/**
+		 * A setter function that allows updating of image Writer
 		 * 
-		 * 
-		 * @param
-		 * @return
+		 * @param imageWriter With it we will update the image Writer
+		 * @return a camera with updated image Writer
 		 */
 		public Builder setImageWriter(ImageWriter imageWriter) {
 			camera.imageWriter = imageWriter;
@@ -344,9 +372,10 @@ public class Camera implements Cloneable {
 				throw new IllegalArgumentException("the vectors are not orthogonal");
 
 			camera.vRight = camera.vTo.crossProduct(camera.vUp).normalize();
+
 			if (camera.imageWriter == null)
-							throw new MissingResourceException(missing, "Camera", "imageWriter");
-			
+				throw new MissingResourceException(missing, "Camera", "imageWriter");
+
 			if (camera.rayTracer == null)
 				throw new MissingResourceException(missing, "Camera", "rayTracer");
 
@@ -356,8 +385,7 @@ public class Camera implements Cloneable {
 				// these is zero probability for the code to get here
 				return null;
 			}
-			
-			
+
 		}
 
 	}
