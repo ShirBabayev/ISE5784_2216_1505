@@ -7,3 +7,5 @@ concave
 quadrangular
 intersectable
 int
+ia
+ka
