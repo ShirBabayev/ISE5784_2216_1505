@@ -72,27 +72,30 @@ public class Ray {
 	public String toString() {
 		return head + "->" + direction;
 	}
-	
+
 	/**
-	 * A function that receives a list of points and returns the point closest to the top of the ray
+	 * A function that receives a list of points and returns the point closest to
+	 * the top of the ray
+	 * 
 	 * @param intersections are the list of points
 	 * @return the point closest to the top of the ray
 	 */
 	public Point findClosestPoint(List<Point> intersections) {
-		if (intersections == null)	//if there are no points in the list
+		if (intersections == null) // if there are no points in the list
 			return null;
-		double distance = Double.POSITIVE_INFINITY;//the biggest value of distance
+		double distance = Double.POSITIVE_INFINITY;// the biggest value of distance
 		Point closest = null;
-		//passes threw all the points in the list and checks for each one
-		//if it's closer to the head of the ray, than the current closet point.
-		for (Point p : intersections) {    
-			double pdh = p.distance(head);//p distance head
-			//if the distance from p to the head is smaller than the smallest current distance
+		// passes threw all the points in the list and checks for each one
+		// if it's closer to the head of the ray, than the current closet point.
+		for (Point p : intersections) {
+			double pdh = p.distance(head);// p distance head
+			// if the distance from p to the head is smaller than the smallest current
+			// distance
 			if (pdh < distance) {
 				distance = pdh;
 				closest = p;
 			}
 		}
 		return closest;
-		}
+	}
 }

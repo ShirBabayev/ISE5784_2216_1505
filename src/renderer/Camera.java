@@ -182,7 +182,7 @@ public class Camera implements Cloneable {
 			for (int j = 0; j < imageWriter.getNx(); j++)
 				// for each pixel cast a ray
 				castRay(imageWriter.getNx(), imageWriter.getNy(), j, i);
-		 //throw new UnsupportedOperationException();
+		// throw new UnsupportedOperationException();
 	}
 
 	/**
