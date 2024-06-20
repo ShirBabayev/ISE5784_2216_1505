@@ -1,7 +1,6 @@
 package renderer;
 
 import primitives.Color;
-import primitives.Point;
 import primitives.Ray;
 import scene.Scene;
 import geometries.Intersectable.GeoPoint;
@@ -36,7 +35,7 @@ public class SimpleRayTracer extends RayTracerBase {
 	 * @param point The point closest to the top of the ray
 	 * @return Body color at this point
 	 */
-	private Color calcColor(GeoPoint point) {
-		return scene.ambientLight.getIntensity();
+	private Color calcColor(GeoPoint gpoint) {
+		return scene.ambientLight.getIntensity().add(gpoint.geometry.getEmission());
 	}
 }

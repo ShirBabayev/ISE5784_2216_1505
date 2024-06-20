@@ -10,12 +10,12 @@ import primitives.Double3;
  * 
  * @author Hodaya Avidan and Shir Babayev
  */
-public class AmbientLight {
+public class AmbientLight extends Light {
 
 	/**
 	 * fill light intensity
 	 */
-	private final Color intensity;
+	//private final Color intensity;//TODO
 
 	/**
 	 * Default ambient lighting = black background with zero attenuation coefficient
@@ -30,7 +30,7 @@ public class AmbientLight {
 	 * @param kA is light attenuation coefficient
 	 */
 	public AmbientLight(Color iA, Double3 kA) {
-		intensity = iA.scale(kA);
+		super(iA.scale(kA));
 	}
 
 	/**
@@ -41,15 +41,15 @@ public class AmbientLight {
 	 * @param kA is light attenuation coefficient
 	 */
 	public AmbientLight(Color iA, Double kA) {
-		intensity = iA.scale(kA);
-	}
+		super(iA.scale(kA));
+		}
 
 	/**
 	 * getter function that returns the value of the ambient lighting intensity
 	 * 
 	 * @return the value of the ambient lighting intensity
 	 */
-	public Color getIntensity() {
+	/*public Color getIntensity() {
 		return intensity;
-	}
+	}*///TODO
 }

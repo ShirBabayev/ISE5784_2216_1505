@@ -101,22 +101,8 @@ public class Ray {
 	 * @param intersections are the list of points
 	 * @return the point closest to the top of the ray
 	 */
-	public Point findClosestPoint(List<Point> intersections) {
-		if (intersections == null) // if there are no points in the list
-			return null;
-		double distance = Double.POSITIVE_INFINITY;// the biggest value of distance
-		Point closest = null;
-		// passes threw all the points in the list and checks for each one
-		// if it's closer to the head of the ray, than the current closet point.
-		for (Point p : intersections) {
-			double pdh = p.distance(head);// p distance head
-			// if the distance from p to the head is smaller than the smallest current
-			// distance
-			if (pdh < distance) {
-				distance = pdh;
-				closest = p;
-			}
+	public Point findClosestPoint(List<Point> points) {
+		 return points == null || points.isEmpty() ? null
+		 : findClosestGeoPoint(points.stream().map(p -> new GeoPoint(null, p)).toList()).point;
 		}
-		return closest;
-	}
 }
