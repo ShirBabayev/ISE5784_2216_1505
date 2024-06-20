@@ -10,3 +10,6 @@ int
 ia
 ka
 rt
+specular
+nl
+nv
