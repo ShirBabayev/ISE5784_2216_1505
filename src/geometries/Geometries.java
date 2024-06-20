@@ -10,7 +10,7 @@ import primitives.Ray;
 /**
  * implementation of Intersectable
  */
-public class Geometries implements Intersectable {
+public class Geometries extends Intersectable {
 
 	/**
 	 * a list of geometry bodies
@@ -44,7 +44,7 @@ public class Geometries implements Intersectable {
 	}
 
 	@Override
-	public List<Point> findIntersections(Ray ray) {
+	public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
 		List<Point> l = null;
 		// Checks each body separately if it has intersection points with the beam
 		for (Intersectable body : bodies) {
@@ -58,6 +58,6 @@ public class Geometries implements Intersectable {
 					l.addAll(intersectionsOfBody);
 			}
 		}
-		return l;
+		return List.of(this,);
 	}
 }

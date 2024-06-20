@@ -2,7 +2,6 @@ package renderer;
 
 import static primitives.Util.isZero;
 import java.util.MissingResourceException;
-
 import primitives.*;
 
 /**
@@ -178,10 +177,12 @@ public class Camera implements Cloneable {
 	 */
 	public void renderImage() {
 		// runs trough all the pixels of the view plain
-		for (int i = 0; i < imageWriter.getNy(); i++)
-			for (int j = 0; j < imageWriter.getNx(); j++)
+		int nX=imageWriter.getNx();
+		int nY=imageWriter.getNy();		
+		for (int i = 0; i < nY; i++)
+			for (int j = 0; j < nX; j++)
 				// for each pixel cast a ray
-				castRay(imageWriter.getNx(), imageWriter.getNy(), j, i);
+				castRay(nX, nY, j, i);
 		// throw new UnsupportedOperationException();
 	}
 
@@ -192,8 +193,10 @@ public class Camera implements Cloneable {
 	 * @param color    is the color of the grid lines
 	 */
 	public void printGrid(int interval, Color color) {
-		for (int j = 0; j < imageWriter.getNx(); j++)
-			for (int i = 0; i < imageWriter.getNy(); i++)
+		int nX=imageWriter.getNx();
+		int nY=imageWriter.getNy();		
+		for (int j = 0; j < nX; j++)
+			for (int i = 0; i < nY; i++)
 				if (isZero(j % interval) || isZero(i % interval))
 					imageWriter.writePixel(j, i, color);
 	}
@@ -286,7 +289,8 @@ public class Camera implements Cloneable {
 		 * @return a camera with updated view plane size
 		 */
 		public Builder setVpSize(double w, double h) {
-			if (h == 0 || w == 0)
+			//if one og them is zero
+			if (isZero(h*w))
 				throw new IllegalArgumentException("size of view plane is wrong");
 			camera.height = h;
 			camera.width = w;
@@ -301,7 +305,7 @@ public class Camera implements Cloneable {
 		 * @return a camera with updated distance
 		 */
 		public Builder setVpDistance(double d) {
-			if (d == 0)
+			if (isZero(d))
 				throw new IllegalArgumentException("distance from camera to the view plane is wrong");
 			camera.distance = d;
 			return this;
@@ -350,13 +354,13 @@ public class Camera implements Cloneable {
 			if (camera.vTo == null)
 				throw new MissingResourceException(missing, "Camera", "vTo");
 
-			if (camera.height == 0)
+			if (isZero(camera.height))
 				throw new MissingResourceException(missing, "Camera", h);
 
-			if (camera.width == 0)
+			if (isZero(camera.width))
 				throw new MissingResourceException(missing, "Camera", w);
 
-			if (camera.distance == 0)
+			if (isZero(camera.distance))
 				throw new MissingResourceException(missing, "Camera", d);
 
 			if (camera.height < 0)

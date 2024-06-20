@@ -11,7 +11,7 @@ import static primitives.Util.*;
  * 
  * @author Hodaya Avidan and Shir Babayev
  */
-public class Plane implements Geometry {
+public class Plane extends Geometry {
 
 	/**
 	 * a point on the plane
@@ -65,7 +65,7 @@ public class Plane implements Geometry {
 	}
 
 	@Override
-	public List<Point> findIntersections(Ray ray) {
+	public List<Point> findGeoIntersectionsHelper(Ray ray) {
 		double nv = normal.dotProduct(ray.getDirection());
 		if (isZero(nv))
 			return null;
@@ -84,7 +84,7 @@ public class Plane implements Geometry {
 		// If t is negative than the body is in the opposite direction from the ray or
 		// there is no point of
 		// intersection
-		return alignZero(t) <= 0 ? null : List.of(ray.getPoint(t));
+		return alignZero(t) <= 0 ? null : List.of(GeoPoint( (Geometry)this,ray.getPoint(t)));
 	}
 
 }

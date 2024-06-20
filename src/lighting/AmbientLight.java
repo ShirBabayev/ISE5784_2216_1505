@@ -26,22 +26,22 @@ public class AmbientLight {
 	 * The constructor calculates the intensity of the fill according to the
 	 * original fill color and the light attenuation coefficient
 	 * 
-	 * @param Ia is original fill color
-	 * @param Ka is light attenuation coefficient
+	 * @param iA is original fill color
+	 * @param kA is light attenuation coefficient
 	 */
-	public AmbientLight(Color Ia, Double3 Ka) {
-		intensity = Ia.scale(Ka);
+	public AmbientLight(Color iA, Double3 kA) {
+		intensity = iA.scale(kA);
 	}
 
 	/**
 	 * The constructor calculates the intensity of the fill according to the
 	 * original fill color and the light attenuation coefficient
 	 * 
-	 * @param Ia is original fill color
-	 * @param Ka is light attenuation coefficient
+	 * @param iA is original fill color
+	 * @param kA is light attenuation coefficient
 	 */
-	public AmbientLight(Color Ia, Double Ka) {
-		intensity = Ia.scale(Ka);
+	public AmbientLight(Color iA, Double kA) {
+		intensity = iA.scale(kA);
 	}
 
 	/**

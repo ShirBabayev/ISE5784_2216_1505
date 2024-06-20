@@ -5,7 +5,7 @@ package geometries;
  * 
  * @author Hodaya Avidan and Shir Babayev
  */
-public abstract class RadialGeometry implements Geometry {
+public abstract class RadialGeometry extends Geometry {
 
 	/**
 	 * Radius - the distance between the center of the circle of the shape and its
