@@ -13,9 +13,12 @@ public abstract class Intersectable {
 	 * calculates the points where the ray intersects with the geometry
 	 * 
 	 * @param ray - the ray that Intersects with the geometry
-	 * @return a list of intersection point between the ray and the geometry
+	 * @return geoList list of intersection point between the ray and the geometry
 	 */
-	public abstract List<Point> findIntersections(Ray ray);
+	public List<Point> findIntersections(Ray ray) {
+		 var geoList = findGeoIntersections(ray);
+		 return geoList == null ? null : geoList.stream().map(gp -> gp.point).toList();
+		}	
 	
 	public static class GeoPoint {
 		 public Geometry geometry;

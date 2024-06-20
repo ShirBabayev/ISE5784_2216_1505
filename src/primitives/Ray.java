@@ -2,6 +2,8 @@ package primitives;
 
 import java.util.List;
 
+import geometries.Intersectable.GeoPoint;
+
 /**
  * The class provides a service for various operations on ray based on point and
  * direction
@@ -24,11 +26,11 @@ public class Ray {
 	 * direction parameter is not a unit vector - the ray will normalize it
 	 * 
 	 * @param p   - head point of the ray
-	 * @param dir - direction of the ray
+	 * @param direction - direction of the ray
 	 */
-	public Ray(Point p, Vector dir) {
+	public Ray(Point p, Vector directoin) {
 		head = p;
-		direction = dir.normalize();
+		this.direction = directoin.normalize();
 	}
 
 	/**
@@ -71,6 +73,25 @@ public class Ray {
 	@Override
 	public String toString() {
 		return head + "->" + direction;
+	}
+	
+	public GeoPoint findClosestGeoPoint(List<GeoPoint> intersections) {
+		if (intersections == null) // if there are no points in the list
+			return null;
+		double distance = Double.POSITIVE_INFINITY;// the biggest value of distance
+		GeoPoint closest = null;
+		// passes threw all the points in the list and checks for each one
+		// if it's closer to the head of the ray, than the current closet point.
+		for (GeoPoint p : intersections) {
+			double pdh = p.point.distance(head);// p distance head
+			// if the distance from p to the head is smaller than the smallest current
+			// distance
+			if (pdh < distance) {
+				distance = pdh;
+				closest = p;
+			}
+		}
+		return closest;
 	}
 
 	/**

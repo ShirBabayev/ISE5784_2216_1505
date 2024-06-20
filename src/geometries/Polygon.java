@@ -2,6 +2,8 @@ package geometries;
 
 import java.util.List;
 
+import geometries.Intersectable.GeoPoint;
+
 import static primitives.Util.isZero;
 
 import primitives.Point;
@@ -87,11 +89,12 @@ public class Polygon extends Geometry {
 		return plane.getNormal();
 	}
 
+	//TODO: לבדוק האם לא כדאי לקרוא ישירות לפונקציה של המישור
 	@Override
-	public List<Point> findIntersections(Ray ray) {
-		List<Point> intersections = plane.findIntersections(ray);
+	public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+		List<Point> intersection = plane.findIntersections(ray);
 		// there is no intersection point with the plane of the polygon
-		if (intersections == null)
+		if (intersection == null)
 			return null;
 
 		// a vector from the head to the first vertex
@@ -122,7 +125,7 @@ public class Polygon extends Geometry {
 		if (sign2 * sign <= 0)
 			return null;
 
-		return intersections;
+		return List.of(new GeoPoint(this,intersection.get(0)));
 	}
 
 }

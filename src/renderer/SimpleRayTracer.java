@@ -4,6 +4,7 @@ import primitives.Color;
 import primitives.Point;
 import primitives.Ray;
 import scene.Scene;
+import geometries.Intersectable.GeoPoint;
 
 /**
  * A class representing the path of a simple ray
@@ -24,7 +25,7 @@ public class SimpleRayTracer extends RayTracerBase {
 
 	@Override
 	public Color traceRay(Ray ray) {
-		Point point = ray.findClosestPoint(scene.geometries.findIntersections(ray));
+		GeoPoint point = ray.findClosestGeoPoint(scene.geometries.findGeoIntersections(ray));
 		return point == null ? scene.background : calcColor(point);
 	}
 
@@ -35,7 +36,7 @@ public class SimpleRayTracer extends RayTracerBase {
 	 * @param point The point closest to the top of the ray
 	 * @return Body color at this point
 	 */
-	private Color calcColor(Point point) {
+	private Color calcColor(GeoPoint point) {
 		return scene.ambientLight.getIntensity();
 	}
 }

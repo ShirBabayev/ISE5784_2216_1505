@@ -45,10 +45,10 @@ public class Geometries extends Intersectable {
 
 	@Override
 	public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
-		List<Point> l = null;
+		List<GeoPoint> l = null;
 		// Checks each body separately if it has intersection points with the beam
 		for (Intersectable body : bodies) {
-			var intersectionsOfBody = body.findIntersections(ray);
+			var intersectionsOfBody = body.findGeoIntersections(ray);
 			if (intersectionsOfBody != null) {
 				// create a new list because it is the first value
 				if (l == null)
@@ -58,6 +58,6 @@ public class Geometries extends Intersectable {
 					l.addAll(intersectionsOfBody);
 			}
 		}
-		return List.of(this,);
+		return l;
 	}
 }

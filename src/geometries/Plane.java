@@ -1,7 +1,6 @@
 package geometries;
 
 import java.util.List;
-
 import primitives.*;
 import static primitives.Util.*;
 
@@ -65,7 +64,7 @@ public class Plane extends Geometry {
 	}
 
 	@Override
-	public List<Point> findGeoIntersectionsHelper(Ray ray) {
+	public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
 		double nv = normal.dotProduct(ray.getDirection());
 		if (isZero(nv))
 			return null;
@@ -84,7 +83,7 @@ public class Plane extends Geometry {
 		// If t is negative than the body is in the opposite direction from the ray or
 		// there is no point of
 		// intersection
-		return alignZero(t) <= 0 ? null : List.of(GeoPoint( (Geometry)this,ray.getPoint(t)));
+		return alignZero(t) <= 0 ? null : List.of(new GeoPoint(this , ray.getPoint(t)));
 	}
 
 }
