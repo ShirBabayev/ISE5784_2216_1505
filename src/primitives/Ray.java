@@ -75,6 +75,11 @@ public class Ray {
 		return head + "->" + direction;
 	}
 	
+	/**
+	 * The function gets a list of intersections point that the rat intersect the geometry body and find the closet point to the head of the point
+	 * @param intersections are list of intersection point that the ray intersect the body
+	 * @return the closet point to the head of the ray among the intersections point
+	 */
 	public GeoPoint findClosestGeoPoint(List<GeoPoint> intersections) {
 		if (intersections == null) // if there are no points in the list
 			return null;
