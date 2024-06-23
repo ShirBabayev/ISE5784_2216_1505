@@ -175,7 +175,7 @@ public class Camera implements Cloneable {
 	 * A function that goes through all the pixels of the view plane and casts a ray
 	 * on each one
 	 */
-	public void renderImage() {
+	public Camera renderImage() {
 		// runs trough all the pixels of the view plain
 		int nX=imageWriter.getNx();
 		int nY=imageWriter.getNy();		
@@ -183,7 +183,7 @@ public class Camera implements Cloneable {
 			for (int j = 0; j < nX; j++)
 				// for each pixel cast a ray
 				castRay(nX, nY, j, i);
-		// throw new UnsupportedOperationException();
+		return this;
 	}
 
 	/**
@@ -192,13 +192,14 @@ public class Camera implements Cloneable {
 	 * @param interval is the length of the sides of the squares in the grid
 	 * @param color    is the color of the grid lines
 	 */
-	public void printGrid(int interval, Color color) {
+	public Camera printGrid(int interval, Color color) {
 		int nX=imageWriter.getNx();
 		int nY=imageWriter.getNy();		
 		for (int j = 0; j < nX; j++)
 			for (int i = 0; i < nY; i++)
 				if (isZero(j % interval) || isZero(i % interval))
 					imageWriter.writePixel(j, i, color);
+		return this;
 	}
 
 	/**

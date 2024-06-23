@@ -3,9 +3,8 @@
  */
 package lighting;
 
-import primitives.Color;
-import primitives.Point;
-import primitives.Vector;
+import primitives.*;
+import static primitives.Util.*;
 
 /**
  * A class representing spot lighting - lighting emanating from a point in a specific direction
@@ -25,7 +24,7 @@ public class SpotLight extends PointLight {
 	 */
 	public SpotLight(Color intensity,Point position,  Vector direction) {
 		super(intensity,position);
-		this.direction = direction;
+		this.direction = direction.normalize();
 	}
 		
 	/**
@@ -55,8 +54,10 @@ public class SpotLight extends PointLight {
 	
 	@Override
 	public Color getIntensity(Point p) {
+		double dirL = direction.dotProduct(getL(p));
+		if (alignZero(dirL) <= 0) return Color.BLACK;
 		//the getL of the father is working
-		return super.getIntensity(p).scale(Math.max(0, direction.dotProduct(getL(p))));
+		return super.getIntensity(p).scale(direction.dotProduct(getL(p)));
 	}
 	
 

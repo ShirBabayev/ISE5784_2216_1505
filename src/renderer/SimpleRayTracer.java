@@ -1,17 +1,11 @@
 package renderer;
 
-import primitives.Color;
-import primitives.Double3;
-import primitives.Material;
-import primitives.Ray;
-import primitives.Vector;
-
+import primitives.*;
+import lighting.LightSource;
 import scene.Scene;
 
-import static primitives.Util.alignZero;
-
-import geometries.Intersectable.GeoPoint;
-import lighting.LightSource;
+import static primitives.Util.*;
+import static geometries.Intersectable.GeoPoint;
 
 /**
  * A class representing the path of a simple ray
@@ -38,7 +32,7 @@ public class SimpleRayTracer extends RayTracerBase {
 
 	/**
 	 * The function receives the point closest to the ray and calculates the color
-	 * of the point on the geometric body *
+	 * of the point on the geometric body
 	 * 
 	 * @param point The point closest to the top of the ray
 	 * @return Body color at this point
@@ -47,43 +41,66 @@ public class SimpleRayTracer extends RayTracerBase {
 		return scene.ambientLight.getIntensity().add(calcLocalEffects(gpoint, ray));
 	}
 
+	/**
+	 * 
+	 * @param intersection
+	 * @param ray
+	 * @return
+	 */
 	private Color calcLocalEffects(GeoPoint intersection, Ray ray) {
-	    Vector v = ray.getDirection();
-	    Vector n = intersection.geometry.getNormal(intersection.point);
-	    double nv = alignZero(n.dotProduct(v));
-	    if (nv == 0)
-	        return Color.BLACK;
+		Vector v = ray.getDirection();
+		Vector n = intersection.geometry.getNormal(intersection.point);
+		double nv = alignZero(n.dotProduct(v));
+		if (nv == 0)
+			return Color.BLACK;
 
-	    int nShininess = intersection.geometry.getMaterial().nShininess;
+		Material material = intersection.geometry.getMaterial();
+		int nShininess = material.nShininess;
 
-	    Double3 kd = intersection.geometry.getMaterial().kD, ks = intersection.geometry.getMaterial().kS;
+		Color color = intersection.geometry.getEmission();
+		for (LightSource lightSource : scene.lights) {
+			Vector l = lightSource.getL(intersection.point);
+			double nl = alignZero(n.dotProduct(l));
 
-	    Color color = Color.BLACK;
-	    for (LightSource lightSource : scene.lights) {
-	    Vector l = lightSource.getL(intersection.point);
-	    double nl = alignZero(n.dotProduct(l));
+			if (nl * nv > 0) { // sign(nl) == sign(nv)
+				Color lightIntensity = lightSource.getIntensity(intersection.point);
+				color = color.add(lightIntensity.scale( //
+						calcDiffusive(material.kD, nl).add( //
+						calcSpecular(material.kS, l, n, nl, v, nShininess))));
+			}
+		}
+		return color;
+	}
 
-	    if (nl * nv > 0) { // sign(nl) == sign(nv)
-	    Color lightIntensity = lightSource.getIntensity(intersection.point);
-	    color = color.add(calcDiffusive(kd, nl, lightIntensity),
-	    calcSpecular(ks, l, n, nl, v, nShininess, lightIntensity));
-	    }
-	    }
-	    return color;
-	    }
+	/**
+	 * 
+	 * @param kd
+	 * @param nl
+	 * @return
+	 */
+	private Double3 calcDiffusive(Double3 kd, double nl) {
+		return kd.scale(Math.abs(nl));
+	}
 
-	private Color calcDiffusive(Double3 kd, double nl, Color lightIntensity) {
-	     return lightIntensity.scale(kd.scale(Math.abs(nl)));
-	     }
+	/**
+	 * 
+	 * @param ks
+	 * @param l
+	 * @param n
+	 * @param nl
+	 * @param v
+	 * @param nShininess
+	 * @param lightIntensity
+	 * @return
+	 */
+	private Double3 calcSpecular(Double3 ks, //
+			Vector l, Vector n, double nl, Vector v, //
+			int nShininess) {
+		Vector r = l.add(n.scale(-2 * nl)); // nl must not be zero!
+		double minusVR = -alignZero(r.dotProduct(v));
 
-	    
-	    private Color calcSpecular(Double3 ks, Vector l, Vector n, double nl, Vector v, int nShininess,
-	                               Color lightIntensity) {
-	        Vector r = l.add(n.scale(-2 * nl)); // nl must not be zero!
-	        double minusVR = -alignZero(r.dotProduct(v));
-	        if (minusVR <= 0) {
-	            return new primitives.Color(Color.BLACK.getColor()); // View from direction opposite to r vector
-	        }
-	        return lightIntensity.scale(ks.scale(Math.pow(minusVR, nShininess)));
-	    }
+		// It may be that the view is from direction opposite to r vector
+		return minusVR <= 0 ? Double3.ZERO //
+				: ks.scale(Math.pow(minusVR, nShininess));
+	}
 }
