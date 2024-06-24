@@ -13,7 +13,7 @@ import scene.Scene;
  * 
  * @author Shir Babayev and Hodaya Avidan
  */
-public class integrationTests {
+public class IntegrationTests {
 
 	/**
 	 * a cameraBuilder for tests

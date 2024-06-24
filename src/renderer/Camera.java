@@ -174,6 +174,7 @@ public class Camera implements Cloneable {
 	/**
 	 * A function that goes through all the pixels of the view plane and casts a ray
 	 * on each one
+	 * @return 
 	 */
 	public Camera renderImage() {
 		// runs trough all the pixels of the view plain
@@ -191,6 +192,8 @@ public class Camera implements Cloneable {
 	 * 
 	 * @param interval is the length of the sides of the squares in the grid
 	 * @param color    is the color of the grid lines
+	 * 
+	 * @return
 	 */
 	public Camera printGrid(int interval, Color color) {
 		int nX=imageWriter.getNx();

@@ -34,7 +34,7 @@ public class SimpleRayTracer extends RayTracerBase {
 	 * The function receives the point closest to the ray and calculates the color
 	 * of the point on the geometric body
 	 * 
-	 * @param point The point closest to the top of the ray
+	 * @param gpoint - The point closest to the top of the ray
 	 * @return Body color at this point
 	 */
 	private Color calcColor(GeoPoint gpoint, Ray ray) {
@@ -90,7 +90,6 @@ public class SimpleRayTracer extends RayTracerBase {
 	 * @param nl
 	 * @param v
 	 * @param nShininess
-	 * @param lightIntensity
 	 * @return
 	 */
 	private Double3 calcSpecular(Double3 ks, //

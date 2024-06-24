@@ -196,12 +196,12 @@ public class LightsTests {
 	 * 
 	 * 
 	 * 
-	 * camera_1 = camera1.setImageWriter(new ImageWriter("lightSphereSpotSharp",
-	 * 500, 500)).build();
+	 * camera1.setImageWriter(new ImageWriter("lightSphereSpotSharp",
+	 * 500, 500)).build()
 	 * 
-	 * camera_1.renderImage();
+	 * .renderImage()
 	 * 
-	 * camera_1.writeToImage();
+	 * .writeToImage();
 	 * 
 	 * }
 	 */
@@ -222,12 +222,12 @@ public class LightsTests {
 	 * 
 	 * 
 	 * 
-	 * camera_2 = camera2.setImageWriter(new ImageWriter("lightTrianglesSpotSharp",
-	 * 500, 500)).build();
+	 * camera2.setImageWriter(new ImageWriter("lightTrianglesSpotSharp",
+	 * 500, 500)).build()
 	 * 
-	 * camera_2.renderImage();
+	 * .renderImage()
 	 * 
-	 * camera_2.writeToImage();
+	 * .writeToImage();
 	 * 
 	 * }
 	 */
