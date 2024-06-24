@@ -101,7 +101,7 @@ public class Ray {
 
 	/**
 	 * A function that receives a list of points and returns the point closest to
-	 * the top of the ray
+	 * the top of the ray, if there is no intersection point return null
 	 * 
 	 * @param intersections are the list of points
 	 * @return the point closest to the top of the ray

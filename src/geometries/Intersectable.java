@@ -68,6 +68,12 @@ public abstract class Intersectable {
 	public List<GeoPoint> findGeoIntersections(Ray ray){
 		return findGeoIntersectionsHelper(ray);
 		}
+	
+	/**
+	 * The functions gets a ray and find a list of points that intersects the geometry body
+	 * @param ray is a ray that intersect (or not) the geometry body
+	 * @return list of intersections point
+	 */
 	protected abstract  List<GeoPoint> findGeoIntersectionsHelper(Ray ray);
 
 }
