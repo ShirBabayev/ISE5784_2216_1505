@@ -13,3 +13,4 @@ rt
 specular
 nl
 nv
+gpoint

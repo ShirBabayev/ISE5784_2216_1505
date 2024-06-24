@@ -5,6 +5,7 @@ import primitives.*;
 /**
  * A class that represents point lighting - lighting that comes from a point and
  * spreads around
+ * @author Hodaya Avidan and Shir Babayev
  */
 public class PointLight extends Light implements LightSource {
 	/**
@@ -66,12 +67,7 @@ public class PointLight extends Light implements LightSource {
 		return this;
 	}
 
-	/**
-	 * A function that returns the intensity of the color at a certain point
-	 * 
-	 * @param p is the point we consider its strength
-	 * @return the color after calculating the intensity according to the lighting
-	 */
+	@Override
 	public Color getIntensity(Point p) {
 		double distance = position.distance(p);
 		// Calculating the intensity of the color at a point by dividing
@@ -80,14 +76,7 @@ public class PointLight extends Light implements LightSource {
 		return this.intensity.scale(1 / (kC + kL * distance + kQ * distance * distance));
 	}
 
-	/**
-	 * A function that returns us the direction normalized vector between the
-	 * starting point of the light and a certain point
-	 * 
-	 * @param p is a point within the scene
-	 * @return normalized vector between the point of origin of the light and the
-	 *         point
-	 */
+	@Override
 	public Vector getL(Point p) {
 		return p.subtract(position).normalize();
 	}

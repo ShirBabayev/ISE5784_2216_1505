@@ -1,6 +1,3 @@
-/**
- * 
- */
 package lighting;
 
 import primitives.*;
@@ -8,6 +5,7 @@ import static primitives.Util.*;
 
 /**
  * A class representing spot lighting - lighting emanating from a point in a specific direction
+ * @author Hodaya Avidan and Shir Babayev
  */
 public class SpotLight extends PointLight {
 	/**

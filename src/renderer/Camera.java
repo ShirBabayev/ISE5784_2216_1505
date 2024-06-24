@@ -6,6 +6,8 @@ import primitives.*;
 
 /**
  * a class represents a camera with a point of view on an image
+ * 
+ * @author Hodaya Avidan and Shir Babayev
  */
 public class Camera implements Cloneable {
 	/**
@@ -174,7 +176,7 @@ public class Camera implements Cloneable {
 	/**
 	 * A function that goes through all the pixels of the view plane and casts a ray
 	 * on each one
-	 * @return 
+	 * @return the camera with painted view plane
 	 */
 	public Camera renderImage() {
 		// runs trough all the pixels of the view plain
@@ -193,7 +195,7 @@ public class Camera implements Cloneable {
 	 * @param interval is the length of the sides of the squares in the grid
 	 * @param color    is the color of the grid lines
 	 * 
-	 * @return
+	 * @return the camera with painted grid
 	 */
 	public Camera printGrid(int interval, Color color) {
 		int nX=imageWriter.getNx();

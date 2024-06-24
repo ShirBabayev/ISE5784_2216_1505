@@ -26,34 +26,43 @@ public class SimpleRayTracer extends RayTracerBase {
 
 	@Override
 	public Color traceRay(Ray ray) {
+		//find the closet intersection point of the ray with the geometry bodies
 		GeoPoint point = ray.findClosestGeoPoint(scene.geometries.findGeoIntersections(ray));
+		//return the color that we need to color the pixel that the ray intersect
 		return point == null ? scene.background : calcColor(point, ray);
 	}
 
-	/**
-	 * The function receives the point closest to the ray and calculates the color
-	 * of the point on the geometric body
+	
+	 
+	 /**
+	 * The function receives the point closest to the head of the ray and calculates the color
+	 * of the point on the geometric body for painting the intersected pixel
 	 * 
-	 * @param gpoint - The point closest to the top of the ray
+	 * @param gpoint - The point closest to the head of the ray
+	 * @param ray 
 	 * @return Body color at this point
 	 */
 	private Color calcColor(GeoPoint gpoint, Ray ray) {
+		//Adding the lighting effect on the color to the intensity
 		return scene.ambientLight.getIntensity().add(calcLocalEffects(gpoint, ray));
 	}
 
 	/**
-	 * 
-	 * @param intersection
+	 * The function calculates the effect of lighting on the color
+	 * @param intersection is a point on a geometric body
 	 * @param ray
 	 * @return
 	 */
 	private Color calcLocalEffects(GeoPoint intersection, Ray ray) {
 		Vector v = ray.getDirection();
 		Vector n = intersection.geometry.getNormal(intersection.point);
+		//if the ray is orthogonal to the normal of the geometry - the ray is parallel to the geometry
 		double nv = alignZero(n.dotProduct(v));
 		if (nv == 0)
+			// return the background color
 			return Color.BLACK;
 
+		
 		Material material = intersection.geometry.getMaterial();
 		int nShininess = material.nShininess;
 

@@ -44,12 +44,4 @@ public class AmbientLight extends Light {
 		super(iA.scale(kA));
 		}
 
-	/**
-	 * getter function that returns the value of the ambient lighting intensity
-	 * 
-	 * @return the value of the ambient lighting intensity
-	 */
-	/*public Color getIntensity() {
-		return intensity;
-	}*///TODO
 }
