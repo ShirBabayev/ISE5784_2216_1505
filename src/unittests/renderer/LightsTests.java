@@ -35,6 +35,7 @@ public class LightsTests {
 	/** Shininess value for most of the geometries in the tests */
 	private static final int SHININESS = 301;
 
+
 	/** Diffusion attenuation factor for some of the geometries in the tests */
 	private static final double KD = 0.5;
 
@@ -50,12 +51,15 @@ public class LightsTests {
 	/** Material for some of the geometries in the tests */
 	private final Material material = new Material().setKd(KD3).setKs(KS3).setShininess(SHININESS);
 
+	
 	/** Light color for tests with triangles */
 	private final Color trianglesLightColor = new Color(800, 500, 250);
 
 	/** Light color for tests with sphere */
 	private final Color sphereLightColor = new Color(800, 500, 0);
+	/** Light color for tests with sphere */
 
+	
 	/** Color of the sphere */
 	private final Color sphereColor = new Color(BLUE).reduce(2);
 
@@ -78,9 +82,14 @@ public class LightsTests {
 
 	/** Position of the light in tests with sphere */
 	private final Point sphereLightPosition = new Point(-50, -50, 25);
+	/** Position of the light in tests with sphere */
+
 
 	/** Light direction (directional and spot) in tests with sphere */
 	private final Vector sphereLightDirection = new Vector(1, 1, -0.5);
+	
+	/** Light direction (directional and spot) in tests with sphere */
+
 
 	/** Position of the light in tests with triangles */
 	private final Point trianglesLightPosition = new Point(30, 10, -100);
@@ -180,6 +189,59 @@ public class LightsTests {
 				.writeToImage();
 
 	}
+
+	
+	/*private static final int SHININESS2 = 100;
+	private final Material material2 = new Material().setKd(KD3).setKs(new Double3(0.1, 0.1, 0.1)).setShininess(SHININESS2);
+	private final Color sphereLightColor1 = new Color(144, 238, 144);
+	private final Vector sphereLightDirection1 = new Vector(-0.5, 1, 0.1);*/
+	private final Color sphereLightColor2 = new Color(800, 0, 100);
+	private final Point sphereLightPosition2 = new Point(-50, 50, 25);
+	private final Vector sphereLightDirection2 = new Vector(1, -1, -0.5);
+	private final Color sphereLightColor3 = new Color(255, 255, 255);
+	private final Point sphereLightPosition3 = new Point(50, 50, 25);
+
+
+	/** Produce a picture of a sphere lighted by a spotlight */
+	@Test
+	public void sphereDoubleLights() {
+
+		scene1.geometries.add(sphere);
+		scene1.lights.add(
+				new SpotLight(sphereLightColor2, sphereLightPosition2, sphereLightDirection2).setKl(0.001).setKq(0.001));
+		scene1.lights.add(new DirectionalLight(sphereLightColor, sphereLightDirection));
+		scene1.lights.add(new PointLight(sphereLightColor3, sphereLightPosition3).setKl(0.0001).setKq(0.00002));
+
+		camera1.setImageWriter(new ImageWriter("lightSphereDoubleLights", 500, 500))//
+				.build()//
+				.renderImage()//
+				.writeToImage();
+	}
+	
+	private final Color trianglesLightColorSpot = new Color(511, 694, 705);
+	 private final Color trianglesLightColorPoint = new Color(800, 500, 250);
+	 private final Color trianglesLightColorDirectional = new Color(511, 438, 705);
+
+	 //private final Point trianglesLightPosition1 = new Point(30, 10, -100);
+	 private final Vector trianglesLightDirection1 = new Vector(-2, -2, -1);
+	 private final Point trianglesLightPositionPoint = new Point(0, 0, 0);
+
+	 @Test
+	 public void trianglesDoubleLights() {
+
+	  scene2.geometries.add(triangle1, triangle2);
+
+	  scene2.lights.add(new SpotLight(trianglesLightColorSpot, trianglesLightPosition, trianglesLightDirection1)
+	    .setKl(0.0001).setKq(0.001));
+	  scene2.lights.add(new PointLight(trianglesLightColorPoint, trianglesLightPositionPoint).setKl(0.001).setKq(0.0001));
+	  scene2.lights.add(new DirectionalLight(trianglesLightColorDirectional, trianglesLightDirection1));
+
+	  camera2.setImageWriter(new ImageWriter("lightTrianglesDoubleLights", 500, 500)).build() //
+	    .renderImage() //
+	    .writeToImage();
+
+	 }
+
 
 //	/** Produce a picture of a sphere lighted by a narrow spotlight */
 	/*
