@@ -82,14 +82,9 @@ public class LightsTests {
 
 	/** Position of the light in tests with sphere */
 	private final Point sphereLightPosition = new Point(-50, -50, 25);
-	/** Position of the light in tests with sphere */
-
 
 	/** Light direction (directional and spot) in tests with sphere */
 	private final Vector sphereLightDirection = new Vector(1, 1, -0.5);
-	
-	/** Light direction (directional and spot) in tests with sphere */
-
 
 	/** Position of the light in tests with triangles */
 	private final Point trianglesLightPosition = new Point(30, 10, -100);
@@ -148,9 +143,7 @@ public class LightsTests {
 		scene2.lights.add(new DirectionalLight(trianglesLightColor, trianglesLightDirection));
 
 		camera2 //
-//				.setLocation(new Point(10, -10, 1000)) // for debug
-				.setImageWriter(new ImageWriter("lightTrianglesDirectional", 500, 500)) // original
-//				.setImageWriter(new ImageWriter("lightTrianglesDirectional", 1, 1)) // for debug
+				.setImageWriter(new ImageWriter("lightTrianglesDirectional", 500, 500))//
 				.build() //
 				.renderImage() //
 				.writeToImage();
@@ -195,10 +188,16 @@ public class LightsTests {
 	private final Material material2 = new Material().setKd(KD3).setKs(new Double3(0.1, 0.1, 0.1)).setShininess(SHININESS2);
 	private final Color sphereLightColor1 = new Color(144, 238, 144);
 	private final Vector sphereLightDirection1 = new Vector(-0.5, 1, 0.1);*/
+	
+	/** pink color for a test */
 	private final Color sphereLightColor2 = new Color(800, 0, 100);
+	/** Position of the light for a test with sphere */
 	private final Point sphereLightPosition2 = new Point(-50, 50, 25);
+	/** 2nd Direction of the light for a test with sphere */
 	private final Vector sphereLightDirection2 = new Vector(1, -1, -0.5);
+	/** White color for a test */
 	private final Color sphereLightColor3 = new Color(255, 255, 255);
+	/** 3rd Position of the light for a test with sphere */
 	private final Point sphereLightPosition3 = new Point(50, 50, 25);
 
 
@@ -218,12 +217,16 @@ public class LightsTests {
 				.writeToImage();
 	}
 	
+	/** Light pink color for a test */
 	private final Color trianglesLightColorSpot = new Color(511, 694, 705);
+	/** Light turquoise color for a test */
 	 private final Color trianglesLightColorPoint = new Color(800, 500, 250);
+	/** Light turquoise color for a test */
 	 private final Color trianglesLightColorDirectional = new Color(511, 438, 705);
 
-	 //private final Point trianglesLightPosition1 = new Point(30, 10, -100);
+	/** Direction of the light for a test with triangle */
 	 private final Vector trianglesLightDirection1 = new Vector(-2, -2, -1);
+	/** Position of the light for a test with triangle */
 	 private final Point trianglesLightPositionPoint = new Point(0, 0, 0);
 
 	 @Test
