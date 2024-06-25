@@ -55,6 +55,6 @@ public class Triangle extends Polygon {
 			return null;
 
 		// if all the results are with the same sign there is an intersection point
-		return List.of(new GeoPoint(this, intersection.get(0)));
+		return List.of(new GeoPoint(this, intersection.getFirst()));
 	}
 }

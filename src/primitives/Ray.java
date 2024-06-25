@@ -91,7 +91,7 @@ public class Ray {
 		// passes threw all the points in the list and checks for each one
 		// if it's closer to the head of the ray, than the current closet point.
 		for (GeoPoint p : intersections) {
-			double pdh = p.point.distance(head);// p distance head
+			double pdh = p.point.distanceSquared(head);// p distance head (squared)
 			// if the distance from p to the head is smaller than the smallest current
 			// distance
 			if (pdh < distance) {

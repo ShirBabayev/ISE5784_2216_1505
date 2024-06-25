@@ -354,39 +354,29 @@ public class Camera implements Cloneable {
 
 			if (camera.p0 == null)
 				throw new MissingResourceException(missing, "Camera", "p0");
-
 			if (camera.vUp == null)
 				throw new MissingResourceException(missing, "Camera", "vUp");
-
 			if (camera.vTo == null)
 				throw new MissingResourceException(missing, "Camera", "vTo");
+			if (!isZero(camera.vTo.dotProduct(camera.vUp)))
+				throw new IllegalArgumentException("the vectors are not orthogonal");
+			camera.vRight = camera.vTo.crossProduct(camera.vUp).normalize();
 
 			if (isZero(camera.height))
 				throw new MissingResourceException(missing, "Camera", h);
-
-			if (isZero(camera.width))
-				throw new MissingResourceException(missing, "Camera", w);
-
-			if (isZero(camera.distance))
-				throw new MissingResourceException(missing, "Camera", d);
-
 			if (camera.height < 0)
 				throw new IllegalArgumentException(h + illegalArgument);
-
+			if (isZero(camera.width))
+				throw new MissingResourceException(missing, "Camera", w);
 			if (camera.width < 0)
 				throw new IllegalArgumentException(w + illegalArgument);
-
+			if (isZero(camera.distance))
+				throw new MissingResourceException(missing, "Camera", d);
 			if (camera.distance < 0)
 				throw new IllegalArgumentException(d + illegalArgument);
 
-			if (!isZero(camera.vTo.dotProduct(camera.vUp)))
-				throw new IllegalArgumentException("the vectors are not orthogonal");
-
-			camera.vRight = camera.vTo.crossProduct(camera.vUp).normalize();
-
 			if (camera.imageWriter == null)
 				throw new MissingResourceException(missing, "Camera", "imageWriter");
-
 			if (camera.rayTracer == null)
 				throw new MissingResourceException(missing, "Camera", "rayTracer");
 

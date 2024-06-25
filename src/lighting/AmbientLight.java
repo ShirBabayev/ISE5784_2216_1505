@@ -13,11 +13,6 @@ import primitives.Double3;
 public class AmbientLight extends Light {
 
 	/**
-	 * fill light intensity
-	 */
-	// private final Color intensity;//TODO
-
-	/**
 	 * Default ambient lighting = black background with zero attenuation coefficient
 	 */
 	public static AmbientLight NONE = new AmbientLight(Color.BLACK, 0d);

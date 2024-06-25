@@ -13,7 +13,7 @@ public class SpotLight extends PointLight {
 	/**
 	 * The direction in which the lighting goes out
 	 */
-	private Vector direction;
+	private final Vector direction;
 
 	/**
 	 * A builder who builds our spot lighting according to the parameters of the
@@ -59,10 +59,7 @@ public class SpotLight extends PointLight {
 	@Override
 	public Color getIntensity(Point p) {
 		double dirL = direction.dotProduct(getL(p));
-		if (alignZero(dirL) <= 0)
-			return Color.BLACK;
-		// the getL of the father is working
-		return super.getIntensity(p).scale(direction.dotProduct(getL(p)));
+		return alignZero(dirL) <= 0 ? Color.BLACK : super.getIntensity(p).scale(dirL);
 	}
 
 }

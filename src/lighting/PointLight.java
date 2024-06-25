@@ -12,7 +12,7 @@ public class PointLight extends Light implements LightSource {
 	/**
 	 * The point of origin of the light
 	 */
-	private Point position;
+	private final Point position;
 	/**
 	 * constant attenuation coefficient
 	 */

@@ -66,8 +66,6 @@ public class SimpleRayTracer extends RayTracerBase {
 
 		// the material of the body
 		Material material = intersection.geometry.getMaterial();
-		// the shininess that the material returns
-		int nShininess = material.nShininess;
 		// the color of the geometry
 		Color color = intersection.geometry.getEmission();
 
@@ -84,7 +82,7 @@ public class SimpleRayTracer extends RayTracerBase {
 						calcDiffusive(material.kD, nl).add(
 								// The ray that returns as a reflection of the ray that hit the body from the
 								// lighting
-								calcSpecular(material.kS, l, n, nl, v, nShininess))));
+								calcSpecular(material.kS, l, n, nl, v, material.nShininess))));
 			}
 		}
 		return color;

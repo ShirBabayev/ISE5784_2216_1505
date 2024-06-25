@@ -43,7 +43,7 @@ public class Geometries extends Intersectable {
 	}
 
 	@Override
-	public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+	protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
 		List<GeoPoint> l = null;
 		// Checks each body separately if it has intersection points with the beam
 		for (Intersectable body : bodies) {

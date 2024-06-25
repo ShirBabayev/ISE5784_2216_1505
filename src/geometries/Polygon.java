@@ -2,7 +2,7 @@ package geometries;
 
 import java.util.List;
 
-import static primitives.Util.isZero;
+import static primitives.Util.*;
 
 import primitives.Point;
 import primitives.Vector;
@@ -89,14 +89,14 @@ public class Polygon extends Geometry {
 
 	// TODO: לבדוק האם לא כדאי לקרוא ישירות לפונקציה של המישור
 	@Override
-	public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+	protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
 		List<Point> intersection = plane.findIntersections(ray);
 		// there is no intersection point with the plane of the polygon
 		if (intersection == null)
 			return null;
 
 		// a vector from the head to the first vertex
-		Vector v = this.vertices.get(0).subtract(ray.getHead());
+		Vector v = this.vertices.getFirst().subtract(ray.getHead());
 		Vector v1, v2, n;
 		v1 = v;
 
@@ -104,26 +104,26 @@ public class Polygon extends Geometry {
 		v2 = this.vertices.get(1).subtract(ray.getHead());
 
 		n = v1.crossProduct(v2).normalize();
-		double sign = ray.getDirection().dotProduct(n);
-		if (isZero(sign))
+		double sign = alignZero(ray.getDirection().dotProduct(n));
+		if (sign == 0)
 			return null;
 		v1 = v2;
 
 		for (Point vertex : vertices.subList(2, vertices.size())) {
 			v2 = vertex.subtract(ray.getHead());
 			n = v1.crossProduct(v2).normalize();
-			double sign2 = ray.getDirection().dotProduct(n);
+			double sign2 = alignZero(ray.getDirection().dotProduct(n));
 			if (sign2 * sign <= 0)
 				return null;
 			v1 = v2;
 		}
 
 		n = v1.crossProduct(v).normalize();
-		double sign2 = ray.getDirection().dotProduct(n);
+		double sign2 = alignZero(ray.getDirection().dotProduct(n));
 		if (sign2 * sign <= 0)
 			return null;
 
-		return List.of(new GeoPoint(this, intersection.get(0)));
+		return List.of(new GeoPoint(this, intersection.getFirst()));
 	}
 
 }
