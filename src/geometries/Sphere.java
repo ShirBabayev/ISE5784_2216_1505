@@ -38,7 +38,7 @@ public class Sphere extends RadialGeometry {
 		Point head = ray.getHead();
 		// The ray starts in the center
 		if (head.equals(center))
-			return List.of(new GeoPoint(this,ray.getPoint(radius)));
+			return List.of(new GeoPoint(this, ray.getPoint(radius)));
 
 		// a vector from the head of the ray to the center of the sphere
 		Vector u = center.subtract(head);
@@ -62,8 +62,8 @@ public class Sphere extends RadialGeometry {
 		// the closer point to the head
 		double t1 = Util.alignZero(tm - th);
 		return t1 <= 0 //
-				? List.of(new GeoPoint(this,ray.getPoint(t2))) //
-				: List.of(new GeoPoint(this,ray.getPoint(t1)), new GeoPoint(this,ray.getPoint(t2)));
+				? List.of(new GeoPoint(this, ray.getPoint(t2))) //
+				: List.of(new GeoPoint(this, ray.getPoint(t1)), new GeoPoint(this, ray.getPoint(t2)));
 	}
 
 }

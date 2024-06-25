@@ -23,7 +23,7 @@ public class Triangle extends Polygon {
 		super(p1, p2, p3);
 	}
 
-	//TODO: לבדוק האם לא כדאי לקרוא ישירות לפונקציה של המישור
+	// TODO: לבדוק האם לא כדאי לקרוא ישירות לפונקציה של המישור
 	@Override
 	public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
 		var intersection = plane.findIntersections(ray);
@@ -55,6 +55,6 @@ public class Triangle extends Polygon {
 			return null;
 
 		// if all the results are with the same sign there is an intersection point
-		return List.of(new GeoPoint(this,intersection.get(0)));
+		return List.of(new GeoPoint(this, intersection.get(0)));
 	}
 }

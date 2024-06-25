@@ -40,7 +40,8 @@ public class Scene {
 	/**
 	 * list of lights sources in the scene
 	 */
-	public List<LightSource> lights=new LinkedList<>();
+	public List<LightSource> lights = new LinkedList<>();
+
 	/**
 	 * a constructor for rename the scene
 	 * 
@@ -85,15 +86,16 @@ public class Scene {
 		this.geometries = geometries;
 		return this;
 	}
-	
+
 	/**
 	 * setter function for setting the source lights of the scene
+	 * 
 	 * @param list is a list of lights sources
 	 * @return the updated scene
 	 */
 	public Scene setLights(List<LightSource> list) {
-		//TODO:ADDALL OT =
-		this.lights=(list);
+		// TODO:ADDALL OT =
+		this.lights = (list);
 		return this;
 	}
 

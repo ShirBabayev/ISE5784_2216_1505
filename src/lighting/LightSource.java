@@ -6,11 +6,13 @@ import primitives.Point;
 import primitives.Vector;
 
 /**
- * An interface representing source of light by original color and a point in space around
+ * An interface representing source of light by original color and a point in
+ * space around
+ * 
  * @author Hodaya Avidan and Shir Babayev
  */
 public interface LightSource {
-	
+
 	/**
 	 * A function that returns the intensity of the color at a certain point
 	 * 
@@ -18,10 +20,10 @@ public interface LightSource {
 	 * @return the color after calculating the intensity according to the lighting
 	 */
 	public Color getIntensity(Point p);
-	
+
 	/**
-	 * A function that returns the direction normalized vector between the
-	 * starting point of the light and a certain point
+	 * A function that returns the direction normalized vector between the starting
+	 * point of the light and a certain point
 	 * 
 	 * @param p is a point within the scene
 	 * @return normalized vector between the point of origin of the light and the

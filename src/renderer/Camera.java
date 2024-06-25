@@ -176,12 +176,13 @@ public class Camera implements Cloneable {
 	/**
 	 * A function that goes through all the pixels of the view plane and casts a ray
 	 * on each one
+	 * 
 	 * @return the camera with painted view plane
 	 */
 	public Camera renderImage() {
 		// runs trough all the pixels of the view plain
-		int nX=imageWriter.getNx();
-		int nY=imageWriter.getNy();		
+		int nX = imageWriter.getNx();
+		int nY = imageWriter.getNy();
 		for (int i = 0; i < nY; i++)
 			for (int j = 0; j < nX; j++)
 				// for each pixel cast a ray
@@ -198,8 +199,8 @@ public class Camera implements Cloneable {
 	 * @return the camera with painted grid
 	 */
 	public Camera printGrid(int interval, Color color) {
-		int nX=imageWriter.getNx();
-		int nY=imageWriter.getNy();		
+		int nX = imageWriter.getNx();
+		int nY = imageWriter.getNy();
 		for (int j = 0; j < nX; j++)
 			for (int i = 0; i < nY; i++)
 				if (isZero(j % interval) || isZero(i % interval))
@@ -295,8 +296,8 @@ public class Camera implements Cloneable {
 		 * @return a camera with updated view plane size
 		 */
 		public Builder setVpSize(double w, double h) {
-			//if one og them is zero
-			if (isZero(h*w))
+			// if one og them is zero
+			if (isZero(h * w))
 				throw new IllegalArgumentException("size of view plane is wrong");
 			camera.height = h;
 			camera.width = w;

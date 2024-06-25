@@ -26,7 +26,8 @@ public abstract class RayTracerBase {
 	}
 
 	/**
-	 * A function that calculates the color that we need to paint the pixel that the ray intersect with geometric bodies
+	 * A function that calculates the color that we need to paint the pixel that the
+	 * ray intersect with geometric bodies
 	 * 
 	 * @param ray that intersect the bodies
 	 * @return the color that we need to paint the pixel that the ray intersect

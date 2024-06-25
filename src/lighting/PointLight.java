@@ -5,6 +5,7 @@ import primitives.*;
 /**
  * A class that represents point lighting - lighting that comes from a point and
  * spreads around
+ * 
  * @author Hodaya Avidan and Shir Babayev
  */
 public class PointLight extends Light implements LightSource {
@@ -40,6 +41,7 @@ public class PointLight extends Light implements LightSource {
 	/**
 	 * A function that allows editing of the constant attenuation coefficient
 	 * 
+	 * @param kC is constant attenuation coefficient
 	 * @return the current lighting object
 	 */
 	public PointLight setKc(double kC) {
@@ -50,6 +52,7 @@ public class PointLight extends Light implements LightSource {
 	/**
 	 * A function that allows editing of the Linear attenuation coefficient
 	 * 
+	 * @param kL is a linear attenuation coefficient
 	 * @return the current lighting object
 	 */
 	public PointLight setKl(double kL) {
@@ -60,6 +63,7 @@ public class PointLight extends Light implements LightSource {
 	/**
 	 * A function that allows editing of the quadratic attenuation coefficient
 	 * 
+	 * @param kQ is a quadratic attenuation coefficient
 	 * @return the current lighting object
 	 */
 	public PointLight setKq(double kQ) {

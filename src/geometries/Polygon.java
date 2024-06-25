@@ -87,7 +87,7 @@ public class Polygon extends Geometry {
 		return plane.getNormal();
 	}
 
-	//TODO: לבדוק האם לא כדאי לקרוא ישירות לפונקציה של המישור
+	// TODO: לבדוק האם לא כדאי לקרוא ישירות לפונקציה של המישור
 	@Override
 	public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
 		List<Point> intersection = plane.findIntersections(ray);
@@ -123,7 +123,7 @@ public class Polygon extends Geometry {
 		if (sign2 * sign <= 0)
 			return null;
 
-		return List.of(new GeoPoint(this,intersection.get(0)));
+		return List.of(new GeoPoint(this, intersection.get(0)));
 	}
 
 }

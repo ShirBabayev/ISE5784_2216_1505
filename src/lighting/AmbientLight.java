@@ -15,7 +15,7 @@ public class AmbientLight extends Light {
 	/**
 	 * fill light intensity
 	 */
-	//private final Color intensity;//TODO
+	// private final Color intensity;//TODO
 
 	/**
 	 * Default ambient lighting = black background with zero attenuation coefficient
@@ -42,6 +42,6 @@ public class AmbientLight extends Light {
 	 */
 	public AmbientLight(Color iA, Double kA) {
 		super(iA.scale(kA));
-		}
+	}
 
 }

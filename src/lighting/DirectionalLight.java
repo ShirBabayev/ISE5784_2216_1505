@@ -16,7 +16,9 @@ public class DirectionalLight extends Light implements LightSource {
 	private Vector direction;
 
 	/**
-	 * A constructor that build the directional light by direction of the light and intensity
+	 * A constructor that build the directional light by direction of the light and
+	 * intensity
+	 * 
 	 * @param intensity is the color of the body
 	 * @param direction is the direction of the light
 	 */

@@ -14,3 +14,6 @@ specular
 nl
 nv
 gpoint
+kd
+ks
+emission

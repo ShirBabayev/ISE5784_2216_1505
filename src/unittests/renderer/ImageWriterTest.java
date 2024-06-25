@@ -13,7 +13,13 @@ import renderer.ImageWriter;
  * @author Shir Babayev and Hodaya Avidan
  */
 class ImageWriterTest {
+	/**
+	 * The number of pixels on the X-axis
+	 */
 	private final int NX = 801;
+	/**
+	 * The number of pixels on the Y-axis
+	 */
 	private final int NY = 501;
 
 	/**

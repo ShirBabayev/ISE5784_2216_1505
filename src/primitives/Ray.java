@@ -25,12 +25,12 @@ public class Ray {
 	 * Construct ray at a given point and direction sent to the constructor. If the
 	 * direction parameter is not a unit vector - the ray will normalize it
 	 * 
-	 * @param p   - head point of the ray
+	 * @param p         - head point of the ray
 	 * @param direction - direction of the ray
 	 */
-	public Ray(Point p, Vector directoin) {
+	public Ray(Point p, Vector direction) {
 		head = p;
-		this.direction = directoin.normalize();
+		this.direction = direction.normalize();
 	}
 
 	/**
@@ -74,10 +74,13 @@ public class Ray {
 	public String toString() {
 		return head + "->" + direction;
 	}
-	
+
 	/**
-	 * The function gets a list of intersections point that the rat intersect the geometry body and find the closet point to the head of the point
-	 * @param intersections are list of intersection point that the ray intersect the body
+	 * The function gets a list of intersections point that the rat intersect the
+	 * geometry body and find the closet point to the head of the point
+	 * 
+	 * @param intersections are list of intersection point that the ray intersect
+	 *                      the body
 	 * @return the closet point to the head of the ray among the intersections point
 	 */
 	public GeoPoint findClosestGeoPoint(List<GeoPoint> intersections) {
@@ -103,11 +106,11 @@ public class Ray {
 	 * A function that receives a list of points and returns the point closest to
 	 * the top of the ray, if there is no intersection point return null
 	 * 
-	 * @param intersections are the list of points
+	 * @param points are the list of intersection points
 	 * @return the point closest to the top of the ray
 	 */
 	public Point findClosestPoint(List<Point> points) {
-		 return points == null || points.isEmpty() ? null
-		 : findClosestGeoPoint(points.stream().map(p -> new GeoPoint(null, p)).toList()).point;
-		}
+		return points == null || points.isEmpty() ? null
+				: findClosestGeoPoint(points.stream().map(p -> new GeoPoint(null, p)).toList()).point;
+	}
 }

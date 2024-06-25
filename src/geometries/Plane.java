@@ -83,7 +83,7 @@ public class Plane extends Geometry {
 		// If t is negative than the body is in the opposite direction from the ray or
 		// there is no point of
 		// intersection
-		return alignZero(t) <= 0 ? null : List.of(new GeoPoint(this , ray.getPoint(t)));
+		return alignZero(t) <= 0 ? null : List.of(new GeoPoint(this, ray.getPoint(t)));
 	}
 
 }
