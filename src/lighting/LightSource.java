@@ -30,4 +30,13 @@ public interface LightSource {
 	 *         point
 	 */
 	public Vector getL(Point p);
+
+	/**
+	 * A function that calculates the distance from the current point to the given
+	 * point.
+	 *
+	 * @param p the point to calculate the distance
+	 * @return the distance from the current point to the given point
+	 */
+	double getDistance(Point p);
 }

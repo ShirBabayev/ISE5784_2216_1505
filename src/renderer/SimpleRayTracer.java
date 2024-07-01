@@ -5,14 +5,19 @@ import lighting.LightSource;
 import scene.Scene;
 
 import static primitives.Util.*;
+
+import java.util.List;
+
 import static geometries.Intersectable.GeoPoint;
 
 /**
  * A class representing the path of a simple ray
  * 
- * @author Hodaya Avidan and Shir Babayev
+ * @author Shir Babayev and Hodaya Avida
  */
 public class SimpleRayTracer extends RayTracerBase {
+
+	private static final double DELTA = 0.1;
 
 	/**
 	 * constructor that build the scene according to the parameter
@@ -76,13 +81,18 @@ public class SimpleRayTracer extends RayTracerBase {
 			double nl = alignZero(n.dotProduct(l));
 			// The effect of the lighting reach the camera because of the angles
 			if (nl * nv > 0) { // sign(nl) == sign(nv)
-				Color lightIntensity = lightSource.getIntensity(intersection.point);
-				color = color.add(lightIntensity.scale(
-						// The lighting that returns from the body equally in all directions
-						calcDiffusive(material.kD, nl).add(
-								// The ray that returns as a reflection of the ray that hit the body from the
-								// lighting
-								calcSpecular(material.kS, l, n, nl, v, material.nShininess))));
+				// if it is not shaded - the light hits it
+				if (unshaded(intersection, lightSource, l, n, nv)) {
+					// the intensity of the light at the intersection point
+					Color lightIntensity = lightSource.getIntensity(intersection.point);
+					// add the diffusive and specular components to the color
+					color = color.add(lightIntensity.scale(
+							// The lighting that returns from the body equally in all directions
+							calcDiffusive(material.kD, nl).add(
+									// The ray that returns as a reflection of the ray that hit the body from the
+									// lighting
+									calcSpecular(material.kS, l, n, nl, v, material.nShininess))));
+				}
 			}
 		}
 		return color;
@@ -123,5 +133,41 @@ public class SimpleRayTracer extends RayTracerBase {
 		// the beam from the camera are opposite or perpendicular
 		return minusVR <= 0 ? Double3.ZERO //
 				: ks.scale(Math.pow(minusVR, nShininess));
+	}
+
+	/**
+	 * A function that determines if a point is unshaded, meaning no objects block
+	 * the light source.
+	 * 
+	 * @param gp          - the geometric point that is being checked
+	 * @param lightSource - the source of the light
+	 * @param l           - the vector from the point to the light source
+	 * @param n           - the normal vector at the geometric point
+	 * @param nv          - the dot product of the normal vector and the view vector
+	 * @return - true if the point is unshaded, false if it is shaded
+	 */
+	private boolean unshaded(GeoPoint gp, LightSource lightSource, Vector l, Vector n, double nv) {
+		// from point to light source, the opposite light direction from l
+		Vector lightDirection = l.scale(-1);
+		// move this point with the scaled normal
+		Point point = gp.point.add(n.scale(nv < 0 ? DELTA : -DELTA));
+		// create the ray with the new point
+		Ray lightRay = new Ray(point, lightDirection);
+		// calculate the intersections
+		List<GeoPoint> intersections = scene.geometries.findGeoIntersections(lightRay);
+		// Return true the list of intersections is empty
+		if (intersections == null)
+			return true;
+		// the distance from the pint to the light source
+		double lightDistance = lightSource.getDistance(point);
+		// if there are points in the intersections list that are closer to the point
+		// than light source – return false
+		for (var item : intersections) {
+			if (point.distance(item.point) < lightDistance) {
+				return false;
+			}
+		}
+		// otherwise – return true
+		return true;
 	}
 }
