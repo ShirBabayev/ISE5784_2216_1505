@@ -126,10 +126,10 @@ public class SimpleRayTracer extends RayTracerBase {
 	 * @param nv          - the dot product of the normal vector and the view vector
 	 * @return - true if the point is unshaded, false if it is shaded
 	 */
-	private boolean unshaded(GeoPoint gp, LightSource lightSource, Vector l, Vector n, double nv) {
+	/*private Double3 transparency(GeoPoint gp, LightSource lightSource, Vector l, Vector n, double nv) {
 		//alignZero? 
 		if(gp.geometry.getMaterial().kT==Double3.ZERO)
-			return false;
+			return Double3.ZERO;
 		// from point to light source, the opposite light direction from l
 		Vector lightDirection = l.scale(-1);
 		// move this point with the scaled normal
@@ -152,7 +152,7 @@ public class SimpleRayTracer extends RayTracerBase {
 		}
 		// otherwise – return true
 		return true;
-	}
+	}*/
 	
 	private Color calcGlobalEffects(GeoPoint gPoint, Ray ray,int level, Double3 k) {
 		
@@ -168,18 +168,18 @@ public class SimpleRayTracer extends RayTracerBase {
 	
 	}
 	
-	private Color calcGlobalEffect( Ray ray, Double3 factor, int level, Double3 k) {
+	private Color calcGlobalEffect( Ray ray, Double3 factor, int level, Double3 stop) {
 		
 		Color color = Color.BLACK;
 		
-		Double3 f=k.product(factor);
+		Double3 f=stop.product(factor);
 		
 		if (f.lowerThan(MIN_CALC_COLOR_K)) {
 			return color;
 		}
 		GeoPoint gPoint=findClosestIntersection(ray);
 		
-		return gPoint==null ? null: calcColor(gPoint, ray, level-1, f).scale(factor);
+		return gPoint==null ? color: calcColor(gPoint, ray, level-1, f).scale(factor);
 
 		
 		
