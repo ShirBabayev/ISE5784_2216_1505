@@ -161,10 +161,10 @@ public class SimpleRayTracer extends RayTracerBase {
 		Vector direction=ray.getDirection();
 		Vector normal=gPoint.geometry.getNormal(point);
 		
-		return calcGlobalEffect(constructReflectedRay(point, direction,normal), material.kT, level, k)
+		return calcGlobalEffect(constructRefractedRay(point, direction,normal), material.kT, level, k)
 				.add(//
 						calcGlobalEffect(//
-								constructRefractedRay(point, direction,normal), material.kR, level, k));
+								constructReflectedRay(point, direction,normal), material.kR, level, k));
 	
 	}
 	
