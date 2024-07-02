@@ -10,8 +10,6 @@ import java.util.List;
 
 import geometries.Intersectable.GeoPoint;
 
-import static geometries.Intersectable.GeoPoint;
-
 /**
  * A class representing the path of a simple ray
  * 
@@ -23,6 +21,9 @@ public class SimpleRayTracer extends RayTracerBase {
 	
 	private static final int MAX_CALC_COLOR_LEVEL = 3;
 
+	/**
+	 * a number used to moving the head of the ray towards the light source
+	 */
 	private static final double DELTA = 0.1;
 	
 	private static final double MIN_CALC_COLOR_K = 0.001;
@@ -48,7 +49,7 @@ public class SimpleRayTracer extends RayTracerBase {
 	 * the color of the point on the geometric body for painting the intersected
 	 * pixel
 	 * 
-	 * @param gpoint - The point closest to the head of the ray
+	 * @param gp - The point closest to the head of the ray
 	 * @param ray    is the ray from the camera to the point
 	 * @return Body color at this point
 	 */
@@ -59,7 +60,8 @@ public class SimpleRayTracer extends RayTracerBase {
 
 	private Color calcColor(GeoPoint gp, Ray ray, int level, Double3 k) {
 		Color color = calcLocalEffects(gp, ray,k);
-		return 1 == level ? color : color.add(calcGlobalEffects(gp, ray, level, k));
+		return 1 == level ? color 
+						  : color.add(calcGlobalEffects(gp, ray, level, k));
 	}
 	
 
@@ -172,12 +174,15 @@ public class SimpleRayTracer extends RayTracerBase {
 		
 		Double3 f=k.product(factor);
 		
-		if (!f.lowerThan(MIN_CALC_COLOR_K)) {
-			GeoPoint gPoint=findClosestIntersection(ray);
-			return gPoint==null ? null: calcColor(gPoint, ray, level-1, f).scale(factor);
+		if (f.lowerThan(MIN_CALC_COLOR_K)) {
+			return color;
 		}
+		GeoPoint gPoint=findClosestIntersection(ray);
 		
-		return color;
+		return gPoint==null ? null: calcColor(gPoint, ray, level-1, f).scale(factor);
+
+		
+		
 	}
 	
 	private Double3 transparency(GeoPoint gp, LightSource light, Vector l, Vector n) {
