@@ -21,6 +21,8 @@ public class Ray {
 	 */
 	private final Point head;
 
+	private static final double DELTA = 0.1;
+
 	/**
 	 * Construct ray at a given point and direction sent to the constructor. If the
 	 * direction parameter is not a unit vector - the ray will normalize it
@@ -32,6 +34,15 @@ public class Ray {
 		head = p;
 		this.direction = direction.normalize();
 	}
+	
+	public Ray(Point point, Vector direction, Vector normal) {
+		this.direction = direction.normalize();
+		double nv = normal.dotProduct(this.direction);
+		Vector dltVector = normal.scale(nv < 0 ? -DELTA : DELTA);
+		head = point.add(dltVector);
+
+	}
+
 
 	/**
 	 * getter function for direction of the ray
