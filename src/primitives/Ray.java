@@ -20,7 +20,9 @@ public class Ray {
 	 * the head of the ray
 	 */
 	private final Point head;
-
+	/**
+	 * a DELTA for the constructor
+	 */
 	private static final double DELTA = 0.1;
 
 	/**
@@ -45,14 +47,21 @@ public class Ray {
 	 */
 	public Ray(Point point, Vector direction, Vector normal) {
 		this.direction = direction.normalize();
+		// Measure whether the vectors are in the same direction
+		// 0 - perpendicular, Negative - opposite directions, Positive - similar
+		// directions
 		double nv = normal.dotProduct(this.direction);
+		// The vectors are not perpendicular, that is, there is an angle between them
 		if (!Util.isZero(nv)) {
-			Vector dltVector = normal.scale(nv < 0 ? -DELTA : DELTA);
-			head = point.add(dltVector);
+			// We will direct the head of the ray with a smaller break than the original
+			// ray,
+			// if the direction between them was negative, we will break towards the left
+			// and
+			// if the direction is positive, we will break towards the right
+			head = point.add(normal.scale(nv < 0 ? -DELTA : DELTA));
 		} else {
 			head = point;
 		}
-
 	}
 
 	/**
