@@ -133,12 +133,13 @@ public class SimpleRayTracer extends RayTracerBase {
 
 	
 /**
- * A function that calculates the environmental effects of transparency and reflectance of a particular point
+ * Calculates the environmental effects of transparency and reflectance at a particular intersection point.
  * @param gPoint intersection point on body
  * @param ray is a ray that intersect the body at the point
  * @param level is The level of the recursion, when it equals 1 we will stop
  * @param k is A parameter according to which an additional stopping condition of the recursion is considered
- * @return
+ * @return The color at the intersection point considering global effects.
+ * 
  */
 	private Color calcGlobalEffects(GeoPoint gPoint, Ray ray, int level, Double3 k) {
 
