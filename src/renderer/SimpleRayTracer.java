@@ -15,12 +15,12 @@ import geometries.Intersectable.GeoPoint;
 public class SimpleRayTracer extends RayTracerBase {
 
 	/**
-	 * condition for the recursion
+	 * condition for recursion
 	 */
 	private static final Double3 INITIAL_K = Double3.ONE;
 
 	/**
-	 * max parameter for the level of the recursion
+	 * max parameter for a level of recursion
 	 */
 	private static final int MAX_CALC_COLOR_LEVEL = 10;
 
