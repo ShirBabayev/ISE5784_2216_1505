@@ -17,3 +17,5 @@ gpoint
 kd
 ks
 emission
+ktr
+imperceptible

@@ -94,7 +94,6 @@ public class Scene {
 	 * @return the updated scene
 	 */
 	public Scene setLights(List<LightSource> list) {
-		// TODO:ADDALL OT =
 		this.lights = (list);
 		return this;
 	}

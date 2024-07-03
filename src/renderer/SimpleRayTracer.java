@@ -17,8 +17,12 @@ import geometries.Intersectable.GeoPoint;
  */
 public class SimpleRayTracer extends RayTracerBase {
 
+	
 	private static final Double3 INITIAL_K = Double3.ONE;
 
+	/**
+	 * max parameter for the level of the recursion
+	 */
 	private static final int MAX_CALC_COLOR_LEVEL = 10;
 
 	/**
@@ -58,6 +62,14 @@ public class SimpleRayTracer extends RayTracerBase {
 		return calcColor(gp, ray, MAX_CALC_COLOR_LEVEL, INITIAL_K).add(scene.ambientLight.getIntensity());
 	}
 
+	/**
+	 * A recursive function that calculates the color of the body at a point of intersection and its global effects
+	 * @param gp The point for which the color is calculated
+	 * @param ray The ray that hits the point on the body
+	 * @param level The stop level in the recursion, as level=1
+	 * @param k is A parameter according to which an additional stopping condition of the recursion is considered
+	 * @return the color of the point on the body
+	 */
 	private Color calcColor(GeoPoint gp, Ray ray, int level, Double3 k) {
 		Color color = calcLocalEffects(gp, ray, k);
 		return 1 == level ? color//
@@ -113,6 +125,55 @@ public class SimpleRayTracer extends RayTracerBase {
 		return color;
 	}
 
+	
+/**
+ * A function that calculates the environmental effects of transparency and reflectance of a particular point
+ * @param gPoint intersection point on body
+ * @param ray is a ray that intersect the body at the point
+ * @param level is The level of the recursion, when it equals 1 we will stop
+ * @param k is A parameter according to which an additional stopping condition of the recursion is considered
+ * @return
+ */
+	private Color calcGlobalEffects(GeoPoint gPoint, Ray ray, int level, Double3 k) {
+
+		Material material = gPoint.geometry.getMaterial();
+		Point point = gPoint.point;
+		Vector direction = ray.getDirection();
+		Vector normal = gPoint.geometry.getNormal(point);
+
+		//Examination of the environmental effects of the point in the direction of transparency and reflection
+		return calcGlobalEffect(constructRefractedRay(point, direction, normal), material.kT, level, k)//
+				.add(calcGlobalEffect(constructReflectedRay(point, direction, normal),//
+						material.kR, level, k));
+
+	}
+
+	/**
+	 * The function checks if the reflected ray intersects with another point and colors it 
+	 * with the appropriate color using a calculation with the attenuation coefficients, 
+	 * if there is no intersection point returns the background color
+	 * @param ray is A ray emanating from a point painted in a reflected direction
+	 * @param k is the attenuation coefficient
+	 * @param level is The level of the recursion, when it equals 1 we will stop
+	 * @param condition is A parameter according to which an additional stopping condition of the recursion is considered
+	 * @return Returns the color in which the point where the beam intersected should be painted 
+	 * or the background color if there was no intersection
+	 */
+	private Color calcGlobalEffect(Ray ray, Double3 k, int level, Double3 condition) {
+				
+		Double3 kkx = condition.product(k);
+
+		//Checking whether the number is so small that the color is imperceptible
+		if (kkx.lowerThan(MIN_CALC_COLOR_K)) 
+			return Color.BLACK;
+		
+		//find the closet point 
+		GeoPoint gPoint = findClosestIntersection(ray);
+		return gPoint == null ? Color.BLACK 
+				//calculate the color at gPoint and scale in an attenuation coefficient
+							  : calcColor(gPoint, ray, level - 1, kkx).scale(k);
+	}
+
 	/**
 	 * A function that determines if a point is unshaded, meaning no objects block
 	 * the light source.
@@ -124,33 +185,6 @@ public class SimpleRayTracer extends RayTracerBase {
 	 * @param nv          - the dot product of the normal vector and the view vector
 	 * @return - true if the point is unshaded, false if it is shaded
 	 */
-
-	private Color calcGlobalEffects(GeoPoint gPoint, Ray ray, int level, Double3 k) {
-
-		Material material = gPoint.geometry.getMaterial();
-		Point point = gPoint.point;
-		Vector direction = ray.getDirection();
-		Vector normal = gPoint.geometry.getNormal(point);
-
-		return calcGlobalEffect(constructRefractedRay(point, direction, normal), material.kT, level, k)//
-				.add(calcGlobalEffect(constructReflectedRay(point, direction, normal),//
-						material.kR, level, k));
-
-	}
-
-	private Color calcGlobalEffect(Ray ray, Double3 kx, int level, Double3 stop) {
-		
-		//Color color = Color.BLACK;TODO: see that it is unnecessary
-		
-		Double3 kkx = stop.product(kx);
-
-		if (kkx.lowerThan(MIN_CALC_COLOR_K)) return Color.BLACK;
-		
-		GeoPoint gPoint = findClosestIntersection(ray);
-		return gPoint == null ? Color.BLACK //
-							  : calcColor(gPoint, ray, level - 1, kkx).scale(kx);
-	}
-
 	private Double3 transparency(GeoPoint gp, LightSource lightSource, Vector l, Vector n, double nv) {
 
 		// from point to light source, the opposite light direction from l
@@ -220,22 +254,51 @@ public class SimpleRayTracer extends RayTracerBase {
 							: ks.scale(Math.pow(minusVR, nShininess));
 	}
 
+	/**
+	 * The function builds a ray that is reflected in the opposite direction on the normal axis
+	 * @param point is the intersection point on the body
+	 * @param direction is the direction of the ray that intersects the body at a point
+	 * @param normal is the normal to the body at a point
+	 * @return The opposite ray is the ray of the direction starting from the point of intersection in
+	 *  the opposite direction reflected on the normal axis
+	 */
 	private Ray constructRefractedRay(Point point, Vector direction, Vector normal) {
 		return new Ray(point, direction, normal);
 	}
 
+	/**
+	 * A function that calculates the intersection point closest to the top of the ray
+	 * @param ray is a ray for which its closet intersection point are checked
+	 * @return The intersection point closest to the top of the ray
+	 */
 	private GeoPoint findClosestIntersection(Ray ray) {
 		return ray.findClosestGeoPoint(scene.geometries.findGeoIntersections(ray));
 	}
 
+	/**
+	 * A function that constructs a ray that is reflected like a mirror on the normal axis according to the
+	 * direction of the original ray, the normal and a point
+	  * @param point is the intersection point on the body
+	 * @param direction is the direction of the ray that intersects the body at a point
+	 * @param normal is the normal to the body at a point
+	 * @return A ray that is reflected like a mirror on the normal axis
+	 */
 	private Ray constructReflectedRay(Point point, Vector direction, Vector normal) {
 
 		double nv = normal.dotProduct(direction);
 		return nv == 0 ? null : new Ray(point, constructReflectedVector(normal, direction, nv), normal);
 	}
 
-	private Vector constructReflectedVector(Vector normal, Vector v, double nv) {
-		return v.add(normal.scale(-2 * nv));
+	/**
+	 * A function that constructs a vector that is reflected like a mirror on the normal axis according to the
+	 * direction, normal and the angle between them
+	 * @param normal is the normal to the body at a point
+	 * @param direction is the direction of the ray that intersects the body at a point
+	 * @param nv the angle between direction to normal
+	 * @return A vector that is reflected like a mirror on the normal axis
+	 */
+	private Vector constructReflectedVector(Vector normal, Vector direction, double nv) {
+		return direction.add(normal.scale(-2 * nv));
 	}
 
 }

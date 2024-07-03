@@ -23,7 +23,6 @@ public class Triangle extends Polygon {
 		super(p1, p2, p3);
 	}
 
-	// TODO: לבדוק האם לא כדאי לקרוא ישירות לפונקציה של המישור
 	@Override
 	public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
 		var intersection = plane.findIntersections(ray);
