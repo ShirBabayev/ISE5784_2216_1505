@@ -20,22 +20,22 @@ public class Material {
 	 */
 	public int nShininess = 0;
 	/**
-	 * Attenuation coefficient of transparency
-	 * In a realistic image, kT=0 is completely transparent and kT=1 is completely opaque
+	 * Attenuation coefficient of transparency In a realistic image, kT=0 is
+	 * completely transparent and kT=1 is completely opaque
 	 */
-	public Double3 kT=Double3.ZERO;
+	public Double3 kT = Double3.ZERO;
 	/**
-	 * reflection attenuation coefficient
-	 * In a realistic image, kR=0 does not reflect at all and kR=1 reflects like a mirror
+	 * reflection attenuation coefficient In a realistic image, kR=0 does not
+	 * reflect at all and kR=1 reflects like a mirror
 	 */
-	public Double3 kR=Double3.ZERO;
+	public Double3 kR = Double3.ZERO;
 
 	/**
 	 * setter function for the diffusion attenuation factor
 	 * 
 	 * @param kD is diffusion attenuation factor
 	 * @return the updated material
-	 */	
+	 */
 	public Material setKd(Double3 kD) {
 		this.kD = kD;
 		return this;
@@ -106,7 +106,7 @@ public class Material {
 		this.kT = new Double3(kT);
 		return this;
 	}
-	
+
 	/**
 	 * setter function for the reflection attenuation factor
 	 * 

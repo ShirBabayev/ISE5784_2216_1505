@@ -3,11 +3,8 @@ package renderer;
 import primitives.*;
 import lighting.LightSource;
 import scene.Scene;
-
 import static primitives.Util.*;
-
 import java.util.List;
-
 import geometries.Intersectable.GeoPoint;
 
 /**
@@ -17,7 +14,9 @@ import geometries.Intersectable.GeoPoint;
  */
 public class SimpleRayTracer extends RayTracerBase {
 
-	
+	/**
+	 * condition for the recursion
+	 */
 	private static final Double3 INITIAL_K = Double3.ONE;
 
 	/**
@@ -30,6 +29,9 @@ public class SimpleRayTracer extends RayTracerBase {
 	 */
 	private static final double DELTA = 0.1;
 
+	/**
+	 * minimal number for the attenuation coefficient
+	 */
 	private static final double MIN_CALC_COLOR_K = 0.001;
 
 	/**
@@ -46,7 +48,7 @@ public class SimpleRayTracer extends RayTracerBase {
 		// find the closet intersection point of the ray with the geometry bodies
 		GeoPoint closestPoint = findClosestIntersection(ray);
 		return closestPoint == null ? scene.background //
-									: calcColor(closestPoint, ray);
+				: calcColor(closestPoint, ray);
 	}
 
 	/**
@@ -63,17 +65,20 @@ public class SimpleRayTracer extends RayTracerBase {
 	}
 
 	/**
-	 * A recursive function that calculates the color of the body at a point of intersection and its global effects
-	 * @param gp The point for which the color is calculated
-	 * @param ray The ray that hits the point on the body
+	 * A recursive function that calculates the color of the body at a point of
+	 * intersection and its global effects
+	 * 
+	 * @param gp    The point for which the color is calculated
+	 * @param ray   The ray that hits the point on the body
 	 * @param level The stop level in the recursion, as level=1
-	 * @param k is A parameter according to which an additional stopping condition of the recursion is considered
+	 * @param k     is A parameter according to which an additional stopping
+	 *              condition of the recursion is considered
 	 * @return the color of the point on the body
 	 */
 	private Color calcColor(GeoPoint gp, Ray ray, int level, Double3 k) {
 		Color color = calcLocalEffects(gp, ray, k);
 		return 1 == level ? color//
-						  : color.add(calcGlobalEffects(gp, ray, level, k));
+				: color.add(calcGlobalEffects(gp, ray, level, k));
 	}
 
 	/**
@@ -125,15 +130,17 @@ public class SimpleRayTracer extends RayTracerBase {
 		return color;
 	}
 
-	
-/**
- * A function that calculates the environmental effects of transparency and reflectance of a particular point
- * @param gPoint intersection point on body
- * @param ray is a ray that intersect the body at the point
- * @param level is The level of the recursion, when it equals 1 we will stop
- * @param k is A parameter according to which an additional stopping condition of the recursion is considered
- * @return
- */
+	/**
+	 * A function that calculates the environmental effects of transparency and
+	 * reflected of a particular point
+	 * 
+	 * @param gPoint intersection point on body
+	 * @param ray    is a ray that intersect the body at the point
+	 * @param level  is The level of the recursion, when it equals 1 we will stop
+	 * @param k      is A parameter according to which an additional stopping
+	 *               condition of the recursion is considered
+	 * @return
+	 */
 	private Color calcGlobalEffects(GeoPoint gPoint, Ray ray, int level, Double3 k) {
 
 		Material material = gPoint.geometry.getMaterial();
@@ -141,37 +148,42 @@ public class SimpleRayTracer extends RayTracerBase {
 		Vector direction = ray.getDirection();
 		Vector normal = gPoint.geometry.getNormal(point);
 
-		//Examination of the environmental effects of the point in the direction of transparency and reflection
+		// Examination of the environmental effects of the point in the direction of
+		// transparency and reflection
 		return calcGlobalEffect(constructRefractedRay(point, direction, normal), material.kT, level, k)//
-				.add(calcGlobalEffect(constructReflectedRay(point, direction, normal),//
+				.add(calcGlobalEffect(constructReflectedRay(point, direction, normal), //
 						material.kR, level, k));
 
 	}
 
 	/**
-	 * The function checks if the reflected ray intersects with another point and colors it 
-	 * with the appropriate color using a calculation with the attenuation coefficients, 
-	 * if there is no intersection point returns the background color
-	 * @param ray is A ray emanating from a point painted in a reflected direction
-	 * @param k is the attenuation coefficient
-	 * @param level is The level of the recursion, when it equals 1 we will stop
-	 * @param condition is A parameter according to which an additional stopping condition of the recursion is considered
-	 * @return Returns the color in which the point where the beam intersected should be painted 
-	 * or the background color if there was no intersection
+	 * The function checks if the reflected ray intersects with another point and
+	 * colors it with the appropriate color using a calculation with the attenuation
+	 * coefficients, if there is no intersection point returns the background color
+	 * 
+	 * @param ray       is A ray emanating from a point painted in a reflected
+	 *                  direction
+	 * @param k         is the attenuation coefficient
+	 * @param level     is The level of the recursion, when it equals 1 we will stop
+	 * @param condition is A parameter according to which an additional stopping
+	 *                  condition of the recursion is considered
+	 * @return Returns the color in which the point where the beam intersected
+	 *         should be painted or the background color if there was no
+	 *         intersection
 	 */
 	private Color calcGlobalEffect(Ray ray, Double3 k, int level, Double3 condition) {
-				
+
 		Double3 kkx = condition.product(k);
 
-		//Checking whether the number is so small that the color is imperceptible
-		if (kkx.lowerThan(MIN_CALC_COLOR_K)) 
+		// Checking whether the number is so small that the color is imperceptible
+		if (kkx.lowerThan(MIN_CALC_COLOR_K))
 			return Color.BLACK;
-		
-		//find the closet point 
+
+		// find the closet point
 		GeoPoint gPoint = findClosestIntersection(ray);
-		return gPoint == null ? Color.BLACK 
-				//calculate the color at gPoint and scale in an attenuation coefficient
-							  : calcColor(gPoint, ray, level - 1, kkx).scale(k);
+		return gPoint == null ? Color.BLACK
+				// calculate the color at gPoint and scale in an attenuation coefficient
+				: calcColor(gPoint, ray, level - 1, kkx).scale(k);
 	}
 
 	/**
@@ -251,23 +263,29 @@ public class SimpleRayTracer extends RayTracerBase {
 		// The direction in which the light returns and the direction of
 		// the beam from the camera are opposite or perpendicular
 		return minusVR <= 0 ? Double3.ZERO //
-							: ks.scale(Math.pow(minusVR, nShininess));
+				: ks.scale(Math.pow(minusVR, nShininess));
 	}
 
 	/**
-	 * The function builds a ray that is reflected in the opposite direction on the normal axis
-	 * @param point is the intersection point on the body
-	 * @param direction is the direction of the ray that intersects the body at a point
-	 * @param normal is the normal to the body at a point
-	 * @return The opposite ray is the ray of the direction starting from the point of intersection in
-	 *  the opposite direction reflected on the normal axis
+	 * The function builds a ray that is reflected in the opposite direction on the
+	 * normal axis
+	 * 
+	 * @param point     is the intersection point on the body
+	 * @param direction is the direction of the ray that intersects the body at a
+	 *                  point
+	 * @param normal    is the normal to the body at a point
+	 * @return The opposite ray is the ray of the direction starting from the point
+	 *         of intersection in the opposite direction reflected on the normal
+	 *         axis
 	 */
 	private Ray constructRefractedRay(Point point, Vector direction, Vector normal) {
 		return new Ray(point, direction, normal);
 	}
 
 	/**
-	 * A function that calculates the intersection point closest to the top of the ray
+	 * A function that calculates the intersection point closest to the top of the
+	 * ray
+	 * 
 	 * @param ray is a ray for which its closet intersection point are checked
 	 * @return The intersection point closest to the top of the ray
 	 */
@@ -276,11 +294,14 @@ public class SimpleRayTracer extends RayTracerBase {
 	}
 
 	/**
-	 * A function that constructs a ray that is reflected like a mirror on the normal axis according to the
-	 * direction of the original ray, the normal and a point
-	  * @param point is the intersection point on the body
-	 * @param direction is the direction of the ray that intersects the body at a point
-	 * @param normal is the normal to the body at a point
+	 * A function that constructs a ray that is reflected like a mirror on the
+	 * normal axis according to the direction of the original ray, the normal and a
+	 * point
+	 * 
+	 * @param point     is the intersection point on the body
+	 * @param direction is the direction of the ray that intersects the body at a
+	 *                  point
+	 * @param normal    is the normal to the body at a point
 	 * @return A ray that is reflected like a mirror on the normal axis
 	 */
 	private Ray constructReflectedRay(Point point, Vector direction, Vector normal) {
@@ -290,11 +311,13 @@ public class SimpleRayTracer extends RayTracerBase {
 	}
 
 	/**
-	 * A function that constructs a vector that is reflected like a mirror on the normal axis according to the
-	 * direction, normal and the angle between them
-	 * @param normal is the normal to the body at a point
-	 * @param direction is the direction of the ray that intersects the body at a point
-	 * @param nv the angle between direction to normal
+	 * A function that constructs a vector that is reflected like a mirror on the
+	 * normal axis according to the direction, normal and the angle between them
+	 * 
+	 * @param normal    is the normal to the body at a point
+	 * @param direction is the direction of the ray that intersects the body at a
+	 *                  point
+	 * @param nv        the angle between direction to normal
 	 * @return A vector that is reflected like a mirror on the normal axis
 	 */
 	private Vector constructReflectedVector(Vector normal, Vector direction, double nv) {

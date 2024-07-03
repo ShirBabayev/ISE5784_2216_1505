@@ -34,25 +34,26 @@ public class Ray {
 		head = p;
 		this.direction = direction.normalize();
 	}
-	
+
 	/**
-	 * construct a ray by moving a ray head in some direction by an DELTA among the line of normal to a geometry
-	 * @param point Cut point on the body
+	 * construct a ray by moving a ray head in some direction by an DELTA among the
+	 * line of normal to a geometry
+	 * 
+	 * @param point     Cut point on the body
 	 * @param direction The direction of the ray that intersects the point
-	 * @param normal is normal to the body at a point
+	 * @param normal    is normal to the body at a point
 	 */
 	public Ray(Point point, Vector direction, Vector normal) {
 		this.direction = direction.normalize();
 		double nv = normal.dotProduct(this.direction);
-		if(!Util.isZero(nv)) {
-		Vector dltVector = normal.scale(nv < 0 ? -DELTA : DELTA);
-		head = point.add(dltVector);}
-		else {
-			head=point;
+		if (!Util.isZero(nv)) {
+			Vector dltVector = normal.scale(nv < 0 ? -DELTA : DELTA);
+			head = point.add(dltVector);
+		} else {
+			head = point;
 		}
 
 	}
-
 
 	/**
 	 * getter function for direction of the ray
