@@ -189,7 +189,7 @@ public class SimpleRayTracer extends RayTracerBase {
 
 		// find the closet point
 		GeoPoint gPoint = findClosestIntersection(ray);
-		return gPoint == null ? Color.BLACK
+		return gPoint == null ? scene.background
 				// calculate the color at gPoint and scale in an attenuation coefficient
 				: calcColor(gPoint, ray, level - 1, kkx).scale(k);
 	}
@@ -218,7 +218,7 @@ public class SimpleRayTracer extends RayTracerBase {
 		// create the ray with the new point
 		Ray lightRay = new Ray(point, lightDirection);
 		// calculate the intersections
-		List<GeoPoint> intersections = scene.geometries.findGeoIntersections(lightRay);
+		var intersections = scene.geometries.findGeoIntersections(lightRay);
 		// Return 1 if the list of intersections is empty
 		if (intersections == null)
 			// All light reaches a point
@@ -237,8 +237,8 @@ public class SimpleRayTracer extends RayTracerBase {
 				// of the geometry at the point of intersection
 				ktr = ktr.product(item.geometry.getMaterial().kT);
 				// if ktr is zero - stop
-				if (ktr.equals(Double3.ZERO))
-					break;
+				if (ktr.lowerThan(MIN_CALC_COLOR_K))
+					return Double3.ZERO;
 			}
 		}
 		return ktr;

@@ -3,6 +3,7 @@ package primitives;
 import java.util.List;
 
 import geometries.Intersectable.GeoPoint;
+import static primitives.Util.*;
 
 /**
  * The class provides a service for various operations on ray based on point and
@@ -42,26 +43,16 @@ public class Ray {
 	 * line of normal to a geometry
 	 * 
 	 * @param point     Cut point on the body
-	 * @param direction The direction of the ray that intersects the point
+	 * @param direction The direction of the ray that intersects the point - must be normalized
 	 * @param normal    is normal to the body at a point
 	 */
 	public Ray(Point point, Vector direction, Vector normal) {
-		this.direction = direction.normalize();
+		this.direction = direction;
 		// Measure whether the vectors are in the same direction
 		// 0 - perpendicular, Negative - opposite directions, Positive - similar
 		// directions
 		double nv = normal.dotProduct(this.direction);
-		// The vectors are not perpendicular, that is, there is an angle between them
-		if (!Util.isZero(nv)) {
-			// We will direct the head of the ray with a smaller break than the original
-			// ray,
-			// if the direction between them was negative, we will break towards the left
-			// and
-			// if the direction is positive, we will break towards the right
-			head = point.add(normal.scale(nv < 0 ? -DELTA : DELTA));
-		} else {
-			head = point;
-		}
+		head = point.add(normal.scale(nv < 0 ? -DELTA : DELTA));
 	}
 
 	/**
@@ -90,7 +81,11 @@ public class Ray {
 	 * @return point on the line of the ray
 	 */
 	public Point getPoint(double t) {
-		return Util.isZero(t) ? head : head.add(direction.scale(t));
+		try {
+			return head.add(direction.scale(t));
+		} catch (IllegalArgumentException ignore) { // if t is [almost] zero...
+			return head;
+		}
 	}
 
 	@Override

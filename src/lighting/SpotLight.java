@@ -62,8 +62,4 @@ public class SpotLight extends PointLight {
 		return alignZero(dirL) <= 0 ? Color.BLACK : super.getIntensity(p).scale(dirL);
 	}
 
-	@Override
-	public double getDistance(Point p) {
-		return super.getDistance(p);
-	}
 }
