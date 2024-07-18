@@ -69,6 +69,8 @@ public class RenderTests {
 		camera1.printGrid(100, new Color(WHITE));
 		camera1.writeToImage();
 	}
+	
+	
 
 	/** Test for XML based scene - for bonus */
 	/*

@@ -114,27 +114,6 @@ public class ReflectionRefractionTests {
 				.setImageWriter(new ImageWriter("customScene111", 600, 600)).build().renderImage().writeToImage();
 	}
 
+
 }
-/*
- * scene.geometries.add( new Plane(new Point(0, -50, -100), new Vector(0, 1, 0))
- * .setEmission(new Color(200, 200, 200)) .setMaterial(new
- * Material().setKd(0.5).setKs(0.3).setShininess(60)), new Triangle(new
- * Point(-50, -50, -50), new Point(50, -50, -50), new Point(0, 50, -50))
- * .setEmission(new Color(RED)) .setMaterial(new
- * Material().setKd(0.5).setKs(0.5).setShininess(80).setKt(0.5)), new Sphere(new
- * Point(-25, 25, -50), 30d) .setEmission(new Color(GREEN)) .setMaterial(new
- * Material().setKd(0.4).setKs(0.4).setShininess(100).setKr(0.3)), new
- * Sphere(new Point(25, 25, -50), 30d) .setEmission(new Color(BLUE))
- * .setMaterial(new
- * Material().setKd(0.4).setKs(0.3).setShininess(100).setKt(0.3)) );
- * 
- * scene.setAmbientLight(new AmbientLight(new Color(WHITE), 0.2));
- * scene.lights.add( new SpotLight(new Color(400, 240, 0), new Point(-100, -100,
- * 300), new Vector(-1, -1, -2)) .setKl(0.0004).setKq(0.0000006));
- * scene.lights.add( new SpotLight(new Color(280, 160, 160), new Point(100, 100,
- * 200), new Vector(-1, -1, -3)) .setKl(0.0005).setKq(0.0000007));
- * 
- * cameraBuilder.setLocation(new Point(0, 0, 1000)).setVpDistance(1000)
- * .setVpSize(150, 150) .setImageWriter(new ImageWriter("customScene3", 500,
- * 500)) .build() .renderImage() .writeToImage(); }
- */
+

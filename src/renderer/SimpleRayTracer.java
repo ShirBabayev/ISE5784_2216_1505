@@ -3,11 +3,7 @@ package renderer;
 import primitives.*;
 import lighting.LightSource;
 import scene.Scene;
-
 import static primitives.Util.*;
-
-import java.util.List;
-
 import geometries.Intersectable.GeoPoint;
 
 /**
