@@ -38,7 +38,7 @@ public class IntegrationTests {
 	public int findIntersections(Geometry g) {
 		int counter = 0;
 		List<Point> results;
-		Camera camera=cameraBuilder.build();
+		Camera camera = cameraBuilder.build();
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
 				results = g.findIntersections(camera.constructRay(3, 3, j, i));

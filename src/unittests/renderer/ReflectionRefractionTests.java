@@ -114,6 +114,4 @@ public class ReflectionRefractionTests {
 				.setImageWriter(new ImageWriter("customScene111", 600, 600)).build().renderImage().writeToImage();
 	}
 
-
 }
-

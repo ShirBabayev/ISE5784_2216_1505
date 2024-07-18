@@ -43,7 +43,8 @@ public class Ray {
 	 * line of normal to a geometry
 	 * 
 	 * @param point     Cut point on the body
-	 * @param direction The direction of the ray that intersects the point - must be normalized
+	 * @param direction The direction of the ray that intersects the point - must be
+	 *                  normalized
 	 * @param normal    is normal to the body at a point
 	 */
 	public Ray(Point point, Vector direction, Vector normal) {
