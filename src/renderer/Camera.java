@@ -258,36 +258,41 @@ public class Camera implements Cloneable {
 	 * @param i  the y-coordinate of the pixel
 	 */
 	private void castRays(int nX, int nY, int j, int i) {
-		Color color;
+		Color color=Color.BLACK;
 		Ray ray = constructRay(nX, nY, j, i);
+		
 		// With depth of field
 		if (sqrtGridSize > 1) {
 
 			Point focalPoint = calculateFocalPoint(ray);
-			Point sourcePoint = apperturePoints.get(0);
-			Ray secondaryRay = new Ray(sourcePoint, focalPoint.subtract(sourcePoint));
-			color = rayTracer.traceRay(secondaryRay);
+			Point sourcePoint;
+			Ray secondaryRay;
 
-			int k = 1;
+			int k = 0;
 			for (; k < apperturePoints.size(); k++) {
 				sourcePoint = apperturePoints.get(k);
 				secondaryRay = new Ray(sourcePoint, focalPoint.subtract(sourcePoint));
 				color = color.add(rayTracer.traceRay(secondaryRay));
 			}
+			
 			color = color.scale(1d / k);
 
 		} else
 			color = rayTracer.traceRay(ray);
+		
 		colorPixel(j, i, color);
 
 	}
 
+	/**
+	 * a function that calculate the focal point for every pixel, the focal point is on the focal plane
+	 * @param ray is the main ray from the center of the aperture
+	 * @return focal point on the focal plane
+	 */
 	private Point calculateFocalPoint(Ray ray) {
 		double cosA = vTo.dotProduct(ray.getDirection());
 		double dij = focalDistance / cosA;
-		Point pfij = p0.add(ray.getDirection().scale(dij));
-		return pfij;
-		// return ray.getPoint(focalDistance / vTo.dotProduct(ray.getDirection()));
+		return p0.add(ray.getDirection().scale(dij));
 	}
 
 	/**

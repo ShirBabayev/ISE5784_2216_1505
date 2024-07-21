@@ -62,58 +62,7 @@ class CameraTests {
 	}
 
 	/**
-	 * test function for test the depth of field effect
-	 */
-	@Test
-	public void depthOfFieldEffect() {
-
-		Scene scene = new Scene("Test scene");
-
-		// Adding geometries (spheres) to the scene
-		scene.geometries.add(
-				new Sphere(new Point(1000, -10, 0), 100).setEmission(new Color(GREEN))
-						.setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30)),
-				new Sphere(new Point(900, -90, -100), 100).setEmission(new Color(BLUE))
-						.setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30)),
-				new Sphere(new Point(1900, 200, 170), 100).setEmission(new Color(RED))
-						.setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30)));
-
-		// Setting ambient light
-		scene.setAmbientLight(new AmbientLight(new Color(255, 255, 255), 0.1));
-
-		// Adding lights to the scene
-		scene.lights.add(new SpotLight(new Color(1020, 400, 400), new Point(0, 100, 0), new Vector(500, -100, 0))
-				.setKl(0.00001).setKq(0.000005));
-		scene.lights.add(new SpotLight(new Color(700, 400, 400), new Point(0, 1500, 0), new Vector(500, -100, 0))
-				.setKl(4E-5).setKq(2E-7));
-
-		cameraBuilder.setLocation(new Point(-500, 0, 0)).setVpDistance(1000).setVpSize(400, 400)
-				.setDirection(new Vector(1, 0, 0), new Vector(0, 1, 0)).setRayTracer(new SimpleRayTracer(scene))
-				.setImageWriter(new ImageWriter("noDepthOfFieldEffect", 600, 600)).build().renderImage().writeToImage();
-
-		cameraBuilder.setFocalDistance(160).setSqrtGridSize(8).setApertureRadius(2)
-				.setImageWriter(new ImageWriter("depthOfFieldEffect", 600, 600)).build().renderImage().writeToImage();
-
-	}
-
-	/*
-	 * public void test() { Scene s=new Scene("new"); s.geometries.add(new
-	 * Sphere(new Point(20,0,0), 1).setEmission(new Color(RED)).setMaterial(new
-	 * Material().setKd(0.2).setKs(0.2).setShininess(30)), new Sphere(new
-	 * Point(30,0,0), 2).setEmission(new Color(RED)).setMaterial(new
-	 * Material().setKd(0.2).setKs(0.2).setShininess(30)), new Sphere(new
-	 * Point(40,0,0), 3).setEmission(new Color(RED)).setMaterial(new
-	 * Material().setKd(0.2).setKs(0.2).setShininess(30))); s.setAmbientLight(new
-	 * AmbientLight(new Color(255, 255, 255), 0.1)); s.lights.add(new SpotLight(new
-	 * Color(700, 400, 400), new Point(0,100,0),new Vector(0,-70,0)));
-	 * Camera.Builder cameraBuilder = Camera.getBuilder() .setRayTracer(new
-	 * SimpleRayTracer(new Scene("new"))).setImageWriter(new ImageWriter("new", 1,
-	 * 1)) .setLocation(Point.ZERO).setDirection(new Vector(1, 0, 0), new Vector(0,
-	 * 1, 0)).setVpDistance(10).setApertureRadius(3).setSqrtGridSize(2).
-	 * setFocalDistance(35).setVpSize(40, 40);
-	 * cameraBuilder.build().renderImage().writeToImage(); }
-	 * 
-	 * 
+	 * Test for depth of field effect
 	 */
 	@Test
 	public void advancedDepthOfFieldTest() {
@@ -122,28 +71,28 @@ class CameraTests {
 		Material mat = new Material().setKd(0.3).setKr(0.4).setKs(0.7).setShininess(500);
 
 		scene.lights.add(new PointLight(new Color(150, 150, 150), new Point(20, 20, 20))); // Increased light intensity
-		scene.geometries.add(new Sphere(new Point(10, 15, -80), 5).setEmission(new Color(100, 50, 50)).setMaterial(mat),
-				new Sphere(new Point(5, 10, -40), 5).setEmission(new Color(100, 150, 50)).setMaterial(mat),
-				new Sphere(new Point(0, 5, 0), 5).setEmission(new Color(50, 50, 100)).setMaterial(mat),
-				new Sphere(new Point(-5, 0, 40), 5).setEmission(new Color(50, 100, 50)).setMaterial(mat),
-				new Sphere(new Point(-10, -5, 80), 5).setEmission(new Color(50, 100, 100)).setMaterial(mat));
+		scene.geometries.add(new Sphere(new Point(10, 15, -80), 5).setEmission(new Color(RED)).setMaterial(mat),
+				new Sphere(new Point(5, 10, -40), 5).setEmission(new Color(BLUE)).setMaterial(mat),
+				new Sphere(new Point(0, 5, 0), 5).setEmission(new Color(GREEN)).setMaterial(mat),
+				new Sphere(new Point(-5, 0, 40), 5).setEmission(new Color(255, 105, 180)).setMaterial(mat),
+				new Sphere(new Point(-10, -5, 80), 5).setEmission(new Color(255, 255, 0)).setMaterial(mat));
 
-		Camera.Builder cameraBuilder = Camera.getBuilder().setRayTracer(new SimpleRayTracer(new Scene("Test")))
-				.setImageWriter(new ImageWriter("Test", 1, 1)).setLocation(Point.ZERO)
-				.setDirection(new Vector(0, 0, -1), new Vector(0, -1, 0)).setVpDistance(10);
+		Camera.Builder cameraBuilder = Camera.getBuilder();
 
-		cameraBuilder.setImageWriter(new ImageWriter("advanced_depth", 600, 600))
+		cameraBuilder.setImageWriter(new ImageWriter("no_advanced_depth", 600, 600))
 				.setRayTracer(new SimpleRayTracer(scene)).setVpDistance(150) // Adjusted for a closer view of the scene
 				.setVpSize(40, 40) // Maintain size for consistency
-				.setDirection(new Vector(0, 0, -1), new Vector(0, 1, 0)).setLocation(new Point(-5, 0, 200)) // Moved
-																											// closer to
-																											// the scene
-																											// for more
-																											// pronounced
-																											// depth of
-																											// field
-				.setFocalDistance(160) // Set the focal plane distance to where one sphere should be in focus
-				.setApertureRadius(2) // Decreased aperture to reduce overall blurriness while still showing depth of
+				// Moved closer to the scene for more field
+				.setDirection(new Vector(0, 0, -1), new Vector(0, 1, 0)).setLocation(new Point(-5, 0, 200)).build()
+				.renderImage().writeToImage();
+
+		cameraBuilder.setImageWriter(new ImageWriter("advanced_depth", 600, 600)).setFocalDistance(160) // Set the focal
+																										// plane
+																										// distance to
+																										// where one
+																										// sphere should
+																										// be in focus
+				.setApertureRadius(5) // Decreased aperture to reduce overall blurriness while still showing depth of
 										// field
 				.setSqrtGridSize(8) // Increased number of rays for a smoother depth of field effect
 				.build().renderImage().writeToImage();
