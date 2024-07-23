@@ -8,9 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import geometries.Sphere;
-import lighting.AmbientLight;
 import lighting.PointLight;
-import lighting.SpotLight;
 import primitives.*;
 import renderer.*;
 //import scene.Scene;
@@ -79,7 +77,7 @@ class CameraTests {
 
 		Camera.Builder cameraBuilder = Camera.getBuilder();
 
-		cameraBuilder.setImageWriter(new ImageWriter("no_advanced_depth", 1000,1000))
+		cameraBuilder.setImageWriter(new ImageWriter("no_advanced_depth", 1000, 1000))
 				.setRayTracer(new SimpleRayTracer(scene)).setVpDistance(150) // Adjusted for a closer view of the scene
 				.setVpSize(40, 40) // Maintain size for consistency
 				// Moved closer to the scene for more field
@@ -94,7 +92,7 @@ class CameraTests {
 																										// be in focus
 				.setApertureRadius(2) // Decreased aperture to reduce overall blurriness while still showing depth of
 										// field
-				.setSqrtGridSize(8) // Increased number of rays for a smoother depth of field effect
+				.setSqrtGridSize(17) // Increased number of rays for a smoother depth of field effect
 				.build().renderImage().writeToImage();
 	}
 

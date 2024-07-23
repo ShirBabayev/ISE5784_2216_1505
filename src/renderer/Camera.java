@@ -2,7 +2,7 @@ package renderer;
 
 import static primitives.Util.isZero;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.MissingResourceException;
 import java.util.Random;
@@ -241,8 +241,7 @@ public class Camera implements Cloneable {
 				castRays(nX, nY, j, i);
 		return this;
 	}
-	
-	
+
 	/**
 	 * Casts rays through a specific pixel on the image. Depending on the aperture
 	 * radius, it can handle depth of field.
@@ -253,35 +252,28 @@ public class Camera implements Cloneable {
 	 * @param i  the y-coordinate of the pixel
 	 */
 	private void castRays(int nX, int nY, int j, int i) {
-		Color color=Color.BLACK;
+		Color color = Color.BLACK;
 		Ray ray = constructRay(nX, nY, j, i);
-		
+
 		// With depth of field
-		if (sqrtGridSize > 1) {
-
+		if (sqrtGridSize > 1 && !isZero(apertureRadius) && !isZero(focalDistance)) {
 			Point focalPoint = calculateFocalPoint(ray);
-			Point sourcePoint;
-			Ray secondaryRay;
-			List<Point> apperturePoints = null;
-			if (!isZero(apertureRadius) && !isZero(focalDistance))
-				apperturePoints = constructBeamPoints(apertureRadius, sqrtGridSize);
-
-			int k = 0;
-			for (; k < apperturePoints.size(); k++) {
-				sourcePoint = apperturePoints.get(k);
-				secondaryRay = new Ray(sourcePoint, focalPoint.subtract(sourcePoint));
+			List<Point> apperturePoints = constructBeamPoints(apertureRadius, sqrtGridSize);
+			for (var sourcePoint : apperturePoints) {
+				Ray secondaryRay = new Ray(sourcePoint, focalPoint.subtract(sourcePoint));
 				color = color.add(rayTracer.traceRay(secondaryRay));
 			}
-			
-			color = color.scale(1d / k);
+			color = color.reduce(apperturePoints.size());
 
 		} else
 			color = rayTracer.traceRay(ray);
-		
+
 		colorPixel(j, i, color);
 
 	}
-	
+
+	private static final Random random = new Random();
+
 	/**
 	 * A function that creates a given amount of points randomly distributed around
 	 * the center point of the camera in a given radius range
@@ -295,43 +287,34 @@ public class Camera implements Cloneable {
 	 *         given radius around the center of the camera
 	 */
 	private List<Point> constructBeamPoints(double radius, int gridSize) {
-		List<Point> points = new ArrayList<>();
+		List<Point> points = new LinkedList<>();
 		// Aperture window size
 		double windowSize = radius * 2;
 		// Grid step size along each axis
 		double gridStep = windowSize / gridSize;
 
 		// Loop through the grid and create random points within each grid square
-		Random random = new Random();
 		Point p = p0;
 		for (int i = 0; i < gridSize; i++) {
 			for (int j = 0; j < gridSize; j++) {
 				// Compute the location of the point within the current grid square
 				p = p0;
-				p = p.add(vRight.scale(-radius + i * gridStep + random.nextDouble() *gridStep ));
-				p = p.add(vUp.scale(-radius + j * gridStep +  random.nextDouble() *gridStep ));
+				p = p.add(vRight.scale(-radius + i * gridStep + random.nextDouble() * gridStep));
+				p = p.add(vUp.scale(-radius + j * gridStep + random.nextDouble() * gridStep));
 
 				// Add the point to the list
-				points.add(p);
+				if (p0.distance(p) <= radius)
+					points.add(p);
 			}
 		}
 
-		// Filter the points to keep only those inside the circle of radius `radius`
-		// around P0
-		List<Point> filteredPoints = new ArrayList<>();
-		for (Point point : points) {
-			if (p0.distance(point) <= radius) {
-				filteredPoints.add(point);
-			}
-		}
-
-		return filteredPoints;
+		return points;
 	}
 
-
-
 	/**
-	 * a function that calculate the focal point for every pixel, the focal point is on the focal plane
+	 * a function that calculate the focal point for every pixel, the focal point is
+	 * on the focal plane
+	 * 
 	 * @param ray is the main ray from the center of the aperture
 	 * @return focal point on the focal plane
 	 */
@@ -521,7 +504,6 @@ public class Camera implements Cloneable {
 			return this;
 		}
 
-		
 		/**
 		 * checks the validity of all fields of the camera
 		 * 

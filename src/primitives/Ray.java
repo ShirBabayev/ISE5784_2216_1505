@@ -3,7 +3,6 @@ package primitives;
 import java.util.List;
 
 import geometries.Intersectable.GeoPoint;
-import static primitives.Util.*;
 
 /**
  * The class provides a service for various operations on ray based on point and
