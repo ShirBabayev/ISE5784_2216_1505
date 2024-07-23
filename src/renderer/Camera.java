@@ -72,12 +72,6 @@ public class Camera implements Cloneable {
 	private int sqrtGridSize = 1;
 
 	/**
-	 * The list of points on the aperture. These points are used to construct rays
-	 * for depth of field calculations.
-	 */
-	private List<Point> apperturePoints = null;
-
-	/**
 	 * default constructor with no parameters
 	 */
 	private Camera() {
@@ -247,7 +241,8 @@ public class Camera implements Cloneable {
 				castRays(nX, nY, j, i);
 		return this;
 	}
-
+	
+	
 	/**
 	 * Casts rays through a specific pixel on the image. Depending on the aperture
 	 * radius, it can handle depth of field.
@@ -267,6 +262,9 @@ public class Camera implements Cloneable {
 			Point focalPoint = calculateFocalPoint(ray);
 			Point sourcePoint;
 			Ray secondaryRay;
+			List<Point> apperturePoints = null;
+			if (!isZero(apertureRadius) && !isZero(focalDistance))
+				apperturePoints = constructBeamPoints(apertureRadius, sqrtGridSize);
 
 			int k = 0;
 			for (; k < apperturePoints.size(); k++) {
@@ -283,6 +281,54 @@ public class Camera implements Cloneable {
 		colorPixel(j, i, color);
 
 	}
+	
+	/**
+	 * A function that creates a given amount of points randomly distributed around
+	 * the center point of the camera in a given radius range
+	 * 
+	 * @param radius   is radius of the aperture window around the center of the
+	 *                 camera
+	 * @param gridSize is the amount of squares we will create in the length and
+	 *                 width of the aperture window. There will be gridSize*gridSize
+	 *                 squares in total
+	 * @return A list of points within the aperture window that fall within the
+	 *         given radius around the center of the camera
+	 */
+	private List<Point> constructBeamPoints(double radius, int gridSize) {
+		List<Point> points = new ArrayList<>();
+		// Aperture window size
+		double windowSize = radius * 2;
+		// Grid step size along each axis
+		double gridStep = windowSize / gridSize;
+
+		// Loop through the grid and create random points within each grid square
+		Random random = new Random();
+		Point p = p0;
+		for (int i = 0; i < gridSize; i++) {
+			for (int j = 0; j < gridSize; j++) {
+				// Compute the location of the point within the current grid square
+				p = p0;
+				p = p.add(vRight.scale(-radius + i * gridStep + random.nextDouble() *gridStep ));
+				p = p.add(vUp.scale(-radius + j * gridStep +  random.nextDouble() *gridStep ));
+
+				// Add the point to the list
+				points.add(p);
+			}
+		}
+
+		// Filter the points to keep only those inside the circle of radius `radius`
+		// around P0
+		List<Point> filteredPoints = new ArrayList<>();
+		for (Point point : points) {
+			if (p0.distance(point) <= radius) {
+				filteredPoints.add(point);
+			}
+		}
+
+		return filteredPoints;
+	}
+
+
 
 	/**
 	 * a function that calculate the focal point for every pixel, the focal point is on the focal plane
@@ -475,52 +521,7 @@ public class Camera implements Cloneable {
 			return this;
 		}
 
-		/**
-		 * A function that creates a given amount of points randomly distributed around
-		 * the center point of the camera in a given radius range
-		 * 
-		 * @param radius   is radius of the aperture window around the center of the
-		 *                 camera
-		 * @param gridSize is the amount of squares we will create in the length and
-		 *                 width of the aperture window. There will be gridSize*gridSize
-		 *                 squares in total
-		 * @return A list of points within the aperture window that fall within the
-		 *         given radius around the center of the camera
-		 */
-		private List<Point> constructBeamPoints(double radius, int gridSize) {
-			List<Point> points = new ArrayList<>();
-			// Aperture window size
-			double windowSize = radius * 2;
-			// Grid step size along each axis
-			double gridStep = windowSize / gridSize;
-
-			// Loop through the grid and create random points within each grid square
-			Random random = new Random();
-			Point p = camera.p0;
-			for (int i = 0; i < gridSize; i++) {
-				for (int j = 0; j < gridSize; j++) {
-					// Compute the location of the point within the current grid square
-					p = camera.p0;
-					p = p.add(camera.vRight.scale(-radius + i * gridStep + random.nextDouble() * gridStep));
-					p = p.add(camera.vUp.scale(-radius + j * gridStep + random.nextDouble() * gridStep));
-
-					// Add the point to the list
-					points.add(p);
-				}
-			}
-
-			// Filter the points to keep only those inside the circle of radius `radius`
-			// around P0
-			List<Point> filteredPoints = new ArrayList<>();
-			for (Point point : points) {
-				if (camera.p0.distance(point) <= radius) {
-					filteredPoints.add(point);
-				}
-			}
-
-			return filteredPoints;
-		}
-
+		
 		/**
 		 * checks the validity of all fields of the camera
 		 * 
@@ -560,9 +561,6 @@ public class Camera implements Cloneable {
 				throw new MissingResourceException(missing, "Camera", "imageWriter");
 			if (camera.rayTracer == null)
 				throw new MissingResourceException(missing, "Camera", "rayTracer");
-
-			if (!isZero(camera.apertureRadius) && camera.sqrtGridSize > 1 && !isZero(camera.focalDistance))
-				camera.apperturePoints = constructBeamPoints(camera.apertureRadius, camera.sqrtGridSize);
 
 			try {
 				return (Camera) camera.clone();
