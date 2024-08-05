@@ -12,7 +12,7 @@ import primitives.*;
 /**
  * a class represents a camera with a point of view on an image
  * 
- * @author Hodaya Avidan and Shir Babayev
+ * @author Shir Babayev and Hodaya Avidan
  */
 public class Camera implements Cloneable {
 	/**
