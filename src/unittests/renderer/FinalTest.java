@@ -26,7 +26,7 @@ public class FinalTest {
 	//TODO: add java doc
 	@Test
 	public void createTestScene() {
-	    Scene scene = new Scene("test_scene");
+	    Scene scene = new Scene("test_scene").setBVH();
 	    // Light sources
 	    //scene.lights.add(new SpotLight(new Color(128, 128, 128), new Point(0, 6, -300), new Vector(1,1,10)));
 	    scene.lights.add(new SpotLight(new Color(192, 192, 192), new Point(-1, 7, -360), new Vector(1,1,1)));
@@ -239,8 +239,8 @@ public class FinalTest {
             .setEmission(new Color(160, 82, 45)) // Darker brown for the railing
             .setMaterial(mat3)
         );
-	    scene.geometries.setBVH();
 
+     //   scene.setCBR();
 	    Camera camera = cameraBuilder.build();
 	    camera.renderImage();
 	    camera.writeToImage();

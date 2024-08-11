@@ -96,5 +96,22 @@ public class Scene {
 		this.lights = (list);
 		return this;
 	}
+	
+	public Scene setBVH() {
+		Intersectable.setBvh();
+		return this;
+	}
+
+	/**
+	 * Creates Bounding Volume Hierarchy in the scene's 3D model<br>
+	 * It must be called <b><u>after</u></b> creating the 3D model (adding bodyes to
+	 * the scene).
+	 * 
+	 * @return scene object itself
+	 */
+	public Scene setCBR() {
+		geometries.setBVH();
+		return this;
+	}
 
 }

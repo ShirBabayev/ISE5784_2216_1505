@@ -1,7 +1,6 @@
 package geometries;
 
 import java.util.List;
-
 import static primitives.Util.*;
 
 import primitives.Point;
@@ -52,7 +51,6 @@ public class Polygon extends Geometry {
 		if (bvh) {
 			// TODO
 			boundingBox = new BoundingBox();
-
 			for (Point p : vertices) {
 
 				// check x
@@ -77,7 +75,6 @@ public class Polygon extends Geometry {
 					boundingBox.zMax = p.getZ();
 			}
 
-			this.boundingBox = boundingBox;
 		}
 
 		// Generate the plane according to the first three vertices and associate the
@@ -121,41 +118,54 @@ public class Polygon extends Geometry {
 	}
 
 	@Override
-	protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
-		List<Point> intersection = plane.findIntersections(ray);
-		// there is no intersection point with the plane of the polygon
+	public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double distance) {
+		var intersection = this.plane.findGeoIntersections(ray, distance);
 		if (intersection == null)
 			return null;
 
-		// a vector from the head to the first vertex
-		Vector v = this.vertices.getFirst().subtract(ray.getHead());
-		Vector v1, v2, n;
-		v1 = v;
+		Point p0 = ray.getHead();
+		Vector v = ray.getDirection();
+		int size = vertices.size();
 
-		// a vector from the head to the second vertex
-		v2 = this.vertices.get(1).subtract(ray.getHead());
-
-		n = v1.crossProduct(v2).normalize();
-		double sign = alignZero(ray.getDirection().dotProduct(n));
-		if (sign == 0)
-			return null;
-		v1 = v2;
-
-		for (Point vertex : vertices.subList(2, vertices.size())) {
-			v2 = vertex.subtract(ray.getHead());
-			n = v1.crossProduct(v2).normalize();
-			double sign2 = alignZero(ray.getDirection().dotProduct(n));
-			if (sign2 * sign <= 0)
+		Vector[] v1ToVn = new Vector[size];
+		for (int i = 0; i < size; ++i) {
+			if (p0.equals(this.vertices.get(i)))
 				return null;
-			v1 = v2;
+			v1ToVn[i] = this.vertices.get(i).subtract(p0);
 		}
 
-		n = v1.crossProduct(v).normalize();
-		double sign2 = alignZero(ray.getDirection().dotProduct(n));
-		if (sign2 * sign <= 0)
+		Vector[] N1ToNn = new Vector[size];
+		try {
+			for (int i = 0; i < size; ++i) {
+				N1ToNn[i] = v1ToVn[i].crossProduct(v1ToVn[(i + 1) % v1ToVn.length]).normalize();
+			}
+		} catch (IllegalArgumentException e) {
 			return null;
-
-		return List.of(new GeoPoint(this, intersection.getFirst()));
+		}
+		double[] vn1ToVNn = new double[size];
+		for (int i = 0; i < size; ++i) {
+			vn1ToVNn[i] = alignZero(v.dotProduct(N1ToNn[i]));
+			if (isZero(vn1ToVNn[i]))
+				return null;
+		}
+		boolean isAllPositive = true;
+		boolean isAllNegative = true;
+		for (int i = 0; i < size; ++i) {
+			if (vn1ToVNn[i] < 0 && isAllPositive) {
+				isAllPositive = false;
+				break;
+			}
+		}
+		for (int i = 0; i < size; ++i) {
+			if (vn1ToVNn[i] > 0 && isAllNegative) {
+				isAllNegative = false;
+				break;
+			}
+		}
+		if (isAllNegative || isAllPositive) {
+			intersection.get(0).geometry = this;
+			return intersection;
+		}
+		return null;
 	}
-
 }

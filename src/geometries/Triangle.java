@@ -24,8 +24,9 @@ public class Triangle extends Polygon {
 	}
 
 	@Override
-	public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
-		var intersection = plane.findIntersections(ray);
+	public List<GeoPoint> findGeoIntersectionsHelper(Ray ray,double distance) {
+
+		var intersection = plane.findGeoIntersections(ray,distance);
 		if (intersection == null)
 			return null;
 
@@ -52,8 +53,10 @@ public class Triangle extends Polygon {
 		double result3 = alignZero(direction.dotProduct(n3));
 		if (result1 * result3 <= 0)
 			return null;
-
+		
 		// if all the results are with the same sign there is an intersection point
-		return List.of(new GeoPoint(this, intersection.getFirst()));
+		intersection.get(0).geometry = this;
+		return intersection;
+		//return List.of(new GeoPoint(this, intersection.getFirst()));
 	}
 }

@@ -60,6 +60,7 @@ public class Geometries extends Intersectable {
 				if (infiniteBodies.isEmpty()) {
 					if (boundingBox == null)
 						boundingBox = new BoundingBox();
+					
 					// check x
 					if (g.boundingBox.xMin < boundingBox.xMin)
 						boundingBox.xMin = g.boundingBox.xMin;
