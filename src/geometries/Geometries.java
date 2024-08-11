@@ -54,13 +54,15 @@ public class Geometries extends Intersectable {
 		}
 
 		for (Intersectable g : geometries) {
-			if (g.boundingBox == null)
+			if (g.boundingBox == null) {
 				infiniteBodies.add(g);
+				boundingBox = null;
+			}
 			else {
 				if (infiniteBodies.isEmpty()) {
-					if (boundingBox == null)
+					if(boundingBox == null)
 						boundingBox = new BoundingBox();
-					
+
 					// check x
 					if (g.boundingBox.xMin < boundingBox.xMin)
 						boundingBox.xMin = g.boundingBox.xMin;
@@ -72,19 +74,16 @@ public class Geometries extends Intersectable {
 						boundingBox.yMin = g.boundingBox.yMin;
 					if (g.boundingBox.yMax > boundingBox.yMax)
 						boundingBox.yMax = g.boundingBox.yMax;
-					
+
 					//z
 					if (g.boundingBox.zMin < boundingBox.zMin)
 						boundingBox.zMin = g.boundingBox.zMin;
 					if (g.boundingBox.zMax > boundingBox.zMax)
 						boundingBox.zMax = g.boundingBox.zMax;
-					return;
 				}
+				bodies.add(g);
 			}	
 		}
-		
-		if (!infiniteBodies.isEmpty())
-			boundingBox = null;
 	}
 
 	@Override

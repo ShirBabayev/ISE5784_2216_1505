@@ -69,19 +69,18 @@ public abstract class Intersectable {
 		 protected double zMax;
 
 
-	    public BoundingBox() {
+		 public BoundingBox() {
 
-	         this.xMin=Double.NEGATIVE_INFINITY;
-	          this.xMax= Double.MAX_VALUE;
+	         this.xMin=Double.POSITIVE_INFINITY;
+	          this.xMax= -Double.NEGATIVE_INFINITY;
 
-	        this.yMin=Double.NEGATIVE_INFINITY;
-	        this.yMax= Double.MAX_VALUE;
+	        this.yMin=Double.POSITIVE_INFINITY;
+	        this.yMax= Double.NEGATIVE_INFINITY;
 
-	        this.zMin=Double.NEGATIVE_INFINITY;
-	        this.zMax= Double.MAX_VALUE;
+	        this.zMin=Double.POSITIVE_INFINITY;
+	        this.zMax= Double.NEGATIVE_INFINITY;
 
 	    }
-
 	   
 	    public BoundingBox(double xMin,double yMin,double zMin,double xMax,double yMax,double zMax) {
 	    
