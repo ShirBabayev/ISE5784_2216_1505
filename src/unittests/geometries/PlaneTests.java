@@ -5,9 +5,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+
+import geometries.Plane;
 import primitives.Point;
 import primitives.*;
-import geometries.Plane;
 
 /**
  * Unit tests for geometries.Plane class

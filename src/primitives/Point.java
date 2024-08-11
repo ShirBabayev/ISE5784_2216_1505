@@ -38,6 +38,20 @@ public class Point {
 		xyz = d;
 	}
 
+
+	  public double getX() {
+	        return xyz.d1;
+	    }
+
+	    public double getY() {
+	        return xyz.d2;
+	    }
+
+	    public double getZ() {
+	        return xyz.d3;
+	    }
+
+	    
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

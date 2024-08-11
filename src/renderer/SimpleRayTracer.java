@@ -4,6 +4,7 @@ import primitives.*;
 import lighting.LightSource;
 import scene.Scene;
 import static primitives.Util.*;
+
 import geometries.Intersectable.GeoPoint;
 
 /**

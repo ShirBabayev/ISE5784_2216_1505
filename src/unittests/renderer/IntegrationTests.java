@@ -2,8 +2,11 @@ package unittests.renderer;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
 import geometries.*;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 import primitives.*;
 import renderer.*;
 import scene.Scene;

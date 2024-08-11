@@ -7,7 +7,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import geometries.*;
-
 import primitives.Color;
 
 /**

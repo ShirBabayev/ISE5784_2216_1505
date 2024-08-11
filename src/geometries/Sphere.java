@@ -26,6 +26,16 @@ public class Sphere extends RadialGeometry {
 	public Sphere(Point p, double radius) {
 		super(radius);
 		center = p;
+		if(bvh) {
+		this.boundingBox = new BoundingBox(
+				center.getX()-radius,
+				center.getY()-radius,
+				center.getZ()-radius,
+				center.getX()+radius,
+				center.getY()+radius,
+				center.getZ()+radius);
+		}
+		
 	}
 
 	@Override
@@ -34,7 +44,7 @@ public class Sphere extends RadialGeometry {
 	}
 
 	@Override
-	protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+	protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double distance) {
 		Point head = ray.getHead();
 		// The ray starts in the center
 		if (head.equals(center))
@@ -66,4 +76,5 @@ public class Sphere extends RadialGeometry {
 				: List.of(new GeoPoint(this, ray.getPoint(t1)), new GeoPoint(this, ray.getPoint(t2)));
 	}
 
+	
 }

@@ -49,6 +49,37 @@ public class Polygon extends Geometry {
 		this.vertices = List.of(vertices);
 		size = vertices.length;
 
+		if (bvh) {
+			// TODO
+			boundingBox = new BoundingBox();
+
+			for (Point p : vertices) {
+
+				// check x
+				if (p.getX() < boundingBox.xMin)
+					boundingBox.xMin = p.getX();
+
+				if (p.getX() > boundingBox.xMax)
+					boundingBox.xMax = p.getX();
+
+				// check y
+				if (p.getY() < boundingBox.yMin)
+					boundingBox.yMin = p.getY();
+
+				if (p.getY() > boundingBox.yMax)
+					boundingBox.yMax = p.getY();
+
+				// check z
+				if (p.getZ() < boundingBox.zMin)
+					boundingBox.zMin = p.getZ();
+
+				if (p.getZ() > boundingBox.zMax)
+					boundingBox.zMax = p.getZ();
+			}
+
+			this.boundingBox = boundingBox;
+		}
+
 		// Generate the plane according to the first three vertices and associate the
 		// polygon with this plane.
 		// The plane holds the invariant normal (orthogonal unit) vector to the polygon
@@ -79,7 +110,9 @@ public class Polygon extends Geometry {
 			edge2 = vertices[i].subtract(vertices[i - 1]);
 			if (positive != (edge1.crossProduct(edge2).dotProduct(n) > 0))
 				throw new IllegalArgumentException("All vertices must be ordered and the polygon must be convex");
+
 		}
+
 	}
 
 	@Override
