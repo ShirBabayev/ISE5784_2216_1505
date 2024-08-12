@@ -22,3 +22,6 @@ imperceptible
 nlight
 ndir
 intersectables
+threadings
+bvh
+mini

@@ -26,16 +26,11 @@ public class Sphere extends RadialGeometry {
 	public Sphere(Point p, double radius) {
 		super(radius);
 		center = p;
-		if(bvh) {
-		this.boundingBox = new BoundingBox(
-				center.getX()-radius,
-				center.getY()-radius,
-				center.getZ()-radius,
-				center.getX()+radius,
-				center.getY()+radius,
-				center.getZ()+radius);
+		if (bvh) {
+			this.boundingBox = new BoundingBox(center.getX() - radius, center.getY() - radius, center.getZ() - radius,
+					center.getX() + radius, center.getY() + radius, center.getZ() + radius);
 		}
-		
+
 	}
 
 	@Override
@@ -84,5 +79,4 @@ public class Sphere extends RadialGeometry {
 				: List.of(new GeoPoint(this, ray.getPoint(t1)), new GeoPoint(this, ray.getPoint(t2)));
 	}
 
-	
 }

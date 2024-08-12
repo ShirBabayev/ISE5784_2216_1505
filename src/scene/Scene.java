@@ -96,7 +96,12 @@ public class Scene {
 		this.lights = (list);
 		return this;
 	}
-	
+
+	/**
+	 * turn on the bvh improvement
+	 * 
+	 * @return the updated scene
+	 */
 	public Scene setBVH() {
 		Intersectable.setBvh();
 		return this;

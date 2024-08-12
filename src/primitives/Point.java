@@ -38,20 +38,33 @@ public class Point {
 		xyz = d;
 	}
 
+	/**
+	 * getter function for x coordinate
+	 * 
+	 * @return x coordinate
+	 */
+	public double getX() {
+		return xyz.d1;
+	}
 
-	  public double getX() {
-	        return xyz.d1;
-	    }
+	/**
+	 * getter function for y coordinate
+	 * 
+	 * @return y coordinate
+	 */
+	public double getY() {
+		return xyz.d2;
+	}
 
-	    public double getY() {
-	        return xyz.d2;
-	    }
+	/**
+	 * getter function for z coordinate
+	 * 
+	 * @return z coordinate
+	 */
+	public double getZ() {
+		return xyz.d3;
+	}
 
-	    public double getZ() {
-	        return xyz.d3;
-	    }
-
-	    
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

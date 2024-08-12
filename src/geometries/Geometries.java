@@ -11,10 +11,13 @@ import primitives.Ray;
 public class Geometries extends Intersectable {
 
 	/**
-	 * a list of geometry bodies
+	 * a list of final geometry bodies
 	 */
 	private final List<Intersectable> bodies = new LinkedList<Intersectable>();
 
+	/**
+	 * a list of infinite geometry bodies
+	 */
 	private final List<Intersectable> infiniteBodies = new LinkedList<>();
 
 	/**
@@ -27,24 +30,35 @@ public class Geometries extends Intersectable {
 	 * A constructor that accepts an unlimited number of geometric bodies and adds
 	 * them to a list that combines the bodies
 	 * 
-	 * @param geometries - list of geometric bodies.
+	 * @param geometries - unlimited number of geometric bodies.
 	 */
 	public Geometries(Intersectable... geometries) {
 		add(geometries);
 	}
-	
+
+	/**
+	 * A constructor that accepts an list of geometric bodies and adds them to a
+	 * list that combines the bodies
+	 * 
+	 * @param geometries - list of geometric bodies.
+	 */
 	public Geometries(List<Intersectable> geometries) {
 		add(geometries);
 	}
 
-	public void add(Intersectable... geometries) {
-
-		add(List.of(geometries));
-	}
-	
 	/**
 	 * accepts an unlimited number of geometric bodies and adds them to a list that
 	 * combines the bodies
+	 * 
+	 * @param geometries - unlimited number of geometric bodies.
+	 */
+	public void add(Intersectable... geometries) {
+		add(List.of(geometries));
+	}
+
+	/**
+	 * accepts an list of geometric bodies and adds them to a list that combines the
+	 * bodies
 	 * 
 	 * @param geometries - list of geometric bodies.
 	 */
@@ -57,10 +71,9 @@ public class Geometries extends Intersectable {
 			if (g.boundingBox == null) {
 				infiniteBodies.add(g);
 				boundingBox = null;
-			}
-			else {
+			} else {
 				if (infiniteBodies.isEmpty()) {
-					if(boundingBox == null)
+					if (boundingBox == null)
 						boundingBox = new BoundingBox();
 
 					// check x
@@ -69,31 +82,30 @@ public class Geometries extends Intersectable {
 					if (g.boundingBox.xMax > boundingBox.xMax)
 						boundingBox.xMax = g.boundingBox.xMax;
 
-					//y
+					// y
 					if (g.boundingBox.yMin < boundingBox.yMin)
 						boundingBox.yMin = g.boundingBox.yMin;
 					if (g.boundingBox.yMax > boundingBox.yMax)
 						boundingBox.yMax = g.boundingBox.yMax;
 
-					//z
+					// z
 					if (g.boundingBox.zMin < boundingBox.zMin)
 						boundingBox.zMin = g.boundingBox.zMin;
 					if (g.boundingBox.zMax > boundingBox.zMax)
 						boundingBox.zMax = g.boundingBox.zMax;
 				}
 				bodies.add(g);
-			}	
+			}
 		}
 	}
 
 	@Override
 	protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
 
-
 		List<GeoPoint> l = null;
 		// Checks each body separately if it has intersection points with the beam
 		for (Intersectable body : bodies) {
-			var intersectionsOfBody = body.findGeoIntersections(ray,maxDistance);
+			var intersectionsOfBody = body.findGeoIntersections(ray, maxDistance);
 			if (intersectionsOfBody != null) {
 				// create a new list because it is the first value
 				if (l == null)
@@ -103,9 +115,9 @@ public class Geometries extends Intersectable {
 					l.addAll(intersectionsOfBody);
 			}
 		}
-		
+
 		for (Intersectable body : infiniteBodies) {
-			var intersectionsOfBody = body.findGeoIntersections(ray,maxDistance);
+			var intersectionsOfBody = body.findGeoIntersections(ray, maxDistance);
 			if (intersectionsOfBody != null) {
 				// create a new list because it is the first value
 				if (l == null)
@@ -117,7 +129,7 @@ public class Geometries extends Intersectable {
 		}
 		return l;
 	}
-	
+
 	/**
 	 * create the hierarchy and put into the right boxes
 	 */
@@ -125,12 +137,15 @@ public class Geometries extends Intersectable {
 		double x = boundingBox.xMax - boundingBox.xMin;
 		double y = boundingBox.yMax - boundingBox.yMin;
 		double z = boundingBox.zMax - boundingBox.zMin;
-		// which axis we are reffering to
+		// which axis is more central in the scene
 		setBVH(y > x && y > z ? 1 : z > x && z > y ? 2 : 0, 3);
 	}
 
 	/**
-	 * create the hierarchy and put into the right boxes
+	 * create the hierarchy and put into bounding boxes
+	 * 
+	 * @param axis  is the central axis that we divide according to.
+	 * @param count is the depth of the hierarchy
 	 */
 	private void setBVH(int axis, int count) {
 		if (!bvh || count == 0)

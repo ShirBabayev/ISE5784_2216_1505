@@ -14,13 +14,15 @@ import renderer.*;
 import scene.Scene;
 
 /**
- * Testing Camera Class
+ * Testing depth of field effect
  * 
  * @author Hodaya Avidan and Shir Babayev
  */
 class DepthOfFieldTest {
-	
-	//TODO: add java doc
+
+	/**
+	 * test depth of field effect
+	 */
 	@Test
 	public void advancedDepthOfFieldTest() {
 		Scene scene = new Scene("advanced depth of field test");
@@ -54,6 +56,5 @@ class DepthOfFieldTest {
 				.setSqrtGridSize(17) // Increased number of rays for a smoother depth of field effect
 				.build().renderImage().writeToImage();
 	}
-
 
 }

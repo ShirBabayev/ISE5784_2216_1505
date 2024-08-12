@@ -272,6 +272,9 @@ public class Camera implements Cloneable {
 
 	}
 
+	/**
+	 * random value for constructBeamPoints function
+	 */
 	private static final Random random = new Random();
 
 	/**

@@ -35,7 +35,7 @@ public class Plane extends Geometry {
 	public Plane(Point p1, Point p2, Point p3) {
 		normal = ((p2.subtract(p1)).crossProduct(p3.subtract(p1))).normalize();
 		q = p1;
-		if(bvh){
+		if (bvh) {
 			boundingBox = null;
 		}
 	}
@@ -51,7 +51,7 @@ public class Plane extends Geometry {
 	public Plane(Point p, Vector v) {
 		q = p;
 		normal = v.normalize();
-		if(bvh){
+		if (bvh) {
 			boundingBox = null;
 		}
 	}
@@ -71,7 +71,7 @@ public class Plane extends Geometry {
 	}
 
 	@Override
-	protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray,double distance) {
+	protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double distance) {
 		double nv = normal.dotProduct(ray.getDirection());
 		if (isZero(nv))
 			return null;
