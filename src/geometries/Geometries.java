@@ -148,6 +148,7 @@ public class Geometries extends Intersectable {
 	 * @param count is the depth of the hierarchy
 	 */
 	private void setBVH(int axis, int count) {
+		//if the bvh is turn on
 		if (!bvh || count == 0)
 			return;
 		// min amount of geometries in a box
